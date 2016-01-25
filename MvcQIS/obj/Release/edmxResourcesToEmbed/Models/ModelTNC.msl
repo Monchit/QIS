@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TNC_ADMINModelStoreContainer" CdmEntityContainer="TNC_ADMINEntities">
+    <EntitySetMapping Name="tnc_costcentercode">
+      <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_costcentercode">
+        <MappingFragment StoreEntitySet="tnc_costcentercode">
+          <ScalarProperty Name="active" ColumnName="active" />
+          <ScalarProperty Name="cost_code" ColumnName="cost_code" />
+          <ScalarProperty Name="subgroup_id" ColumnName="subgroup_id" />
+          <ScalarProperty Name="group_id" ColumnName="group_id" />
+          <ScalarProperty Name="dept_id" ColumnName="dept_id" />
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tnc_dept_master">
+      <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_dept_master">
+        <MappingFragment StoreEntitySet="tnc_dept_master">
+          <ScalarProperty Name="dept_name" ColumnName="dept_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tnc_group_master">
+      <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_group_master">
+        <MappingFragment StoreEntitySet="tnc_group_master">
+          <ScalarProperty Name="s_name" ColumnName="s_name" />
+          <ScalarProperty Name="group_name" ColumnName="group_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tnc_plant_master">
+      <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_plant_master">
+        <MappingFragment StoreEntitySet="tnc_plant_master">
+          <ScalarProperty Name="plant_name" ColumnName="plant_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tnc_position_master">
+      <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_position_master">
+        <MappingFragment StoreEntitySet="tnc_position_master">
+          <ScalarProperty Name="level" ColumnName="level" />
+          <ScalarProperty Name="position_name" ColumnName="position_name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tnc_subgroup_master">
+      <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_subgroup_master">
+        <MappingFragment StoreEntitySet="tnc_subgroup_master">
+          <ScalarProperty Name="sub_group" ColumnName="sub_group" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tnc_user">
+      <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_user">
+        <MappingFragment StoreEntitySet="tnc_user">
+          <ScalarProperty Name="ad_user" ColumnName="ad_user" />
+          <ScalarProperty Name="transfer_permission" ColumnName="transfer_permission" />
+          <ScalarProperty Name="ip" ColumnName="ip" />
+          <ScalarProperty Name="windows_user" ColumnName="windows_user" />
+          <ScalarProperty Name="emp_subgroup" ColumnName="emp_subgroup" />
+          <ScalarProperty Name="ext" ColumnName="ext" />
+          <ScalarProperty Name="lastupdate" ColumnName="lastupdate" />
+          <ScalarProperty Name="createdate" ColumnName="createdate" />
+          <ScalarProperty Name="createby" ColumnName="createby" />
+          <ScalarProperty Name="admin_role" ColumnName="admin_role" />
+          <ScalarProperty Name="img_path" ColumnName="img_path" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="emp_status" ColumnName="emp_status" />
+          <ScalarProperty Name="emp_joindate" ColumnName="emp_joindate" />
+          <ScalarProperty Name="emp_plant" ColumnName="emp_plant" />
+          <ScalarProperty Name="emp_depart" ColumnName="emp_depart" />
+          <ScalarProperty Name="emp_group" ColumnName="emp_group" />
+          <ScalarProperty Name="emp_position" ColumnName="emp_position" />
+          <ScalarProperty Name="emp_sex" ColumnName="emp_sex" />
+          <ScalarProperty Name="emp_lname" ColumnName="emp_lname" />
+          <ScalarProperty Name="emp_fname" ColumnName="emp_fname" />
+          <ScalarProperty Name="emp_title" ColumnName="emp_title" />
+          <ScalarProperty Name="emp_code" ColumnName="emp_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="V_Employee_Info">
+      <EntityTypeMapping TypeName="TNC_ADMINModel.V_Employee_Info">
+        <MappingFragment StoreEntitySet="V_Employee_Info">
+          <ScalarProperty Name="emp_status" ColumnName="emp_status" />
+          <ScalarProperty Name="plant_name" ColumnName="plant_name" />
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="dept_name" ColumnName="dept_name" />
+          <ScalarProperty Name="dept_id" ColumnName="dept_id" />
+          <ScalarProperty Name="group_name" ColumnName="group_name" />
+          <ScalarProperty Name="group_id" ColumnName="group_id" />
+          <ScalarProperty Name="sub_group" ColumnName="sub_group" />
+          <ScalarProperty Name="sub_group_id" ColumnName="sub_group_id" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="position_name" ColumnName="position_name" />
+          <ScalarProperty Name="emp_lname" ColumnName="emp_lname" />
+          <ScalarProperty Name="emp_fname" ColumnName="emp_fname" />
+          <ScalarProperty Name="emp_code" ColumnName="emp_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_Organization">
+      <EntityTypeMapping TypeName="TNC_ADMINModel.View_Organization">
+        <MappingFragment StoreEntitySet="View_Organization">
+          <ScalarProperty Name="sub_group" ColumnName="sub_group" />
+          <ScalarProperty Name="subgroup_id" ColumnName="subgroup_id" />
+          <ScalarProperty Name="GroupMgr_email" ColumnName="GroupMgr_email" />
+          <ScalarProperty Name="GroupMgr" ColumnName="GroupMgr" />
+          <ScalarProperty Name="group_name" ColumnName="group_name" />
+          <ScalarProperty Name="group_id" ColumnName="group_id" />
+          <ScalarProperty Name="DeptMgr_email" ColumnName="DeptMgr_email" />
+          <ScalarProperty Name="DeptMgr" ColumnName="DeptMgr" />
+          <ScalarProperty Name="dept_name" ColumnName="dept_name" />
+          <ScalarProperty Name="dept_id" ColumnName="dept_id" />
+          <ScalarProperty Name="PlantMgr_email" ColumnName="PlantMgr_email" />
+          <ScalarProperty Name="PlantMgr" ColumnName="PlantMgr" />
+          <ScalarProperty Name="plant_name" ColumnName="plant_name" />
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="active" ColumnName="active" />
+          <ScalarProperty Name="cost_code" ColumnName="cost_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

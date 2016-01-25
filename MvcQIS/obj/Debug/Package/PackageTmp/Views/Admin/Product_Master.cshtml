@@ -1,0 +1,56 @@
+﻿<style type="text/css">
+    /* fix the size of the pager */
+    input.ui-pg-input { width: auto; }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Grid Product
+        jQuery("#grid_product").jqGrid({
+            url: "@Url.Action("GridProductData","Admin")",
+                datatype: 'json',
+                mtype: 'POST',
+                colNames: ['Product ID', 'Product Name', 'Plant', 'Group'],
+                colModel: [
+                  { name: 'product_id', index: 'product_id', key: true, align: 'center', editable: true, editrules: { edithidden: false } },
+                  { name: 'product_name', index: 'product_name', align: 'center', sortable: true, editable: true, edittype: 'text', editrules: { required: true } },
+                  { name: 'plant_id', index: 'plant_id', align: 'center', sortable: true, editable: true, edittype: 'select', editoptions: { dataUrl: "@Url.Action("PlantSelectList","Admin")" }, editrules: { required: true } },
+                  { name: 'group_id', index: 'group_id', align: 'center', sortable: true, editable: true, edittype: 'select', editoptions: { dataUrl: "@Url.Action("GroupSelectList","Admin")" }, editrules: { required: true } }
+                ],
+                pager: jQuery('#pager_product'),
+                rowNum: 10,
+                rowList: [5, 10, 20, 50],
+                autowidth: true,
+                //width: 600,
+                height: 'auto',
+                sortname: 'product_id',
+                sortorder: "asc",
+                viewrecords: true,
+                caption: 'Product Master',
+                ajaxSelectOptions: { cache: false },
+                //loadonce: false,
+                scrollOffset: 0
+
+            });
+
+              jQuery("#grid_product").jqGrid('navGrid', '#pager_product',
+                  { edit: true, add: true, del: true, search: false },
+                  { url: "@Url.Action("EditProduct","Admin")", closeAfterEdit: true, width: 450, beforeShowForm: function (formid) { $("#tr_product_id", formid).hide(); } },
+                  { url: "@Url.Action("AddProduct","Admin")", closeAfterAdd: true, width: 450, beforeShowForm: function (formid) { $("#tr_product_id", formid).hide(); } },
+                  { url: "@Url.Action("DeleteProduct","Admin")", width: 400,
+                      beforeShowForm: function (formid) {
+                          var selRowId = $(this).jqGrid('getGridParam', 'selrow');
+                          $("td.delmsg", formid[0]).html("Do you really want delete <br /><b>Product : " +
+                               $(this).jqGrid('getCell', selRowId, 'product_name') + "</b>?");
+                      }
+                  }, {}, {});
+    });
+</script>
+
+<h2>@ViewBag.Title</h2>
+
+<br />
+
+    <table id="grid_product">
+    </table>
+    <div id="pager_product"></div>

@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title | QIS</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/themes/base/css")
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/jqueryjqgrid")
+        @RenderSection("scripts", required: false)
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title">@Html.ActionLink("Quality Information System", "Index", "Home")</p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    <nav>
+                        <ul id="menu">
+                            @* Page that must login but user is not staff of system  *@
+                            @if (Session["QIS_Auth"] != null) {
+                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                if (Session["UserType"] != null){
+                                    if (Session["UserType"].ToString() == "Staff")
+                                    {
+                                        <li>@Html.ActionLink("Input data", "AddQCReject", "Home")</li>
+                                        <li>@Html.ActionLink("Report", "Report", "Home")</li>
+                                    }
+                                    else if (Session["UserType"].ToString() == "Mgr")
+                                    {
+                                        <li>@Html.ActionLink("Approval", "AddQCReject", "Home")</li>
+                                        <li>@Html.ActionLink("Report", "Report", "Home")</li>
+                                    }
+                                    else if (Session["UserType"].ToString() == "Admin")
+                                    {
+                                        <li>@Html.ActionLink("Manage User", "Report", "Home")</li>
+                                    }
+                                }
+                            }
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>Copyright &copy; @DateTime.Now.Year - Thai NOK Co.,Ltd. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        
+    </body>
+</html>

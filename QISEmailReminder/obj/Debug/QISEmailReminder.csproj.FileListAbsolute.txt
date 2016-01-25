@@ -1,0 +1,8 @@
+C:\Users\monchit.TNC\Documents\Visual Studio 2012\Projects\MvcQIS\QISEmailReminder\bin\Debug\QISEmailReminder.exe.config
+C:\Users\monchit.TNC\Documents\Visual Studio 2012\Projects\MvcQIS\QISEmailReminder\bin\Debug\QISEmailReminder.exe
+C:\Users\monchit.TNC\Documents\Visual Studio 2012\Projects\MvcQIS\QISEmailReminder\bin\Debug\QISEmailReminder.pdb
+C:\Users\monchit.TNC\Documents\Visual Studio 2012\Projects\MvcQIS\QISEmailReminder\bin\Debug\EntityFramework.dll
+C:\Users\monchit.TNC\Documents\Visual Studio 2012\Projects\MvcQIS\QISEmailReminder\bin\Debug\EntityFramework.xml
+C:\Users\monchit.TNC\Documents\Visual Studio 2012\Projects\MvcQIS\QISEmailReminder\obj\Debug\QISEmailReminder.csprojResolveAssemblyReference.cache
+C:\Users\monchit.TNC\Documents\Visual Studio 2012\Projects\MvcQIS\QISEmailReminder\obj\Debug\QISEmailReminder.exe
+C:\Users\monchit.TNC\Documents\Visual Studio 2012\Projects\MvcQIS\QISEmailReminder\obj\Debug\QISEmailReminder.pdb

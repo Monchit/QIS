@@ -1,0 +1,273 @@
+﻿@model IEnumerable<MvcQIS.Models.QCReject>
+@{
+    ViewBag.Title = "Approval";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title - </h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+    </section>
+}
+<link href="~/Content/table.css" rel="stylesheet" />
+<link href="~/Content/tablesorter.css" rel="stylesheet" />
+<style type="text/css">
+    /* fix the size of the pager */
+    input.ui-pg-input { width: auto; }
+    #tbCar.bordered th {
+        text-align:left !important;
+    }
+    .rowHL {
+         background: #fb0000; /*#99f9fd*/
+         color:white;
+    }
+    .ui-jqgrid .ui-state-highlight { background: #7AC0DA; }
+    .ui-jqgrid tr.jqgrow td { white-space: normal !important; }/*for wrap text in jqgrid*/
+    #tbSummary td {
+        text-align:center !important;
+        width: 70px !important;
+        font-size: 0.95em;
+    }
+    .ngColor {
+        background: #fb0000;
+        color:white;
+    }
+    .preview-tip {
+        max-width: 400px;
+    }
+</style>
+ <script type="text/javascript">
+     function CreateGrid(data) {
+         $("#divGridTable").html('<table id="grid_approve"></table><div id="pager_approve"></div>');
+         //Grid QC Reject
+         jQuery("#grid_approve").jqGrid({
+             url: '@Url.Action("GridApprove","QCReject")?entrydate=' + data,
+             datatype: 'json',
+             mtype: 'POST',
+             colNames: ['Approve', 'Reject', 'Product', 'Item code', 'Lot no.', 'Problem Detail', 'Defective level', 'Shift', 'Image', 'CAR Detail'],//'QC Inspector', 'Setupman/Screener',
+             colModel: [
+                 { name: 'approve', align: 'center', sortable: false, width: '100px' },
+                 { name: 'reject', align: 'center', sortable: false, width: '100px' },
+                 { name: 'product_name', index: 'Master_Product.product_name', sortable: true },
+                 { name: 'item_code', index: 'item_code', sortable: true },
+                 { name: 'lot_no', index: 'lot_no', sortable: true },
+                 { name: 'problem', index: 'problem', sortable: true },
+                 { name: 'defective_lv', index: 'defective_lv', align: 'center', sortable: true },
+                 { name: 'shift', index: 'shift', align: 'center', sortable: true },
+                 { name: 'picture', index: 'picture', align: 'center' },
+                 //{ name: 'inspector', index: 'inspector', sortable: true },
+                 //{ name: 'screener', index: 'screener', sortable: true },
+                 { name: 'issue_car', index: 'issue_car', align: 'center', sortable: true }
+             ],
+             pager: jQuery('#pager_approve'),
+             rowNum: 10,
+             rowList: [5, 10, 20, 50],
+             autowidth: true,
+             //width: 500,
+             height: 'auto',
+             sortname: 'item_code',
+             sortorder: "asc",
+             viewrecords: true,
+             rownumbers: true,
+             rownumWidth: '25px',
+             caption: 'Approve',
+             ajaxSelectOptions: { cache: false },
+             //gridview:true,
+             //loadonce: false,
+             scrollOffset: 0
+         });
+
+         jQuery("#grid_approve").jqGrid('navGrid', '#pager_approve',
+             { edit: false, add: false, del: false, search: false, view: false }, {}, {}, {}, {}, {});
+     }
+
+     function CreateSummary(cdata) {
+         var obj = new Object();
+         obj.mdate = cdata;
+         $.get("@Url.Action("GetSummary")", obj, function (data) {
+             $("#divSummary").children().remove();
+             $("#divSummary").append(data);
+         }).fail(function () { alert("error"); });
+     }
+
+     $(document).ready(function () {
+
+         $("#slMain").change(function () {
+             CreateGrid($(this).val());
+             CreateSummary($(this).val());
+             $('#divCar').slideUp();
+         });
+
+         $(".fancybox").fancybox({
+             openEffect: 'elastic',
+             closeEffect: 'elastic',
+             maxWidth: 800,
+             maxHeight: 600,
+             easing: true
+         });
+
+         $(document).on("click", ".btAppv", function () {
+             var obj = new Object();
+             obj.mdate = $("#slMain").val();
+             obj.reject_id = $(this).attr("data-rejId");
+
+             if (confirm("Are you sure to Approve ?")) {
+                 $.ajax({
+                     type: "POST",
+                     url: "@Url.Action("ApproveQCReject","QCReject")",
+                        data: obj,
+                        dataType: "json",
+                        success: function (data) {
+                            CreateGrid($("#slMain").val());
+                            CreateSummary($("#slMain").val());
+                        },
+                        error: function (request, status, err) {
+                            alert("Request:" + request + ", Status:" + status + ", Error:" + err);
+                        }
+                    });
+                }
+             return false;
+         });
+
+         $(document).tooltip({
+             items: '.tooltipUI',
+             tooltipClass: 'preview-tip',
+             position: { my: "left+5 top+5", at: "right center" },
+             content: function (callback) {
+                 var element = $(this);
+                 $.get('@Url.Action("GetQCRejectByDate", "QCReject")', { d: element.attr("data-date"), m: element.attr("data-month"), y: element.attr("data-year"), product_id: element.attr("data-product") }, function (data) {
+                     callback(data);
+                 });
+             }
+         });
+
+         $(document).on("click", ".btRej", function () {
+             var obj = new Object();
+             obj.mdate = $("#slMain").val();
+             obj.reject_id = $(this).attr("data-rejId");
+             obj.reason = prompt("Are you sure to Reject ?", "Reason for Reject.");
+             if (obj.reason != null) {
+                 $.ajax({
+                     type: "POST",
+                     url: "@Url.Action("RejectQCReject","QCReject")",
+                     data: obj,
+                     dataType: "json",
+                     success: function (data) {
+                         CreateGrid($("#slMain").val());
+                     },
+                     error: function (request, status, err) {
+                         alert("Request:" + request + ", Status:" + status + ", Error:" + err);
+                     }
+                 });
+             }
+             return false;
+         });
+
+         $(document).on("click", ".btCar", function () {
+             var $btn = $(this);
+             $.get("@Url.Action("GetShowCar","Home")", "id=" + $btn.attr("data-rejId"), function (data) {
+                 $("#lbReportNo").text(data.report_no);
+                 $("#lbFound").text(data.found);
+                 $("#lbRoot").text(data.root_cause);
+                 $("#lbRespGrp").text(data.group_name);
+                 $("#lbQtyProd").text(data.qty_product);
+                 $("#lbQtyRej").text(data.qty_reject);
+                 $("#lbIPQC").text(data.ipqc);
+                 $("#lbIssueDate").text(data.issued_date);
+                 $("#lbReplyDueDate").text(data.reply_due_date);
+                 $("#lbReplyDate").text(data.reply_date);
+                 $("#lbRespondDate").text(data.respond_date);
+                 $("#lbEffDate").text(data.effective_date);
+                 $("#linkFile").children().remove();
+                 if (data.attach != null) {
+                     $("#linkFile").append("<a href='../" + data.attach + "' target='_blank'>Show</a>");
+                 }
+             });
+             $('#divCar').slideUp().slideDown();
+             $('#hideshow').css("display", "inline");
+             return false;
+         });
+
+         $('#hideshow').click(function () {
+             $('#divCar').slideToggle();
+             if ($(this).text() == "Hide")
+                 $(this).text("Show");
+             else
+                 $(this).text("Hide");
+         });
+
+         //$(document).on("click", "#btnExport", function (e) {
+         //    window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#divSummary').html()));
+         //    e.preventDefault();
+         //});
+     });
+
+     @*function pictureFormatter(cellvalue, options, rowObject) {
+         var para = cellvalue.split(" ");
+         var path = '@Url.Content("~/images/")';
+         var pat = "<a href='" + para[0] + "'><imag alt='' border='0' width='100' height='100' src='@Url.Content("~/images/")" + para[1] + "' /></a>";
+         return pat;
+     };*@
+</script>
+<p>
+    <select id="slMain" style="width:150px;" >
+        <option value="01/01/0001">--Select Date--</option>
+        @foreach (var item in ViewBag.SelectDate)
+        {
+            <option value="@item">@item</option>
+        }
+    </select>
+</p>
+
+<div id="divSummary"></div>
+<br />
+
+<div id="divGridTable"></div>
+<br />
+
+<a href="#" id="hideshow" style="display:none;">Hide</a>
+<div id="divCar" style="display:none;">
+    <table id="tbCar" class="bordered">
+        <tr>
+            <th>Report No.</th>
+            <td><span id="lbReportNo"></span></td>
+            <th>Q'ty of Product</th>
+            <td><span id="lbQtyProd"></span></td>
+            <th>Reply Due Date</th>
+            <td><span id="lbReplyDueDate"></span></td>
+        </tr>
+        <tr>
+            <th>Found at Process</th>
+            <td><span id="lbFound"></span></td>
+            <th>Q'ty of Reject</th>
+            <td><span id="lbQtyRej"></span></td>
+            <th>Reply Date</th>
+            <td><span id="lbReplyDate"></span></td>
+        </tr>
+        <tr>
+            <th>Root cause (4M)</th>
+            <td><span id="lbRoot"></span></td>
+            <th>IPQC</th>
+            <td><span id="lbIPQC"></span></td>
+            <th>Respond Date</th>
+            <td><span id="lbRespondDate"></span></td>
+        </tr>
+        <tr>
+            <th>Responsible Group</th>
+            <td><span id="lbRespGrp"></span></td>
+            <th>Issue Date</th>
+            <td><span id="lbIssueDate"></span></td>
+            <th>Effective Date</th>
+            <td><span id="lbEffDate"></span></td>
+        </tr>
+        <tr>
+            <th>File scan</th>
+            <td colspan="5">
+                <span id="linkFile"></span>
+            </td>
+        </tr>
+    </table>
+</div>

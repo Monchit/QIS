@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2749f858c239465bb8b689e9e543e4a1" Name="Diagram1">
+        <EntityTypeShape EntityType="TNC_ADMINModel.tnc_costcentercode" Width="1.5" PointX="4.75" PointY="15.875" />
+        <EntityTypeShape EntityType="TNC_ADMINModel.tnc_dept_master" Width="1.5" PointX="8.75" PointY="15.875" />
+        <EntityTypeShape EntityType="TNC_ADMINModel.tnc_group_master" Width="1.5" PointX="6.75" PointY="15.875" />
+        <EntityTypeShape EntityType="TNC_ADMINModel.tnc_plant_master" Width="1.5" PointX="10.75" PointY="15.875" />
+        <EntityTypeShape EntityType="TNC_ADMINModel.tnc_position_master" Width="1.5" PointX="4.75" PointY="18.625" />
+        <EntityTypeShape EntityType="TNC_ADMINModel.tnc_subgroup_master" Width="1.5" PointX="1.2294615307960015" PointY="14.064068398468228" />
+        <EntityTypeShape EntityType="TNC_ADMINModel.tnc_user" Width="1.5" PointX="2.75" PointY="15.875" />
+        <EntityTypeShape EntityType="TNC_ADMINModel.V_Employee_Info" Width="1.5" PointX="6.75" PointY="17.75" />
+        <EntityTypeShape EntityType="TNC_ADMINModel.View_Organization" Width="1.5" PointX="8.75" PointY="17.625" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

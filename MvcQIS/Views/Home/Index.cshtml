@@ -1,0 +1,299 @@
+﻿@model IEnumerable<MvcQIS.Models.QCReject>
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title - </h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+    </section>
+}
+<link href="~/Content/table.css" rel="stylesheet" />
+<style type="text/css">
+    /* fix the size of the pager */
+    input.ui-pg-input { width: auto; }
+    table.bordered th {
+        text-align:left !important;
+    }
+    .rowHL {
+         background: #ff6666; /*#99f9fd*/
+         color:white;
+    }
+    .ui-jqgrid .ui-state-highlight { background: #7AC0DA; }
+    .ui-jqgrid tr.jqgrow td { white-space: normal !important; }
+</style>
+
+ <script type="text/javascript">
+     function CreateGrid(data) {
+         $("#divGridTable").html('<table id="grid_qcreject"></table><div id="pager_qcreject"></div>');
+         //Grid QC Reject
+         jQuery("#grid_qcreject").jqGrid({
+             url: '@Url.Action("GridCriticalRejData","Home")?plantid=' + data,
+             datatype: 'json',
+             mtype: 'POST',
+             colNames: ['Responsible by', 'Report no.', 'Product', 'Item code', 'Problem Detail', 'Defective level', 'Image', 'Date'],
+             colModel: [
+                { name: 'responsible', index: 'groupname', align: 'left', sortable: true },
+                { name: 'report_no', index: 'qc.Car.report_no', align: 'left', sortable: true },
+                { name: 'product_name', index: 'qc.Master_Product.product_name', align: 'left', sortable: true },
+                { name: 'item_code', index: 'qc.item_code', align: 'left', sortable: true },
+                { name: 'problem', index: 'qc.problem', align: 'left', width: 200 },
+                { name: 'defective_lv', index: 'qc.defective_lv', align: 'center' },
+                { name: 'picture', index: 'qc.picture', align: 'center', width: 100 },
+                { name: 'entry_date', index: 'qc.entry_date', align: 'center', sortable: true, sorttype: 'date', formatter: 'date', formatoptions: { newformat: 'd-M-Y' }, datefmt: 'd-M-Y' }
+             ],
+             pager: jQuery('#pager_qcreject'),
+             rowNum: 100,
+             rowList: [5, 10, 20, 50, 100],
+             autowidth: true,
+             //width: 500,
+             height: 'auto',
+             sortname: 'qc.entry_date',
+             sortorder: "desc",
+             viewrecords: true,
+             rownumbers: true,
+             rownumWidth: '25px',
+             caption: 'Critical Reject',
+             ajaxSelectOptions: { cache: false },
+             //gridview:true,
+             //loadonce: false,
+             scrollOffset: 0,
+             loadComplete: function () {
+                 $("#grid_qcreject").children().children().each(function () {
+                     if ($(this).attr("class") != "jqgfirstrow") {
+                         
+                         var date = $(this).children().eq(8).attr("title");
+                         var parts = date.split('/');
+                         var date1 = new Date(parseInt(parts[2], 10),     // year
+                                             parseInt(parts[1], 10) - 1, // month, starts with 0
+                                             parseInt(parts[0], 10));    // day
+                         var diff = Math.abs(new Date() - date1);
+                         var one_day = 1000 * 60 * 60 * 24;
+                         var diffdt = Math.round(diff/one_day);
+                         if (diffdt > 2) {
+                             $(this).addClass("rowHL");
+                         }
+                     }
+                 });
+             }
+         });
+
+         jQuery("#grid_qcreject").jqGrid('navGrid', '#pager_qcreject',
+             { edit: false, add: false, del: false, search: false, view: false }, {}, {}, {}, {}, {});
+     }
+
+     function CreateGridOverDue(data) {
+         $("#divGridOverDue").html('<table id="grid_overdue"></table><div id="pager_overdue"></div>');
+         //Grid QC Reject
+         jQuery("#grid_overdue").jqGrid({
+             url: '@Url.Action("GridOverDue","Home")?' + data,
+            datatype: 'json',
+            mtype: 'POST',
+            colNames: ['Resposible by', 'Report no.', 'Product', 'Item code', 'Problem Detail', 'Defective level', 'Image', 'Due date', 'Over due (days)'],
+            colModel: [
+                { name: 'responsible', index: 'groupname', align: 'left', sortable: true },
+                { name: 'report_no', index: 'qc.report_no', align: 'left', sortable: true },
+                { name: 'product_name', index: 'qc.QCReject.Master_Product.product_name', align: 'left', sortable: true },
+                { name: 'item_code', index: 'qc.QCReject.item_code', align: 'left', sortable: true },
+                { name: 'problem', index: 'qc.QCReject.problem', align: 'left', sortable: true },
+                { name: 'defective_lv', index: 'qc.QCReject.defective_lv', align: 'center', sortable: true },
+                { name: 'picture', index: 'qc.QCReject.picture', align: 'center', width: 100 },
+                { name: 'reply_due_date', index: 'qc.reply_due_date', align: 'center', sortable: true, sorttype: 'date', formatter: 'date', formatoptions: { newformat: 'd-M-Y' }, datefmt: 'd-M-Y' },
+                { name: 'over_due', index: 'qc.over_due', align: 'center', sortable: false }
+            ],
+            pager: jQuery('#pager_overdue'),
+            rowNum: 100,
+            rowList: [5, 10, 20, 50, 100],
+            autowidth: true,
+            //width: 500,
+            height: 'auto',
+            sortname: 'qc.reply_due_date',
+            sortorder: "asc",
+            viewrecords: true,
+            rownumbers: true,
+            rownumWidth: '25px',
+            caption: 'CAR/PAR OVER DUE',
+            ajaxSelectOptions: { cache: false },
+            //gridview:true,
+            //loadonce: false,
+            scrollOffset: 0
+        });
+
+        jQuery("#grid_overdue").jqGrid('navGrid', '#pager_overdue',
+             { edit: false, add: false, del: false, search: false, view: false }, {}, {}, {}, {}, {});
+    }
+    
+     $(document).ready(function () {
+         $.get("@Url.Action("GetMsg","Home")", function (data) {
+             if (data != 0) {
+                 for (var i = 0; i < data.length; i++) {
+                     $("#noty_hidden").text(data[i].mid);
+                     noty({
+                         text: data[i].message + ' [' + data[i].amount + ']',
+                         layout: 'bottomRight',
+                         type: 'warning',//alert, success, error, information, confirm
+                         //dismissQueue: true,// If you want to use queue feature set this true
+                         animation: {
+                             open: { height: 'toggle' },
+                             close: { height: 'toggle' },
+                             easing: 'swing',
+                             speed: 500 // opening & closing animation speed
+                         },
+                         timeout: false, // delay for closing event. Set false for sticky notification
+                         closeWith: ['click'], // ['click', 'button', 'hover']
+                         callback: {
+                             onClose: function () {
+                                 //alert($("#noty_hidden").text());
+                                 $.post("@Url.Action("DeleteMessage","QCReject")", { id: $("#noty_hidden").text() }, function (data) {
+                                     //alert(data);
+                                 });
+                             }
+                         }
+                     });
+                 }
+             }
+         });
+
+         $.get("@Url.Action("GetShowMessage","Home")", function (data) {
+             if (data != 0) {
+                 noty({
+                     text: data,
+                     layout: 'bottomRight',
+                     type: 'warning',//alert, success, error, information, confirm
+                     //dismissQueue: true,// If you want to use queue feature set this true
+                     animation: {
+                         open: { height: 'toggle' },
+                         close: { height: 'toggle' },
+                         easing: 'swing',
+                         speed: 500 // opening & closing animation speed
+                     },
+                     timeout: 10000, //5000 delay for closing event. Set false for sticky notification
+                     closeWith: ['click'] // ['click', 'button', 'hover']
+                 });
+             }
+         });
+
+         CreateGrid($("#slPlant").val());
+         CreateGridOverDue("plantid=" + $("#slPlant").val());
+
+         $("#slPlant").change(function () {
+             CreateGrid($(this).val());
+             CreateGridOverDue("plantid=" + $(this).val());
+             $('#divCar').slideUp();
+         });
+
+         $(".fancybox").fancybox({
+             openEffect: 'elastic',
+             closeEffect: 'elastic',
+             maxWidth: 800,
+             maxHeight: 600,
+             easing: true
+         });
+
+         $(document).on("click", ".btCar", function () {
+             var $btn = $(this);
+             $.get("@Url.Action("GetShowCar","Home")", "id=" + $btn.attr("data-rejId"), function (data) {
+                 $("#lbReportNo").text(data.report_no);
+                 $("#lbFound").text(data.found);
+                 $("#lbRoot").text(data.root_cause);
+                 $("#lbRespGrp").text(data.group_name);
+                 $("#lbQtyProd").text(data.qty_product);
+                 $("#lbQtyRej").text(data.qty_reject);
+                 $("#lbIPQC").text(data.ipqc);
+                 $("#lbIssueDate").text(data.issued_date);
+                 $("#lbReplyDueDate").text(data.reply_due_date);
+                 $("#lbReplyDate").text(data.reply_date);
+                 $("#lbRespondDate").text(data.respond_date);
+                 $("#lbEffDate").text(data.effective_date);
+                 $("#linkFile").children().remove();
+                 if (data.attach != null) {
+                     $("#linkFile").append("<a href='../qis/" + data.attach + "' target='_blank'>Show</a>");
+                 }
+             });
+             $('#divCar').slideUp().slideDown();//animation
+             $('#hideshow').css("display", "inline");//un-hide #hideshow
+             $("html, body").animate({ scrollTop: $(document).height() }, "slow");//scroll to bottom of page
+             return false;
+         });
+
+         $('#hideshow').click(function (e) {
+             e.preventDefault();//for prevent jump to top
+             $('#divCar').slideToggle();
+             if ($(this).text() == "Hide")
+                 $(this).text("Show");
+             else
+                 $(this).text("Hide");
+         });
+     });
+
+     @*function pictureFormatter(cellvalue, options, rowObject) {
+         var para = cellvalue.split(" ");
+         var path = '@Url.Content("~/images/")';
+         var pat = "<a href='" + para[0] + "'><imag alt='' border='0' width='100' height='100' src='@Url.Content("~/images/")" + para[1] + "' /></a>";
+         return pat;
+     };*@
+</script>
+<p>
+    @*@Html.DropDownList("SelectPlant", (SelectList)ViewBag.SelectPlant)*@
+    <select id="slPlant" style="width:120px;" >
+        @foreach (var item in ViewBag.SelectPlant)
+        {
+            <option value="@item.plant_id">
+                @item.plant_name
+            </option>
+        }
+    </select>
+</p>
+
+<div id="divGridTable"></div>
+<br />
+
+<div id="divGridOverDue"></div>
+
+<a href="#" id="hideshow" style="display:none;">Hide</a>
+<div id="divCar" style="display:none;">
+    <table class="bordered">
+        <tr>
+            <th>Report No.</th>
+            <td><span id="lbReportNo"></span></td>
+            <th>Q'ty of Product</th>
+            <td><span id="lbQtyProd"></span></td>
+            <th>Reply Due Date</th>
+            <td><span id="lbReplyDueDate"></span></td>
+        </tr>
+        <tr>
+            <th>Found at Process</th>
+            <td><span id="lbFound"></span></td>
+            <th>Q'ty of Reject</th>
+            <td><span id="lbQtyRej"></span></td>
+            <th>Reply Date</th>
+            <td><span id="lbReplyDate"></span></td>
+        </tr>
+        <tr>
+            <th>Root cause (4M)</th>
+            <td><span id="lbRoot"></span></td>
+            <th>IPQC</th>
+            <td><span id="lbIPQC"></span></td>
+            <th>Respond Date</th>
+            <td><span id="lbRespondDate"></span></td>
+        </tr>
+        <tr>
+            <th>Responsible Group</th>
+            <td><span id="lbRespGrp"></span></td>
+            <th>Issue Date</th>
+            <td><span id="lbIssueDate"></span></td>
+            <th>Effective Date</th>
+            <td><span id="lbEffDate"></span></td>
+        </tr>
+        <tr>
+            <th>File scan</th>
+            <td colspan="5">
+                <span id="linkFile"></span>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="noty_hidden" style="display:none;"></div>
+

@@ -1,0 +1,13 @@
+﻿@if (Session["QIS_Auth"] != null) {
+    <text>
+        Hello, @Session["FullName"].ToString()!
+        @using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoffForm" })) {
+            @Html.AntiForgeryToken()
+            <a href="javascript:document.getElementById('logoffForm').submit()">Log off</a>
+        }
+    </text>
+} else {
+    <ul>
+        <li>@Html.ActionLink("Log in", "Login", "Account")</li>
+    </ul>
+}

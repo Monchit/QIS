@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="QISModelStoreContainer" CdmEntityContainer="QISEntities">
+    <EntitySetMapping Name="Car">
+      <EntityTypeMapping TypeName="QISModel.Car">
+        <MappingFragment StoreEntitySet="Car">
+          <ScalarProperty Name="attach" ColumnName="attach" />
+          <ScalarProperty Name="effectiveness" ColumnName="effectiveness" />
+          <ScalarProperty Name="respond_date" ColumnName="respond_date" />
+          <ScalarProperty Name="reply_date" ColumnName="reply_date" />
+          <ScalarProperty Name="issued_date" ColumnName="issued_date" />
+          <ScalarProperty Name="ipqc" ColumnName="ipqc" />
+          <ScalarProperty Name="qty_reject" ColumnName="qty_reject" />
+          <ScalarProperty Name="qty_product" ColumnName="qty_product" />
+          <ScalarProperty Name="responsible" ColumnName="responsible" />
+          <ScalarProperty Name="root_cause" ColumnName="root_cause" />
+          <ScalarProperty Name="found" ColumnName="found" />
+          <ScalarProperty Name="report_no" ColumnName="report_no" />
+          <ScalarProperty Name="qc_reject_id" ColumnName="qc_reject_id" />
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="entry_date" ColumnName="entry_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InspectionLot">
+      <EntityTypeMapping TypeName="QISModel.InspectionLot">
+        <MappingFragment StoreEntitySet="InspectionLot">
+          <ScalarProperty Name="qty" ColumnName="qty" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="entry_date" ColumnName="entry_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Main">
+      <EntityTypeMapping TypeName="QISModel.Main">
+        <MappingFragment StoreEntitySet="Main">
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="entry_date" ColumnName="entry_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Master_Plant">
+      <EntityTypeMapping TypeName="QISModel.Master_Plant">
+        <MappingFragment StoreEntitySet="Master_Plant">
+          <ScalarProperty Name="plant_name" ColumnName="plant_name" />
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Master_Product">
+      <EntityTypeMapping TypeName="QISModel.Master_Product">
+        <MappingFragment StoreEntitySet="Master_Product">
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="product_name" ColumnName="product_name" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QCReject">
+      <EntityTypeMapping TypeName="QISModel.QCReject">
+        <MappingFragment StoreEntitySet="QCReject">
+          <ScalarProperty Name="shift" ColumnName="shift" />
+          <ScalarProperty Name="screener" ColumnName="screener" />
+          <ScalarProperty Name="inspector" ColumnName="inspector" />
+          <ScalarProperty Name="issue_car" ColumnName="issue_car" />
+          <ScalarProperty Name="picture" ColumnName="picture" />
+          <ScalarProperty Name="defective_lv" ColumnName="defective_lv" />
+          <ScalarProperty Name="problem" ColumnName="problem" />
+          <ScalarProperty Name="lot_no" ColumnName="lot_no" />
+          <ScalarProperty Name="item_code" ColumnName="item_code" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="qc_reject_id" ColumnName="qc_reject_id" />
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="entry_date" ColumnName="entry_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AuthUser">
+      <EntityTypeMapping TypeName="QISModel.AuthUser">
+        <MappingFragment StoreEntitySet="AuthUser">
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="user_type" ColumnName="user_type" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

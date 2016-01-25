@@ -1,0 +1,63 @@
+﻿@model MvcQIS.Models.tnc_user
+
+@{
+    ViewBag.Title = "Log in";
+}
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+    </section>
+}
+
+<section id="loginForm">
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @*<fieldset>
+        <legend></legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.username)
+                @Html.TextBoxFor(m => m.username)
+                @Html.ValidationMessageFor(m => m.username)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.password)
+                @Html.PasswordFor(m => m.password)
+                @Html.ValidationMessageFor(m => m.password)
+            </li>
+            <li>
+                <input type="submit" value="Log in" />
+            </li>
+        </ol>
+    </fieldset>*@
+    <table>
+        <tr>
+            <td>
+                @Html.LabelFor(m => m.username)
+                @Html.TextBoxFor(m => m.username)
+                @Html.ValidationMessageFor(m => m.username)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(m => m.password)
+                @Html.PasswordFor(m => m.password)
+                @Html.ValidationMessageFor(m => m.password)
+            </td>
+        </tr>
+        <tr><td style="height:10px;"></td></tr>
+        <tr>
+            <td>
+                <input type="submit" value="Log in" />
+            </td>
+        </tr>
+    </table>
+}
+</section>

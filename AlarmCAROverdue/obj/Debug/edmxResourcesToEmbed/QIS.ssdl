@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QISModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="QISModelStoreContainer">
+    <EntitySet Name="AuthUser" EntityType="QISModel.Store.AuthUser" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Car" EntityType="QISModel.Store.Car" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Main" EntityType="QISModel.Store.Main" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Master_Plant" EntityType="QISModel.Store.Master_Plant" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Master_Product" EntityType="QISModel.Store.Master_Product" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PAR" EntityType="QISModel.Store.PAR" store:Type="Tables" store:Schema="dbo" store:Name="PAR">
+      <DefiningQuery>SELECT 
+      [PAR].[entry_date] AS [entry_date], 
+      [PAR].[plant_id] AS [plant_id], 
+      [PAR].[qc_reject_id] AS [qc_reject_id], 
+      [PAR].[report_no] AS [report_no], 
+      [PAR].[found] AS [found], 
+      [PAR].[root_cause] AS [root_cause], 
+      [PAR].[responsible] AS [responsible], 
+      [PAR].[qty_product] AS [qty_product], 
+      [PAR].[qty_reject] AS [qty_reject], 
+      [PAR].[ipqc] AS [ipqc], 
+      [PAR].[issued_date] AS [issued_date], 
+      [PAR].[reply_due_date] AS [reply_due_date], 
+      [PAR].[reply_date] AS [reply_date], 
+      [PAR].[respond_date] AS [respond_date], 
+      [PAR].[effective_date] AS [effective_date], 
+      [PAR].[attach] AS [attach], 
+      [PAR].[issue_dt] AS [issue_dt]
+      FROM [dbo].[PAR] AS [PAR]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="QCReject" EntityType="QISModel.Store.QCReject" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TempEmail" EntityType="QISModel.Store.TempEmail" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_AuthUser_Master_Plant" Association="QISModel.Store.FK_AuthUser_Master_Plant">
+      <End Role="Master_Plant" EntitySet="Master_Plant" />
+      <End Role="AuthUser" EntitySet="AuthUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Car_QCReject" Association="QISModel.Store.FK_Car_QCReject">
+      <End Role="QCReject" EntitySet="QCReject" />
+      <End Role="Car" EntitySet="Car" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Main_Master_Plant" Association="QISModel.Store.FK_Main_Master_Plant">
+      <End Role="Master_Plant" EntitySet="Master_Plant" />
+      <End Role="Main" EntitySet="Main" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Master_Product_Master_Plant" Association="QISModel.Store.FK_Master_Product_Master_Plant">
+      <End Role="Master_Plant" EntitySet="Master_Plant" />
+      <End Role="Master_Product" EntitySet="Master_Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCReject_AuthUser" Association="QISModel.Store.FK_QCReject_AuthUser">
+      <End Role="AuthUser" EntitySet="AuthUser" />
+      <End Role="QCReject" EntitySet="QCReject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCReject_Main" Association="QISModel.Store.FK_QCReject_Main">
+      <End Role="Main" EntitySet="Main" />
+      <End Role="QCReject" EntitySet="QCReject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCReject_Master_Product" Association="QISModel.Store.FK_QCReject_Master_Product">
+      <End Role="Master_Product" EntitySet="Master_Product" />
+      <End Role="QCReject" EntitySet="QCReject" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="AuthUser">
+    <Key>
+      <PropertyRef Name="user_code" />
+    </Key>
+    <Property Name="user_code" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="utype_id" Type="tinyint" Nullable="false" />
+    <Property Name="plant_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Car">
+    <Key>
+      <PropertyRef Name="entry_date" />
+      <PropertyRef Name="plant_id" />
+      <PropertyRef Name="qc_reject_id" />
+    </Key>
+    <Property Name="entry_date" Type="date" Nullable="false" />
+    <Property Name="plant_id" Type="int" Nullable="false" />
+    <Property Name="qc_reject_id" Type="int" Nullable="false" />
+    <Property Name="report_no" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="found" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="root_cause" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="responsible" Type="int" Nullable="false" />
+    <Property Name="qty_product" Type="int" Nullable="false" />
+    <Property Name="qty_reject" Type="int" Nullable="false" />
+    <Property Name="ipqc" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="issued_date" Type="date" Nullable="false" />
+    <Property Name="reply_due_date" Type="date" Nullable="false" />
+    <Property Name="reply_date" Type="date" />
+    <Property Name="respond_date" Type="date" />
+    <Property Name="effective_date" Type="date" />
+    <Property Name="attach" Type="nvarchar(max)" />
+    <Property Name="issue_dt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Main">
+    <Key>
+      <PropertyRef Name="entry_date" />
+      <PropertyRef Name="plant_id" />
+    </Key>
+    <Property Name="entry_date" Type="date" Nullable="false" />
+    <Property Name="plant_id" Type="int" Nullable="false" />
+    <Property Name="issue_dt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Master_Plant">
+    <Key>
+      <PropertyRef Name="plant_id" />
+    </Key>
+    <Property Name="plant_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="plant_name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="plant_del_flag" Type="bit" />
+  </EntityType>
+  <EntityType Name="Master_Product">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="product_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="plant_id" Type="int" Nullable="false" />
+    <Property Name="product_del_flag" Type="bit" />
+    <Property Name="group_id" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'QIS.dbo.PAR' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="PAR">
+    <Key>
+      <PropertyRef Name="entry_date" />
+      <PropertyRef Name="plant_id" />
+      <PropertyRef Name="qc_reject_id" />
+      <PropertyRef Name="report_no" />
+      <PropertyRef Name="found" />
+      <PropertyRef Name="root_cause" />
+      <PropertyRef Name="responsible" />
+      <PropertyRef Name="qty_product" />
+      <PropertyRef Name="qty_reject" />
+      <PropertyRef Name="ipqc" />
+      <PropertyRef Name="issued_date" />
+      <PropertyRef Name="reply_due_date" />
+    </Key>
+    <Property Name="entry_date" Type="date" Nullable="false" />
+    <Property Name="plant_id" Type="int" Nullable="false" />
+    <Property Name="qc_reject_id" Type="int" Nullable="false" />
+    <Property Name="report_no" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="found" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="root_cause" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="responsible" Type="int" Nullable="false" />
+    <Property Name="qty_product" Type="int" Nullable="false" />
+    <Property Name="qty_reject" Type="int" Nullable="false" />
+    <Property Name="ipqc" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="issued_date" Type="date" Nullable="false" />
+    <Property Name="reply_due_date" Type="date" Nullable="false" />
+    <Property Name="reply_date" Type="date" />
+    <Property Name="respond_date" Type="date" />
+    <Property Name="effective_date" Type="date" />
+    <Property Name="attach" Type="nvarchar(max)" />
+    <Property Name="issue_dt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="QCReject">
+    <Key>
+      <PropertyRef Name="entry_date" />
+      <PropertyRef Name="plant_id" />
+      <PropertyRef Name="qc_reject_id" />
+    </Key>
+    <Property Name="entry_date" Type="date" Nullable="false" />
+    <Property Name="plant_id" Type="int" Nullable="false" />
+    <Property Name="qc_reject_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="product_id" Type="int" Nullable="false" />
+    <Property Name="item_code" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="lot_no" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="problem" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="defective_lv" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="picture" Type="nvarchar(max)" />
+    <Property Name="issue_car" Type="tinyint" Nullable="false" />
+    <Property Name="inspector" Type="nvarchar" MaxLength="50" />
+    <Property Name="screener" Type="nvarchar" MaxLength="50" />
+    <Property Name="shift" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="status_id" Type="int" Nullable="false" />
+    <Property Name="issue_dt" Type="datetime" Nullable="false" />
+    <Property Name="user_code" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TempEmail">
+    <Key>
+      <PropertyRef Name="qc_reject_id" />
+      <PropertyRef Name="email" />
+    </Key>
+    <Property Name="qc_reject_id" Type="int" Nullable="false" />
+    <Property Name="email" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="create_date" Type="datetime" Nullable="false" />
+    <Property Name="type" Type="tinyint" />
+  </EntityType>
+  <Association Name="FK_AuthUser_Master_Plant">
+    <End Role="Master_Plant" Type="QISModel.Store.Master_Plant" Multiplicity="1" />
+    <End Role="AuthUser" Type="QISModel.Store.AuthUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Master_Plant">
+        <PropertyRef Name="plant_id" />
+      </Principal>
+      <Dependent Role="AuthUser">
+        <PropertyRef Name="plant_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Car_QCReject">
+    <End Role="QCReject" Type="QISModel.Store.QCReject" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Car" Type="QISModel.Store.Car" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="QCReject">
+        <PropertyRef Name="entry_date" />
+        <PropertyRef Name="plant_id" />
+        <PropertyRef Name="qc_reject_id" />
+      </Principal>
+      <Dependent Role="Car">
+        <PropertyRef Name="entry_date" />
+        <PropertyRef Name="plant_id" />
+        <PropertyRef Name="qc_reject_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Main_Master_Plant">
+    <End Role="Master_Plant" Type="QISModel.Store.Master_Plant" Multiplicity="1" />
+    <End Role="Main" Type="QISModel.Store.Main" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Master_Plant">
+        <PropertyRef Name="plant_id" />
+      </Principal>
+      <Dependent Role="Main">
+        <PropertyRef Name="plant_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Master_Product_Master_Plant">
+    <End Role="Master_Plant" Type="QISModel.Store.Master_Plant" Multiplicity="1" />
+    <End Role="Master_Product" Type="QISModel.Store.Master_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Master_Plant">
+        <PropertyRef Name="plant_id" />
+      </Principal>
+      <Dependent Role="Master_Product">
+        <PropertyRef Name="plant_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCReject_AuthUser">
+    <End Role="AuthUser" Type="QISModel.Store.AuthUser" Multiplicity="1" />
+    <End Role="QCReject" Type="QISModel.Store.QCReject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AuthUser">
+        <PropertyRef Name="user_code" />
+      </Principal>
+      <Dependent Role="QCReject">
+        <PropertyRef Name="user_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCReject_Main">
+    <End Role="Main" Type="QISModel.Store.Main" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="QCReject" Type="QISModel.Store.QCReject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Main">
+        <PropertyRef Name="entry_date" />
+        <PropertyRef Name="plant_id" />
+      </Principal>
+      <Dependent Role="QCReject">
+        <PropertyRef Name="entry_date" />
+        <PropertyRef Name="plant_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCReject_Master_Product">
+    <End Role="Master_Product" Type="QISModel.Store.Master_Product" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="QCReject" Type="QISModel.Store.QCReject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Master_Product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="QCReject">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

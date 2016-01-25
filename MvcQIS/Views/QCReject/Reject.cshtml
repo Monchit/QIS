@@ -1,0 +1,544 @@
+﻿
+<script type="text/javascript" src="@Url.Content("~/Scripts/uploadify/jquery.uploadify-3.2.min.js")"></script>
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Scripts/uploadify/uploadify.css")" />
+<link href="~/Content/table.css" rel="stylesheet" />
+<style type="text/css">
+    .ui-datepicker { font-size: 12px !important; }
+    table.bordered th {
+        text-align:left !important;
+    }
+    .jquery_form_error_message {
+        font-size: .9em;
+        color: red;
+        display: block;
+        margin-top: 2px;
+    }
+    .ui-jqgrid .ui-state-highlight { background: #7AC0DA; }
+    .ui-jqgrid tr.jqgrow td { white-space: normal !important; }
+</style>
+<script type="text/javascript">
+    function clearForm(form) {
+        // iterate over all of the inputs for the form
+        // element that was passed in
+        $(':input', form).each(function () {
+            var type = this.type;
+            var tag = this.tagName.toLowerCase(); // normalize case
+            // it's ok to reset the value attr of text inputs,
+            // password inputs, and textareas
+            if (type == 'text' || type == 'password' || type == 'file' || tag == 'textarea')
+                this.value = "";
+                // checkboxes and radios need to have their checked state cleared
+                // but should *not* have their 'value' changed
+            else if (type == 'checkbox' || type == 'radio')
+                this.checked = false;
+                // select elements need to have their 'selectedIndex' property set to -1
+                // (this works for both single and multiple select elements)
+            else if (tag == 'select')
+                this.selectedIndex = 0;//-1
+        });
+        $("#divCar").slideUp();
+        $("#linkImg").children().remove();
+        //$('#atPicture').uploadify('cancel');
+        $("#linkFile").children().remove();
+        //$('#atFilescan').uploadify('cancel');
+        $('#hiddenPic').val("");
+        $('#hiddenScan').val("");
+    };
+
+    function CreateGrid() {
+        $("#divGridTable").html('<table id="grid_main"></table><div id="pager_main"></div>');
+        jQuery("#grid_main").jqGrid({
+            url: '@Url.Action("GridReject","QCReject")',
+                datatype: 'json',
+                mtype: 'POST',
+                colNames: ['Product', 'Item Code', 'Lot no.', 'Defective Level', 'Shift', 'Image', 'QC Inspector', 'Setupman/Screener', 'Issue CAR', 'Status', 'Edit'],
+                colModel: [
+                  { name: 'product_name', index: 'Master_Product.product_name', align: 'center', sortable: true },
+                  { name: 'item_code', index: 'item_code', align: 'center', sortable: true },
+                  { name: 'lot_no', index: 'lot_no', align: 'center', sortable: true },
+                  { name: 'defective_lv', index: 'defective_lv', align: 'center', sortable: true },
+                  { name: 'shift', index: 'shift', align: 'center', sortable: true },
+                  { name: 'picture', index: 'picture', align: 'center' },
+                  { name: 'inspector', index: 'inspector', align: 'center', sortable: true },
+                  { name: 'screener', index: 'screener', align: 'center', sortable: true },
+                  { name: 'issue_car', index: 'issue_car', align: 'center', sortable: true },
+                  { name: 'status', index: 'status', align: 'center', sortable: true },
+                  { name: 'edit', align: 'center', sortable: false, width: '100px' }
+                ],
+                pager: jQuery('#pager_main'),
+                //pagerpos: 'left',
+                rowNum: 10,
+                rowList: [5, 10, 20, 50],
+                autowidth: true,
+                //width: '600',
+                height: 'auto',
+                sortname: 'item_code',
+                sortorder: 'desc',
+                viewrecords: true,
+                caption: 'QC Reject',
+                ajaxSelectOptions: { cache: false },
+                scrollOffset: 0
+            });
+            jQuery("#grid_main").jqGrid('navGrid', '#pager_main', { edit: false, add: false, del: false, search: false, view: false });
+        }
+
+    $(document).ready(function () {
+
+        CreateGrid();
+
+        // Show error below inputs
+        var validationSettings = {
+            errorMessagePosition: 'element'//top, element
+        };
+
+        //Datepicker Setting
+        $(".datepicker").datepicker({
+            //beforeShowDay: nonWorkingDates,
+            dateFormat: 'dd-mm-yy',
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            showButtonPanel: true
+            //minDate: new Date()//set minDate is today
+        });
+
+        $(".fancybox").fancybox({
+            openEffect  : 'elastic',
+            closeEffect : 'elastic',
+            maxWidth    : 800,
+            maxHeight   : 600,
+            easing      : true
+        });
+            
+        // Show/Hide divCar
+        $("#chCar").change(function () {
+            if ($(this).attr("checked")) {
+                $("#divCar").slideDown();
+                d = $("#dateMain").datepicker("getDate");
+                $("#dateIssue").datepicker("setDate", new Date(d.getFullYear(), d.getMonth(), d.getDate()));
+                $("#dateReplyDue").datepicker("setDate", new Date(d.getFullYear(), d.getMonth(), d.getDate() + 9));//"+9d"
+                $("#dateReplyDue").datepicker("option", "minDate", new Date(d.getFullYear(), d.getMonth(), d.getDate()));
+                $("#dateReply").datepicker("option", "minDate", new Date(d.getFullYear(), d.getMonth(), d.getDate()));
+                $("#dateRespond").datepicker("option", "minDate", new Date(d.getFullYear(), d.getMonth(), d.getDate()));
+                $("#dateEfft").datepicker("option", "minDate", new Date(d.getFullYear(), d.getMonth(), d.getDate()));
+                return;
+            }
+            $("#divCar").slideUp();
+        });
+
+        //Initialize Uploadify on the file input.
+        var d = new Date();
+        var prefix = (Math.floor((Math.random() * 1000) + 1)) + '_';
+        $('#atPicture').uploadify({
+            'swf': "@Url.Content("~/Scripts/uploadify/uploadify.swf")",
+            'buttonText': 'Browse Picture',
+            'fileDataName': 'Filedata',
+            'auto': false,//Upload Auto
+            'multi': false,
+            'queueSizeLimit' : 1,
+            'fileSizeLimit': '10240KB',
+            'fileTypeDesc': 'Image Files',
+            'fileTypeExts': '*.gif; *.jpg; *.jpeg; *.bmp; *.tiff; *.tif; *.png',
+            'height': 20,
+            'width': 150,
+            'method': 'post',
+            'formData': { 'prefix': prefix },
+            'uploader': "@Url.Action("UploadImages", "QCReject")",
+            'onSelect': function (file) {
+                $('#hiddenPic').val("Uploads/Images/" + d.getFullYear() + "/" + prefix + file.name);
+            },
+            'onUploadSuccess': function (file, data, response) {}
+        });
+        $('#atPicture').uploadify('settings', 'ResetUploadsSuccessful', '0');
+
+        $('#atFilescan').uploadify({
+            'swf': "@Url.Content("~/Scripts/uploadify/uploadify.swf")",
+            'buttonText': 'Browse File Scan',
+            'fileDataName': 'Filedata',
+            'auto': false,//Upload Auto
+            'multi': false,
+            'queueSizeLimit': 1,
+            'fileSizeLimit': '20480KB',
+            'fileTypeDesc': 'Document Files',
+            'fileTypeExts': '*.pdf; *.tiff; *.tif; *.doc; *.docx; *.xls; *.xlsx',
+            'height': 20,
+            'width': 150,
+            'method': 'post',
+            'formData': { 'prefix': prefix },
+            'uploader': "@Url.Action("UploadFiles", "QCReject")",
+            'onSelect': function (file) {
+                $('#hiddenScan').val("Uploads/FileScan/" + d.getFullYear() + "/" + prefix + file.name);
+            },
+            'onUploadSuccess': function (file, data, response) {}
+        });
+
+        $('#btAdd').click(function () {
+
+            if ($('#formMain').validate()) {
+                var obj = new Object();
+                obj.mdate = $("#dateMain").val();
+                obj.product = $("#slProduct").val();
+                obj.itemcode = $("#txtItemCode").val();
+                obj.lotno = $("#txtLotNo").val();
+                obj.problem = $("#txtProblem").val();
+                obj.deflv = $("#slDefLv").val();
+                obj.picture = $("#hiddenPic").val();
+                obj.inspector = $("#txtInspector").val();
+                obj.screener = $("#txtScreener").val();
+                obj.shift = $("#slShift").val();
+                obj.car = $("#chCar").is(":checked") ? 1 : 0;
+                if (obj.picture != "") $('#atPicture').uploadify('upload', '*');
+
+                if (obj.car == 1) {
+                    obj.reportno = $("#txtReportNo").val();
+                    obj.foundat = $("#txtFoundAt").val();
+                    obj.root = $("#sl4M").val();
+                    obj.product2 = $("#slProduct2").val();
+                    obj.qtyprd = $("#txtQtyPrd").val();
+                    obj.qtyrej = $("#txtQtyRej").val();
+                    obj.ipqc = $("#slIPQC").val();
+                    obj.dateissue = $("#dateIssue").val();
+                    obj.datedue = $("#dateReplyDue").val();
+                    obj.datereply = $("#dateReply").val();
+                    obj.daterespond = $("#dateRespond").val();
+                    obj.dateefft = $("#dateEfft").val();
+                    obj.file = $("#hiddenScan").val();
+                    if (obj.file != "") $('#atFilescan').uploadify('upload', '*');
+                }
+
+                if ($(this).val() == "Update") {
+                    obj.reject_id = $("#hiddenID").val();
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("UpdateQCReject","QCReject")",
+                        data: obj,
+                        dataType: "json",
+                        success: function (data) {
+                            clearForm('#formMain');
+                            $("#divCar").slideUp();
+                            //$("#btAdd").val("Add");
+                            //$("#btClear").val("Clear");
+                            CreateGrid(data);
+                            alert("Update Success");
+                        },
+                        error: function (request, status, err) {
+                            alert("Request:" + request + ", Status:" + status + ", Error:" + err);
+                        }
+                    });
+                }
+            }
+        });
+
+        $('#btClear').click(function () {
+            clearForm('#formMain');
+            $("#divCar").slideUp();
+            $("#divButton").slideUp();
+            //if ($(this).val() == "Cancel") {
+            //    $(this).val("Clear");
+            //    $("#btAdd").val("Add");
+            //    $("#divCar").slideUp();
+            //}
+        });
+
+        $(document).on("click", ".btEdit", function () {
+            var $btn = $(this);
+            $.get("@Url.Action("GetQCReject")", "id=" + $btn.attr("data-rejId"), function (data) {
+                $("#dateMain").val(data.entrydate);
+                $("#hiddenID").val(data.qc_reject_id);
+                $("#slProduct").val(data.product_id);
+                $("#txtItemCode").val(data.item_code);
+                $("#txtLotNo").val(data.lot_no);
+                $("#txtProblem").val(data.problem);
+                $("#slDefLv").val(data.def_lv);
+                $("#slShift").val(data.shift);
+                $("#txtInspector").val(data.inspector);
+                $("#txtScreener").val(data.screener);
+                $("#linkImg").children().remove();
+                if (data.picture != null) {
+                    $("#linkImg").append("<a href='../" + data.picture + "' class='fancybox'>Show</a>");
+                }
+                if (data.issue_car == "1") {
+                    $("#chCar").attr("checked", true);
+                    $("#divCar").slideDown();
+                    $.get("@Url.Action("GetCar")", "id=" + $btn.attr("data-rejId"), function (data1) {
+                        $("#txtReportNo").val(data1.report_no);
+                        $("#txtFoundAt").val(data1.found);
+                        $("#sl4M").val(data1.root_cause);
+                        $("#slProduct2").val(data1.responsible);
+                        $("#txtQtyPrd").val(data1.qty_product);
+                        $("#txtQtyRej").val(data1.qty_reject);
+                        $("#slIPQC").val(data1.ipqc);
+                        $("#dateIssue").val(data1.issued_date);
+                        $("#dateReplyDue").val(data1.reply_due_date);
+                        $("#dateReply").val(data1.reply_date);
+                        $("#dateRespond").val(data1.respond_date);
+                        $("#dateEfft").val(data1.effective_date);
+                        $("#linkFile").children().remove();
+                        if (data1.attach != null) {
+                            $("#linkFile").append("<a href='../" + data1.attach + "' target='_blank'>Show</a>");
+                        }
+                    });
+                }
+                else {
+                    $("#chCar").attr("checked", false);
+                    $("#divCar").slideUp();
+                }
+            });
+            $("#divButton").slideDown();
+            //$("#btAdd").val("Update");
+            //$("#btClear").val("Cancel");
+            return false;
+        });
+
+        $('#btComplete').click(function () {
+            var obj = new Object();
+            obj.mdate = $("#dateMain").val();
+            if (confirm("Are you sure to Complete ?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("CompleteQCReject","QCReject")",
+                    data: obj,
+                    dataType: "json",
+                    success: function (data) {
+                        CreateGrid(data);
+                        alert("Complete!!!");
+                    },
+                    error: function (request, status, err) {
+                        alert("Request:" + request + ", Status:" + status + ", Error:" + err);
+                    }
+                });
+            }
+        });
+
+        $(document).on("click", ".btCar", function () {
+            var $btn = $(this);
+            $.get("@Url.Action("GetShowCar","Home")", "id=" + $btn.attr("data-rejId"), function (data) {
+                $("#lbReportNo").text(data.report_no);
+                $("#lbFound").text(data.found);
+                $("#lbRoot").text(data.root_cause);
+                $("#lbRespGrp").text(data.product_name);
+                $("#lbQtyProd").text(data.qty_product);
+                $("#lbQtyRej").text(data.qty_reject);
+                $("#lbIPQC").text(data.ipqc);
+                $("#lbIssueDate").text(data.issued_date);
+                $("#lbReplyDueDate").text(data.reply_due_date);
+                $("#lbReplyDate").text(data.reply_date);
+                $("#lbRespondDate").text(data.respond_date);
+                $("#lbEffDate").text(data.effective_date);
+                $("#linkFile1").children().remove();
+                if (data.attach != null) {
+                    $("#linkFile1").append("<a href='../" + data.attach + "' target='_blank'>Show</a>");
+                }
+            });
+            $('#divShowCar').slideUp().slideDown();
+            $('#hideshow').css("display", "inline");
+            $("html, body").animate({ scrollTop: $(document).height() }, "slow");//scroll to bottom of page
+            return false;
+        });
+
+        $('#hideshow').click(function () {
+            $('#divShowCar').slideToggle();
+            if ($(this).text() == "Hide")
+                $(this).text("Show");
+            else
+                $(this).text("Hide");
+            return false;
+        });
+    });
+</script>
+<h2>@ViewBag.Title</h2>
+<form id="formMain" name="formMain" action="#">
+    <table id="tableQCRej" class="bordered">
+        <tr>
+            <th>Product</th>
+            <td>
+                <select id="slProduct" style="width:180px;">
+                    @foreach (var item in ViewBag.Product)
+                        {
+                        <option value="@item.product_id">
+                            @item.product_name
+                        </option>
+                        }
+                </select>
+            </td>
+            <th>Defective level</th>
+            <td>
+                <select id="slDefLv" style="width:120px;">
+                    <option>Critical</option>
+                    <option>Major</option>
+                    <option>Minor</option>
+                </select>
+            </td>
+            <th>QC Inspector</th>
+            <td>
+                <input type="text" id="txtInspector" style="width:150px;" data-validation="validate_min_length length3" />
+            </td>
+        </tr>
+        <tr>
+            <th>Item code</th>
+            <td>
+                <input type="text" id="txtItemCode" style="width:180px;" data-validation="validate_min_length length9" />
+            </td>
+            <th>Shift</th>
+            <td>
+                <select id="slShift" style="width:120px;">
+                    <option>Day</option>
+                    <option>Night</option>
+                </select>
+            </td>
+            <th>Setupman/Screener</th>
+            <td>
+                <input type="text" id="txtScreener" style="width:150px;" data-validation="validate_min_length length3" />
+            </td>
+        </tr>
+        <tr>
+            <th>Lot no.</th>
+            <td>
+                <input type="text" id="txtLotNo" style="width:180px;" data-validation="validate_min_length length13" />
+            </td>
+            <th>Entry Date</th>
+            <td><input type="text" id="dateMain" style="width:120px;" class="datepicker" disabled /></td>
+            <th>Issue CAR</th>
+            <td><input id="chCar" name="chCar" type="checkbox" />
+                <input type="hidden" id="hiddenID" name="hiddenID" />
+            </td>
+        </tr>
+        <tr>
+            <th>Problem detail</th>
+            <td colspan="5">
+                <input type="text" id="txtProblem" style="width:98%;" data-validation="validate_min_length length3" />
+            </td>
+        </tr>
+        <tr>
+            <th>Picture</th>
+            <td colspan="5">
+                <input type="file" name="atPicture" id="atPicture" />
+                <input type="hidden" id="hiddenPic" name="hiddenPic" />
+                <span id="linkImg"></span>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <div id="divCar" style="display:none;">
+        <table class="bordered">
+            <tr>
+                <th>Report No.</th>
+                <td><input type="text" id="txtReportNo" style="width:180px;" 
+                    data-validation-if-checked="chCar" data-validation="validate_min_length length3"/></td>
+                <th>Q'ty of Product</th>
+                <td><input type="text" id="txtQtyPrd" style="width:120px;" 
+                    data-validation-if-checked="chCar" data-validation="validate_int" /></td>
+                <th>Reply Due Date</th>
+                <td><input type="text" id="dateReplyDue" class="datepicker" style="width:120px;" 
+                    data-validation-if-checked="chCar" data-validation="required"/></td>
+            </tr>
+            <tr>
+                <th>Found at Process</th>
+                <td><input type="text" id="txtFoundAt" style="width:180px;" 
+                    data-validation-if-checked="chCar" data-validation="validate_min_length length3" /></td>
+                <th>Q'ty of Reject</th>
+                <td><input type="text" id="txtQtyRej" style="width:120px;" 
+                    data-validation-if-checked="chCar" data-validation="validate_int" /></td>
+                <th>Reply Date</th>
+                <td><input type="text" id="dateReply" class="datepicker" style="width:120px;"/></td>
+            </tr>
+            <tr>
+                <th>Root cause (4M)</th>
+                <td>
+                    <select id="sl4M" style="width:170px;" >
+                        <option value="Man">Man</option>
+                        <option value="Machine">Machine</option>
+                        <option value="Material">Material</option>
+                        <option value="Method">Method</option>
+                    </select>
+                </td>
+                <th>IPQC</th>
+                <td>
+                    <select id="slIPQC" style="width:120px;" >
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </td>
+                <th>Respond Date</th>
+                <td><input type="text" id="dateRespond" class="datepicker" style="width:120px;"/></td>
+            </tr>
+            <tr>
+                <th>Responsible Group</th>
+                <td>
+                    <select id="slProduct2" style="width:170px;" >
+                        @foreach (var item in ViewBag.Product)
+                        {
+                            <option value="@item.product_id">
+                                @item.product_name
+                            </option>
+                        }
+                    </select>
+                </td>
+                <th>Issue Date</th>
+                <td><input type="text" id="dateIssue" style="width:120px;" class="datepicker" disabled /></td>
+                <th>Effective Date</th>
+                <td><input type="text" id="dateEfft" class="datepicker" style="width:120px;" /></td>
+            </tr>
+            <tr>
+                <th>File scan</th>
+                <td colspan="5">
+                    <input id="atFilescan" name="atFilescan" type="file" data-validation-if-checked="chCar" data-validation="required" />
+                    <input type="hidden" id="hiddenScan" name="hiddenScan" />
+                    <span id="linkFile"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="divButton" style="display:none;">
+        <input type="button" value="Update" id="btAdd"/>
+        <input type="button" value="Cancel" id="btClear"/>
+    </div>
+    <br />
+</form>
+<div id="divGridTable"></div><br />
+
+<a href="#" id="hideshow" style="display:none;">Hide</a>
+<div id="divShowCar" style="display:none;">
+    <table class="bordered">
+        <tr>
+            <th>Report No.</th>
+            <td><span id="lbReportNo"></span></td>
+            <th>Q'ty of Product</th>
+            <td><span id="lbQtyProd"></span></td>
+            <th>Reply Due Date</th>
+            <td><span id="lbReplyDueDate"></span></td>
+        </tr>
+        <tr>
+            <th>Found at Process</th>
+            <td><span id="lbFound"></span></td>
+            <th>Q'ty of Reject</th>
+            <td><span id="lbQtyRej"></span></td>
+            <th>Reply Date</th>
+            <td><span id="lbReplyDate"></span></td>
+        </tr>
+        <tr>
+            <th>Root cause (4M)</th>
+            <td><span id="lbRoot"></span></td>
+            <th>IPQC</th>
+            <td><span id="lbIPQC"></span></td>
+            <th>Respond Date</th>
+            <td><span id="lbRespondDate"></span></td>
+        </tr>
+        <tr>
+            <th>Responsible Group</th>
+            <td><span id="lbRespGrp"></span></td>
+            <th>Issue Date</th>
+            <td><span id="lbIssueDate"></span></td>
+            <th>Effective Date</th>
+            <td><span id="lbEffDate"></span></td>
+        </tr>
+        <tr>
+            <th>File scan</th>
+            <td colspan="5">
+                <span id="linkFile1"></span>
+            </td>
+        </tr>
+    </table>
+</div>
+<p>
+    <input type="button" value="Complete" id="btComplete" style="display:none;"/>
+</p>

@@ -1,0 +1,254 @@
+﻿@model IEnumerable<MvcQIS.Models.Master_Product>
+
+@{
+    ViewBag.Title = "Input Form";
+}
+    <style type="text/css">
+        .ui-datepicker { font-size: 12px !important; }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                dateFormat:'dd-mm-yy',
+                minDate: new Date()
+            });
+            $("#dateMain").datepicker('setDate', 'today');
+
+            $("#chCar").change(function () {
+                if ($(this).attr("checked")) {
+                    $("#divCar").slideDown();
+                    return;
+                }
+                $("#divCar").slideUp();
+            });
+
+            $( "#dialog-form" ).dialog({
+                autoOpen: false,
+                height: 600,
+                width: 500,
+                modal: true,
+                buttons: {
+                    "Create QC Reject": function () {
+                        $(this).dialog("close");
+                    },
+                    Cancel: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+
+            $("#new_qcrej").button().click(function () {
+                $("#dialog-form").dialog("open");
+            });
+        });
+
+        $(function () {
+            $("#maingrid").jqGrid({
+                url: '/Home/GetQCReject/',
+                datatype: 'json',
+                mtype: 'POST',
+                serializeGridData: function (postData) {
+                    return JSON.stringify(postData);
+                }, ajaxGridOptions: { contentType: "application/json" },
+                loadonce: true,
+                colNames: ['ID', 'Name', 'Gender'],
+                colModel: [
+                  { name: 'id', index: 'id', width: 55 },
+                  { name: 'Name', index: 'Name', width: 90 },
+                  { name: 'Gender', index: 'Gender', width: 80}
+                ],
+                pager: '#pager',
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                //sortname: 'id',
+                //sortorder: 'asc',
+                viewrecords: true,
+                gridview: true,
+                jsonReader: {
+                    page: function (obj) { return 1; },
+                    total: function (obj) { return 1; },
+                    records: function (obj) { return obj.d.length; },
+                    root: function (obj) { return obj.d; },
+                    repeatitems: false,
+                    id: "0"
+                },
+                caption: 'QC Reject Main'
+            });
+        }).navGrid("#pager", { edit: true, add: true, del: false });
+    </script>
+
+<h2>Input Form</h2>
+
+     <p>Date : <input type="text" id="dateMain" class="datepicker" style="width:100px;"/></p>
+     <table class="tablesorter">
+         <thead>
+             <tr>
+                 <th></th>
+                 @foreach (var item in Model)
+                 {
+                    <th>
+                        @item.product_name
+                    </th>
+                 }
+             </tr>
+        </thead>
+         <tbody>
+             <tr>
+                 <td><b>Total Inspection Lot Q'ty :</b></td>
+                 @foreach (var item in Model)
+                {
+                    <td style="text-align:center;">
+                        <input type="text" id="prd_@item.product_id" style="width:50px;" />
+                    </td>
+                }
+             </tr>
+        </tbody>
+     </table>
+
+@*<table class="tablesorter">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Item code</th>
+            <th>Lot no.</th>
+            <th>Problem detail</th>
+            <th>Defective level</th>
+            <th>Picture</th>
+            <th>QC Inspector</th>
+            <th>Setupman/Screener</th>
+            <th>Shift</th>
+            <th>Issue CAR</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <select id="slProduct">
+                    @foreach (var item in Model)
+                     {
+                        <option>
+                            @item.product_name
+                        </option>
+                     }
+                </select>
+            </td>
+            <td>
+                <input type="text" id="tbItemCode" style="width:120px;" />
+            </td>
+            <td>
+                <input type="text" id="tbLotNo" style="width:120px;" />
+            </td>
+            <td>
+                <input type="text" id="tbProblem" style="width:120px;" />
+            </td>
+            <td>
+                <select id="slDefLv">
+                    <option>Critical</option>
+                    <option>Major</option>
+                    <option>Minor</option>
+                </select>
+            </td>
+            <td>
+                <input id="atPicture" type="file" />
+            </td>
+            <td>
+                <input type="text" id="tbInspector" style="width:120px;" />
+            </td>
+            <td>
+                <input type="text" id="tbScreener" style="width:120px;" />
+            </td>
+            <td>
+                <select id="slShift">
+                    <option>Day</option>
+                    <option>Night</option>
+                </select>
+            </td>
+            <td>
+                <input id="chCar" type="checkbox" />
+            </td>
+        </tr>
+    </tbody>
+</table>
+    <div id="divCar" style="display:none;">
+        <table class="tablesorter">
+            <thead>
+                <tr>
+                    <th>Report No.</th>
+                    <th>Found at Process</th>
+                    <th>Root cause (4M)</th>
+                    <th>Responsible Group</th>
+                    <th>Q'ty of Product</th>
+                    <th>Q'ty of Reject</th>
+                    <th>IPQC</th>
+                    <th>Issue Date</th>
+                    <th>Reply Date</th>
+                    <th>Respond Date</th>
+                    <th>Effectiveness</th>
+                    <th>File scan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" id="tbReportNo" style="width:120px;" /></td>
+                    <td><input type="text" id="tbFoundAt" style="width:120px;" /></td>
+                    <td><select id="sl4M">
+                        <option>Man</option>
+                        <option>Machine</option>
+                        <option>Material</option>
+                        <option>Method</option>
+                    </select></td>
+                    <td><select id="slProduct2">
+                        @foreach (var item in Model)
+                        {
+                            <option>
+                                @item.product_name
+                            </option>
+                        }
+                    </select></td>
+                    <td><input type="text" id="tbQtyPrd" style="width:55px;" /></td>
+                    <td><input type="text" id="tbQtyRej" style="width:55px;" /></td>
+                    <td><select id="slIPQC">
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select></td>
+                    <td><input type="text" id="dateIssue" class="datepicker" style="width:90px;"/></td>
+                    <td><input type="text" id="dateReply" class="datepicker" style="width:90px;"/></td>
+                    <td><input type="text" id="dateRespond" class="datepicker" style="width:90px;"/></td>
+                    <td><input type="text" id="tbEfft" style="width:100px;" /></td>
+                    <td><input id="atFilescan" type="file" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>*@
+
+    @* Dialog Form *@
+    <div id="dialog-form" title="Create new QC Reject">
+      <form>
+        <label for="product">Product</label>
+        <input type="text" name="product" id="product" class="text ui-widget-content ui-corner-all" />
+        <label for="itemcode">Item code</label>
+        <input type="text" name="itemcode" id="itemcode" value="" class="text ui-widget-content ui-corner-all" />
+        <label for="lotno">Lot no.</label>
+        <input type="text" name="lotno" id="lotno" value="" class="text ui-widget-content ui-corner-all" />
+        <label for="problem">Problem Detail</label>
+        <input type="text" name="problem" id="problem" value="" class="text ui-widget-content ui-corner-all" />
+        <label for="deflv">Defective level</label>
+        <input type="text" name="deflv" id="deflv" value="" class="text ui-widget-content ui-corner-all" />
+        <label for="inspector">QC Inspector</label>
+        <input type="text" name="inspector" id="inspector" value="" class="text ui-widget-content ui-corner-all" />
+        <label for="screener">Setupman/Screener</label>
+        <input type="text" name="screener" id="screener" value="" class="text ui-widget-content ui-corner-all" />
+        <label for="picture">Picture</label>
+        <input type="file" name="picture" id="picture" value="" class="text ui-widget-content ui-corner-all" />
+      </form>
+    </div>
+
+    <button id="new_qcrej">Create new QC Reject</button>
+
+    <table id="maingrid">
+        <tr>
+            <td />
+        </tr>
+    </table>
+    <div id="pager"></div>

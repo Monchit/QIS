@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MailCenterModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MailCenterModelStoreContainer">
+    <EntitySet Name="TT_MAIL_WIP" EntityType="MailCenterModel.Store.TT_MAIL_WIP" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="TT_MAIL_WIP">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProgramID" Type="int" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="Sender" Type="nvarchar" MaxLength="50" />
+    <Property Name="Receiver" Type="nvarchar(max)" />
+    <Property Name="CC" Type="nvarchar(max)" />
+    <Property Name="BCC" Type="nvarchar" MaxLength="255" />
+    <Property Name="Title" Type="nvarchar" MaxLength="200" />
+    <Property Name="HTMLBody" Type="ntext" />
+    <Property Name="Flag" Type="smallint" Nullable="false" />
+  </EntityType>
+</Schema>

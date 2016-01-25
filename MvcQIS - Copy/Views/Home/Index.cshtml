@@ -1,0 +1,103 @@
+﻿@model IEnumerable<MvcQIS.Models.QCReject>
+@{
+    ViewBag.Title = "Home";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title - </h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+    </section>
+    
+}
+
+<style type="text/css">
+    /* fix the size of the pager */
+    input.ui-pg-input { width: auto; }
+</style>
+@*<script type="text/javascript">
+ 
+    jQuery(document).ready(function () {
+        var grid = jQuery('#grid');
+        grid.jqGrid({
+            caption: 'TNC User',
+            url: '/Home/GetTNCUser/',
+            datatype: 'json',
+            jsonReader: {
+                repeatitems: false
+            },
+            mtype: 'GET',
+            colName: ['emp_code', 'emp_fname', 'emp_lname', 'emp_sex', 'email'],
+            colModel: [
+                { name: 'emp_code', index: 'emp_code', label: 'emp_code', width: 40, align: 'left' },
+                { name: 'emp_fname', index: 'emp_fname', label: 'First Name', width: 40, align: 'left' },
+                { name: 'emp_lname', index: 'emp_lname', label: 'Last Name', width: 40, align: 'left' },
+                { name: 'emp_sex', index: 'emp_sex', label: 'Sex', width: 40, align: 'left' },
+                { name: 'email', index: 'email', label: 'E-mail', width: 40, align: 'left' }
+            ],
+            autowidth: true,
+            height: 'auto',
+            //pager
+            pager: '#pager',
+            pagerpos: 'left',
+            rowNum: 10,
+            rowList: [5, 10, 20, 50],
+            viewrecords: true,
+            rownumbers: true,
+            rownumWidth: '50px',
+            //sort default
+            sortname: 'emp_code',
+            sortorder: "asc"
+            //loadonce: true
+        });
+    });
+</script>*@
+ <script type="text/javascript">
+ 
+    jQuery(document).ready(function () {
+        var grid = jQuery('#grid');
+        grid.jqGrid({
+            caption: 'Critical Reject',
+            url: '/Home/GetCriticalReject/',
+            datatype: 'json',
+            jsonReader: {
+                repeatitems: false
+            },
+            mtype: 'GET',
+            colName: ['responsible', 'report_no', 'product_name', 'item_code', 'problem', 'defective_lv', 'picture', 'issued_date'],
+            colModel: [
+                { name: 'responsible', index: 'responsible', label: 'Responsible by', width: 40, align: 'left' },
+                { name: 'report_no', index: 'report_no', label: 'Report no.', width: 40, align: 'left' },
+                { name: 'product_name', index: 'product_name', label: 'Product', width: 40, align: 'left' },
+                { name: 'item_code', index: 'item_code', label: 'Item code', width: 40, align: 'left' },
+                { name: 'problem', index: 'problem', label: 'Problem Detail', width: 40, align: 'left' },
+                { name: 'defective_lv', index: 'defective_lv', label: 'Defective level', width: 40, align: 'left' },
+                { name: 'picture', index: 'picture', label: 'Picture', width: 40, align: 'left' },
+                { name: 'issued_date', index: 'issued_date', label: 'Date', width: 40, align: 'left' }
+            ],
+            autowidth: true,
+            height: 'auto',
+            //pager
+            pager: '#pager',
+            pagerpos: 'left',
+            rowNum: 10,
+            rowList: [5, 10, 20, 50],
+            viewrecords: true,
+            rownumbers: true,
+            rownumWidth: '50px',
+            //sort default
+            sortname: 'item_code',
+            sortorder: "asc"
+            //loadonce: true
+        });
+    });
+</script>
+<h2>JQGrid</h2>
+ @Html.DropDownList("SelectPlant", (SelectList)ViewBag.SelectPlant)
+<table id="grid">
+</table>
+<div id="pager">
+</div>

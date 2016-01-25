@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TNC_ADMINModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="TNC_ADMINModelStoreContainer">
+          <EntitySet Name="tnc_costcentercode" EntityType="TNC_ADMINModel.Store.tnc_costcentercode" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tnc_dept_master" EntityType="TNC_ADMINModel.Store.tnc_dept_master" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tnc_group_master" EntityType="TNC_ADMINModel.Store.tnc_group_master" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tnc_plant_master" EntityType="TNC_ADMINModel.Store.tnc_plant_master" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tnc_position_master" EntityType="TNC_ADMINModel.Store.tnc_position_master" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tnc_subgroup_master" EntityType="TNC_ADMINModel.Store.tnc_subgroup_master" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tnc_user" EntityType="TNC_ADMINModel.Store.tnc_user" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="tnc_costcentercode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="plant_id" Type="int" />
+          <Property Name="dept_id" Type="int" />
+          <Property Name="group_id" Type="int" />
+          <Property Name="subgroup_id" Type="int" />
+          <Property Name="cost_code" Type="nvarchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="tnc_dept_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="dept_name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="tnc_group_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="group_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="s_name" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tnc_plant_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="plant_name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="tnc_position_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="position_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="level" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="tnc_subgroup_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="sub_group" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="tnc_user">
+          <Key>
+            <PropertyRef Name="emp_code" />
+          </Key>
+          <Property Name="emp_code" Type="nvarchar" Nullable="false" MaxLength="25" />
+          <Property Name="emp_title" Type="nvarchar" MaxLength="255" />
+          <Property Name="emp_fname" Type="nvarchar" MaxLength="255" />
+          <Property Name="emp_lname" Type="nvarchar" MaxLength="255" />
+          <Property Name="emp_sex" Type="nvarchar" MaxLength="255" />
+          <Property Name="emp_position" Type="tinyint" />
+          <Property Name="emp_group" Type="tinyint" />
+          <Property Name="emp_depart" Type="tinyint" />
+          <Property Name="emp_plant" Type="tinyint" />
+          <Property Name="emp_joindate" Type="date" />
+          <Property Name="emp_status" Type="nchar" MaxLength="10" />
+          <Property Name="username" Type="nvarchar" MaxLength="255" />
+          <Property Name="password" Type="nvarchar" MaxLength="255" />
+          <Property Name="email" Type="nvarchar" MaxLength="255" />
+          <Property Name="img_path" Type="nvarchar" MaxLength="255" />
+          <Property Name="admin_role" Type="tinyint" />
+          <Property Name="createby" Type="nvarchar" MaxLength="255" />
+          <Property Name="createdate" Type="date" />
+          <Property Name="lastupdate" Type="date" />
+          <Property Name="ext" Type="int" />
+          <Property Name="emp_subgroup" Type="tinyint" />
+          <Property Name="windows_user" Type="nvarchar" MaxLength="255" />
+          <Property Name="ip" Type="nvarchar" MaxLength="255" />
+          <Property Name="transfer_permission" Type="nvarchar" MaxLength="60" />
+          <Property Name="ad_user" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TNC_ADMINModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TNC_ADMINEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="tnc_costcentercode" EntityType="TNC_ADMINModel.tnc_costcentercode" />
+          <EntitySet Name="tnc_dept_master" EntityType="TNC_ADMINModel.tnc_dept_master" />
+          <EntitySet Name="tnc_group_master" EntityType="TNC_ADMINModel.tnc_group_master" />
+          <EntitySet Name="tnc_plant_master" EntityType="TNC_ADMINModel.tnc_plant_master" />
+          <EntitySet Name="tnc_position_master" EntityType="TNC_ADMINModel.tnc_position_master" />
+          <EntitySet Name="tnc_subgroup_master" EntityType="TNC_ADMINModel.tnc_subgroup_master" />
+          <EntitySet Name="tnc_user" EntityType="TNC_ADMINModel.tnc_user" />
+        </EntityContainer>
+        <EntityType Name="tnc_costcentercode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="plant_id" Type="Int32" />
+          <Property Name="dept_id" Type="Int32" />
+          <Property Name="group_id" Type="Int32" />
+          <Property Name="subgroup_id" Type="Int32" />
+          <Property Name="cost_code" Type="String" MaxLength="80" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tnc_dept_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="dept_name" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tnc_group_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="group_name" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="s_name" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tnc_plant_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="plant_name" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tnc_position_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="position_name" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="level" Type="Byte" />
+        </EntityType>
+        <EntityType Name="tnc_subgroup_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="sub_group" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tnc_user">
+          <Key>
+            <PropertyRef Name="emp_code" />
+          </Key>
+          <Property Name="emp_code" Type="String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="false" />
+          <Property Name="emp_title" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="emp_fname" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="emp_lname" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="emp_sex" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="emp_position" Type="Byte" />
+          <Property Name="emp_group" Type="Byte" />
+          <Property Name="emp_depart" Type="Byte" />
+          <Property Name="emp_plant" Type="Byte" />
+          <Property Name="emp_joindate" Type="DateTime" Precision="0" />
+          <Property Name="emp_status" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="username" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="password" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="email" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="img_path" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="admin_role" Type="Byte" />
+          <Property Name="createby" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="createdate" Type="DateTime" Precision="0" />
+          <Property Name="lastupdate" Type="DateTime" Precision="0" />
+          <Property Name="ext" Type="Int32" />
+          <Property Name="emp_subgroup" Type="Byte" />
+          <Property Name="windows_user" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ip" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="transfer_permission" Type="String" MaxLength="60" Unicode="true" FixedLength="false" />
+          <Property Name="ad_user" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TNC_ADMINModelStoreContainer" CdmEntityContainer="TNC_ADMINEntities">
+          <EntitySetMapping Name="tnc_costcentercode">
+            <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_costcentercode">
+              <MappingFragment StoreEntitySet="tnc_costcentercode">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+                <ScalarProperty Name="dept_id" ColumnName="dept_id" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="subgroup_id" ColumnName="subgroup_id" />
+                <ScalarProperty Name="cost_code" ColumnName="cost_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tnc_dept_master">
+            <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_dept_master">
+              <MappingFragment StoreEntitySet="tnc_dept_master">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="dept_name" ColumnName="dept_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tnc_group_master">
+            <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_group_master">
+              <MappingFragment StoreEntitySet="tnc_group_master">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="group_name" ColumnName="group_name" />
+                <ScalarProperty Name="s_name" ColumnName="s_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tnc_plant_master">
+            <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_plant_master">
+              <MappingFragment StoreEntitySet="tnc_plant_master">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="plant_name" ColumnName="plant_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tnc_position_master">
+            <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_position_master">
+              <MappingFragment StoreEntitySet="tnc_position_master">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="position_name" ColumnName="position_name" />
+                <ScalarProperty Name="level" ColumnName="level" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tnc_subgroup_master">
+            <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_subgroup_master">
+              <MappingFragment StoreEntitySet="tnc_subgroup_master">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sub_group" ColumnName="sub_group" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tnc_user">
+            <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_user">
+              <MappingFragment StoreEntitySet="tnc_user">
+                <ScalarProperty Name="emp_code" ColumnName="emp_code" />
+                <ScalarProperty Name="emp_title" ColumnName="emp_title" />
+                <ScalarProperty Name="emp_fname" ColumnName="emp_fname" />
+                <ScalarProperty Name="emp_lname" ColumnName="emp_lname" />
+                <ScalarProperty Name="emp_sex" ColumnName="emp_sex" />
+                <ScalarProperty Name="emp_position" ColumnName="emp_position" />
+                <ScalarProperty Name="emp_group" ColumnName="emp_group" />
+                <ScalarProperty Name="emp_depart" ColumnName="emp_depart" />
+                <ScalarProperty Name="emp_plant" ColumnName="emp_plant" />
+                <ScalarProperty Name="emp_joindate" ColumnName="emp_joindate" />
+                <ScalarProperty Name="emp_status" ColumnName="emp_status" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="img_path" ColumnName="img_path" />
+                <ScalarProperty Name="admin_role" ColumnName="admin_role" />
+                <ScalarProperty Name="createby" ColumnName="createby" />
+                <ScalarProperty Name="createdate" ColumnName="createdate" />
+                <ScalarProperty Name="lastupdate" ColumnName="lastupdate" />
+                <ScalarProperty Name="ext" ColumnName="ext" />
+                <ScalarProperty Name="emp_subgroup" ColumnName="emp_subgroup" />
+                <ScalarProperty Name="windows_user" ColumnName="windows_user" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="transfer_permission" ColumnName="transfer_permission" />
+                <ScalarProperty Name="ad_user" ColumnName="ad_user" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

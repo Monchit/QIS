@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="57059c3780274150813c11137b0db29c" Name="Diagram1" ZoomLevel="80">
+        <EntityTypeShape EntityType="QISModel.Approved_Log" Width="1.5" PointX="1.8357404851521086" PointY="9.417136613939487" />
+        <EntityTypeShape EntityType="QISModel.AuthUser" Width="1.5" PointX="5.96838571036625" PointY="2.3707360636306629" />
+        <EntityTypeShape EntityType="QISModel.Car" Width="1.5" PointX="11.355263197494327" PointY="22.123505274822705" />
+        <EntityTypeShape EntityType="QISModel.InspectionLot" Width="1.5" PointX="9.3679988800399" PointY="14.318946249000238" />
+        <EntityTypeShape EntityType="QISModel.Main" Width="1.5" PointX="11.490473588691314" PointY="18.133309044937281" />
+        <EntityTypeShape EntityType="QISModel.Master_Message" Width="1.5" PointX="5.060457271086265" PointY="6.0777500896145353" />
+        <EntityTypeShape EntityType="QISModel.Master_OperateUType" Width="1.5" PointX="11.357084249778225" PointY="27.566165981612247" />
+        <EntityTypeShape EntityType="QISModel.Master_Plant" Width="1.5" PointX="3.4133225490401138" PointY="22.751884634956664" />
+        <EntityTypeShape EntityType="QISModel.Master_Product" Width="1.5" PointX="1.9059871313655687" PointY="13.718704364131533" />
+        <EntityTypeShape EntityType="QISModel.Master_Status" Width="1.5" PointX="2.7663259183831168" PointY="10.409708623965136" />
+        <EntityTypeShape EntityType="QISModel.Master_UType" Width="1.5" PointX="7.4005372167567423" PointY="13.056159293770865" />
+        <EntityTypeShape EntityType="QISModel.Message" Width="1.5" PointX="2.499940217705416" PointY="9.7148178861079817" />
+        <EntityTypeShape EntityType="QISModel.OperateUser" Width="1.5" PointX="0.68588726440718739" PointY="5.58949102721619" />
+        <EntityTypeShape EntityType="QISModel.QCReject" Width="1.5" PointX="3.4790505503672415" PointY="16.139998696809634" />
+        <EntityTypeShape EntityType="QISModel.Rejected_Log" Width="1.5" PointX="8.0497603435301031" PointY="6.6047251106261857" />
+        <EntityTypeShape EntityType="QISModel.TempEmail" Width="1.5" PointX="0.58996535678858186" PointY="3.0251473053475597" />
+        <AssociationConnector Association="QISModel.FK_Approved_Log_QCReject" />
+        <AssociationConnector Association="QISModel.FK_AuthUser_Master_Plant" />
+        <AssociationConnector Association="QISModel.FK_AuthUser_Master_UType" />
+        <AssociationConnector Association="QISModel.FK_QCReject_AuthUser" />
+        <AssociationConnector Association="QISModel.FK_Car_QCReject" />
+        <AssociationConnector Association="QISModel.FK_InspectionLot_Main" />
+        <AssociationConnector Association="QISModel.FK_InspectionLot_Master_Plant" />
+        <AssociationConnector Association="QISModel.FK_InspectionLot_Master_Product" />
+        <AssociationConnector Association="QISModel.FK_Main_Master_Plant" />
+        <AssociationConnector Association="QISModel.FK_QCReject_Main" />
+        <AssociationConnector Association="QISModel.FK_Message_Master_Message" />
+        <AssociationConnector Association="QISModel.FK_OperateUser_Master_OperateUType" />
+        <AssociationConnector Association="QISModel.FK_Master_Product_Master_Plant" />
+        <AssociationConnector Association="QISModel.FK_QCReject_Master_Product" />
+        <AssociationConnector Association="QISModel.FK_QCReject_Master_Status" />
+        <AssociationConnector Association="QISModel.FK_OperateUser_QCReject" />
+        <AssociationConnector Association="QISModel.FK_Rejected_Log_QCReject" />
+        <EntityTypeShape EntityType="QISModel.v_SumDate" Width="1.5" PointX="10.762332340126081" PointY="13.832302546981863" />
+        <EntityTypeShape EntityType="QISModel.v_SumMonth" Width="1.5" PointX="2.8433395153113361" PointY="17.686009608994244" />
+        <EntityTypeShape EntityType="QISModel.v_SumYear" Width="1.5" PointX="9.3017872987789048" PointY="13.757579467146462" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,100 @@
+﻿@model IEnumerable<MvcQIS.Models.Main>
+
+@{
+    ViewBag.Title = "QC Reject";
+}
+<link href="~/Content/table.css" rel="stylesheet" />
+<style type="text/css">
+    .ui-datepicker { font-size: 12px !important; }
+    .ui-jqgrid .ui-state-highlight { background: #7AC0DA; }
+</style>
+
+<script type="text/javascript">
+    function CreateGrid(data) {
+        $("#divGridMain").html('<table id="grid_main"></table><div id="pager_main"></div>');
+
+        jQuery("#grid_main").jqGrid({
+            url: '@Url.Action("GridMainData","QCReject")?' + data,
+            datatype: 'json',
+            mtype: 'POST',
+            colNames: ['Date', 'Plant', 'Edit', 'Delete'],
+            colModel: [
+              { name: 'entry_date', index: 'entry_date', align: 'center', sortable: true, sorttype: 'date', formatter: 'date', formatoptions: { newformat: 'd-M-Y' }, datefmt: 'd-M-Y' },
+              { name: 'plant_id', index: 'plant_id', align: 'center', sortable: true },
+              { name: 'edit_link', align: 'center', sortable: false, width: '100px' },
+              { name: 'delete_link', align: 'center', sortable: false, width: '100px' }
+            ],
+            pager: jQuery('#pager_main'),
+            //pagerpos: 'left',
+            rowNum: 10,
+            rowList: [5, 10, 20, 50],
+            autowidth: true,
+            //width: '600',
+            height: 'auto',
+            sortname: 'entry_date',
+            sortorder: 'desc',
+            viewrecords: true,
+            caption: 'Created Date',
+            ajaxSelectOptions: { cache: false },
+            scrollOffset: 0
+        });
+
+        jQuery("#grid_main").jqGrid('navGrid', '#pager_main', { edit: false, add: false, del: false, search: false });
+    }
+
+    $(document).ready(function () {
+
+        //Datepicker Setting
+        $(".datepicker").datepicker({
+            dateFormat: 'dd-mm-yy',
+            showOtherMonths: true,
+            selectOtherMonths: true
+        });
+
+        CreateGrid();
+
+        $('#btnSearch').click(function () {
+
+            var obj = "&startdate=" + $("#start_date").val() + "&enddate=" + $("#end_date").val();
+            CreateGrid(obj);
+        });
+
+        $(document).on("click", ".btDel", function () {
+            var obj = new Object();
+            obj.mdate = $(this).attr("data-Entry");
+
+            if (confirm("Are you sure to Delete ?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteEntryDate","QCReject")",
+                    data: obj,
+                    dataType: "json",
+                    success: function (data) {
+                        CreateGrid();
+                    },
+                    error: function (request, status, err) {
+                        alert("Request:" + request + ", Status:" + status + ", Error:" + err);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>
+
+<h2>Input Data - Main</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <td>Start Date:</td>
+        <td><input type="text" id="start_date" class="datepicker" style="width:120px;"/></td>
+        <td>End Date:</td>
+        <td><input type="text" id="end_date" class="datepicker" style="width:120px;"/></td>
+        <td><input type="button" id="btnSearch" value="Search" /></td>
+    </tr>
+</table>
+
+<div id="divGridMain"></div>

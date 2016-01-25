@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="QISModelStoreContainer" CdmEntityContainer="QISEntities">
+    <EntitySetMapping Name="Car">
+      <EntityTypeMapping TypeName="QISModel.Car">
+        <MappingFragment StoreEntitySet="Car">
+          <ScalarProperty Name="entry_date" ColumnName="entry_date" />
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="qc_reject_id" ColumnName="qc_reject_id" />
+          <ScalarProperty Name="report_no" ColumnName="report_no" />
+          <ScalarProperty Name="found" ColumnName="found" />
+          <ScalarProperty Name="root_cause" ColumnName="root_cause" />
+          <ScalarProperty Name="responsible" ColumnName="responsible" />
+          <ScalarProperty Name="qty_product" ColumnName="qty_product" />
+          <ScalarProperty Name="qty_reject" ColumnName="qty_reject" />
+          <ScalarProperty Name="ipqc" ColumnName="ipqc" />
+          <ScalarProperty Name="issued_date" ColumnName="issued_date" />
+          <ScalarProperty Name="reply_due_date" ColumnName="reply_due_date" />
+          <ScalarProperty Name="reply_date" ColumnName="reply_date" />
+          <ScalarProperty Name="respond_date" ColumnName="respond_date" />
+          <ScalarProperty Name="effective_date" ColumnName="effective_date" />
+          <ScalarProperty Name="attach" ColumnName="attach" />
+          <ScalarProperty Name="issue_dt" ColumnName="issue_dt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Main">
+      <EntityTypeMapping TypeName="QISModel.Main">
+        <MappingFragment StoreEntitySet="Main">
+          <ScalarProperty Name="entry_date" ColumnName="entry_date" />
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="issue_dt" ColumnName="issue_dt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PAR">
+      <EntityTypeMapping TypeName="QISModel.PAR">
+        <MappingFragment StoreEntitySet="PAR">
+          <ScalarProperty Name="entry_date" ColumnName="entry_date" />
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="qc_reject_id" ColumnName="qc_reject_id" />
+          <ScalarProperty Name="report_no" ColumnName="report_no" />
+          <ScalarProperty Name="found" ColumnName="found" />
+          <ScalarProperty Name="root_cause" ColumnName="root_cause" />
+          <ScalarProperty Name="responsible" ColumnName="responsible" />
+          <ScalarProperty Name="qty_product" ColumnName="qty_product" />
+          <ScalarProperty Name="qty_reject" ColumnName="qty_reject" />
+          <ScalarProperty Name="ipqc" ColumnName="ipqc" />
+          <ScalarProperty Name="issued_date" ColumnName="issued_date" />
+          <ScalarProperty Name="reply_due_date" ColumnName="reply_due_date" />
+          <ScalarProperty Name="reply_date" ColumnName="reply_date" />
+          <ScalarProperty Name="respond_date" ColumnName="respond_date" />
+          <ScalarProperty Name="effective_date" ColumnName="effective_date" />
+          <ScalarProperty Name="attach" ColumnName="attach" />
+          <ScalarProperty Name="issue_dt" ColumnName="issue_dt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QCReject">
+      <EntityTypeMapping TypeName="QISModel.QCReject">
+        <MappingFragment StoreEntitySet="QCReject">
+          <ScalarProperty Name="entry_date" ColumnName="entry_date" />
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="qc_reject_id" ColumnName="qc_reject_id" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="item_code" ColumnName="item_code" />
+          <ScalarProperty Name="lot_no" ColumnName="lot_no" />
+          <ScalarProperty Name="problem" ColumnName="problem" />
+          <ScalarProperty Name="defective_lv" ColumnName="defective_lv" />
+          <ScalarProperty Name="picture" ColumnName="picture" />
+          <ScalarProperty Name="issue_car" ColumnName="issue_car" />
+          <ScalarProperty Name="inspector" ColumnName="inspector" />
+          <ScalarProperty Name="screener" ColumnName="screener" />
+          <ScalarProperty Name="shift" ColumnName="shift" />
+          <ScalarProperty Name="status_id" ColumnName="status_id" />
+          <ScalarProperty Name="issue_dt" ColumnName="issue_dt" />
+          <ScalarProperty Name="user_code" ColumnName="user_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Master_Product">
+      <EntityTypeMapping TypeName="QISModel.Master_Product">
+        <MappingFragment StoreEntitySet="Master_Product">
+          <ScalarProperty Name="group_id" ColumnName="group_id" />
+          <ScalarProperty Name="product_del_flag" ColumnName="product_del_flag" />
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="product_name" ColumnName="product_name" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TempEmail">
+      <EntityTypeMapping TypeName="QISModel.TempEmail">
+        <MappingFragment StoreEntitySet="TempEmail">
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="create_date" ColumnName="create_date" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="qc_reject_id" ColumnName="qc_reject_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AuthUser">
+      <EntityTypeMapping TypeName="QISModel.AuthUser">
+        <MappingFragment StoreEntitySet="AuthUser">
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+          <ScalarProperty Name="utype_id" ColumnName="utype_id" />
+          <ScalarProperty Name="user_code" ColumnName="user_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Master_Plant">
+      <EntityTypeMapping TypeName="QISModel.Master_Plant">
+        <MappingFragment StoreEntitySet="Master_Plant">
+          <ScalarProperty Name="plant_del_flag" ColumnName="plant_del_flag" />
+          <ScalarProperty Name="plant_name" ColumnName="plant_name" />
+          <ScalarProperty Name="plant_id" ColumnName="plant_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,1013 @@
+﻿
+<link href="~/Content/table.css" rel="stylesheet" />
+<link href="~/Content/tablesorter.css" rel="stylesheet" />
+<style type="text/css">
+    #tbSummary td {
+        text-align:center !important;
+        width: 70px !important;
+        font-size: 0.95em;
+    }
+    .ngColor {
+        background: #fb0000;
+        color:white;
+    }
+    .preview-tip {
+        max-width: 400px;
+    }
+    #tbMonthlyData td {
+        text-align:center !important;
+        width: 70px !important;
+    }
+    #tbYearlyData td, #tbHalfYearData td, #tbLastYearData td, #tbHLMonthlyData td {
+        text-align:center !important;
+    }
+</style>
+@*<script type="text/javascript" src="@Url.Content("~/Scripts/data.js")"></script>*@
+<script type="text/javascript" src="@Url.Content("~/Scripts/exporting.js")"></script>
+<script type="text/javascript">
+    function xlsIESpecial(tableid) {
+        //var isFirefox = typeof InstallTrigger !== 'undefined';  // Firefox 1.0+
+        //var isChrome = !!window.chrome;                         // Chrome 1+
+        //if (isChrome || isFirefox) {
+        //    alert("This Browser not support");
+        //} else {
+
+        //}
+        var x = document.getElementById(tableid).rows;
+        var xls = new ActiveXObject("Excel.Application");
+
+        xls.visible = true;
+        xls.Workbooks.Add;
+
+        //var colsCount = 0;
+        for (i = 0; i < x.length; i++) {
+            var y = x[i].cells;
+
+            if ((i % 3 == 2 || i % 3 == 0) && i != 0) {
+                for (j = 0; j < y.length; j++) {
+                    if (j == 0) xls.Cells(i + 1, j + 1).Value = "";
+                    xls.Cells(i + 1, j + 2).Value = y[j].innerText;
+                }
+            }
+            else {
+                for (j = 0; j < y.length; j++) {
+                    xls.Cells(i + 1, j + 1).Value = y[j].innerText;
+                }
+            }
+        }
+        xls.UserControl = true;
+        return xls;
+    }
+
+    function xlsIE(tableid) {
+        //var isFirefox = typeof InstallTrigger !== 'undefined';  // Firefox 1.0+
+        //var isChrome = !!window.chrome;                         // Chrome 1+
+        //if (isChrome || isFirefox) {
+        //    alert("This Browser not support");
+        //} else {
+
+        //}
+
+        var x = document.getElementById(tableid).rows;
+        var xls = new ActiveXObject("Excel.Application");
+
+        xls.visible = true;
+        xls.Workbooks.Add;
+        
+        for (i = 0; i < x.length; i++) {
+            var y = x[i].cells;
+            for (j = 0; j < y.length; j++) {
+                xls.Cells(i + 1, j + 1).Value = y[j].innerText;
+            }
+        }
+        xls.UserControl = true;
+        return xls;
+    }
+
+    function GetGraph_CurrentDate() {
+        options = {
+            chart: {
+                renderTo: 'highChart'
+                //type: 'column'
+            },
+            title: {
+                text: 'Status QC Reject Rate'
+            },
+            subtitle: {
+                text: 'Current Date'
+            },
+            xAxis: {
+                title: { text: 'Days' },
+                categories: [
+                    '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+                    '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+                    '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Percentage (%)'
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            //tooltip: {
+            //    pointFormat: '{series.name} : {point.y:,.2f}%'
+            //},
+            tooltip: {
+                headerFormat: '<span style="font-size:12px">{point.key}</span><table style="width:200px;">',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                             '<td style="padding:0"><b>{point.y:.2f}%</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function () {
+                            return Highcharts.numberFormat(this.y,2) + '%';
+                        }
+                    }
+                    //enableMouseTracking: false
+                },
+                column: {
+                    pointWidth: 4
+                }
+            //    column: {
+            //        pointPadding: 0.2,
+            //        borderWidth: 0
+            //    }
+            },
+            series: []
+        }
+        GetData_CurrentDate();
+    }
+
+    function GetGraph_Monthly() {
+        options = {
+            chart: {
+                renderTo: 'highChart'
+                //type: 'column'
+            },
+            title: {
+                text: 'Status QC Reject Rate'
+            },
+            subtitle: {
+                text: 'Monthly'
+            },
+            xAxis: {
+                title: { text: 'Month' },
+                categories: [
+                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Percentage (%)'
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            //tooltip: {
+            //    pointFormat: '{series.name} : {point.y:,.2f}%'
+            //},
+            //tooltip: {
+            //    formatter: function () {
+            //        return '<b>' + this.series.name + '</b><br/>' +
+            //            this.y + ' ' + this.x.toLowerCase();
+            //    }
+            //}
+            tooltip: {
+                headerFormat: '<span style="font-size:12px">{point.key}</span><table style="width:200px;">',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                             '<td style="padding:0"><b>{point.y:.2f}%</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function () {
+                            return Highcharts.numberFormat(this.y, 2) + '%';
+                        }
+                    }
+                    //enableMouseTracking: false
+                }
+                //    column: {
+                //        pointPadding: 0.2,
+                //        borderWidth: 0
+                //    }
+            },
+            series: []
+        }
+        GetData_Monthly();
+    }
+
+    function GetGraph_Yearly() {
+        options = {
+            chart: {
+                renderTo: 'highChart'
+                //type: 'column'
+            },
+            title: {
+                text: 'Status QC Reject Rate'
+            },
+            subtitle: {
+                text: 'Yearly'
+            },
+            xAxis: {
+                title: { text: 'Year' }
+                //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                min: 0,
+                title: { text: 'Percentage (%)' }
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                pointFormat: '{series.name} : {point.y:,.2f}%'
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function () {
+                            return Highcharts.numberFormat(this.y, 2) + '%';
+                        }
+                    }
+                    //enableMouseTracking: false
+                }
+                //    column: {
+                //        pointPadding: 0.2,
+                //        borderWidth: 0
+                //    }
+            },
+            //tooltip: {
+            //    headerFormat: '<span style="font-size:12px">{point.key}</span><table style="width:200px;">',
+            //    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            //                 '<td style="padding:0"><b>{point.y:.2f}%</b></td></tr>',
+            //    footerFormat: '</table>',
+            //    shared: true,
+            //    useHTML: true
+            //},
+            series: []
+        }
+        GetData_Yearly();
+    }
+
+    function GetGraph_HalfYear() {
+        options = {
+            chart: {
+                renderTo: 'highChart'
+                //type: 'column'
+            },
+            title: {
+                text: 'Status QC Reject Rate'
+            },
+            subtitle: {
+                text: 'Compare Half Year'
+            },
+            xAxis: {
+                //title: { text: 'Month' },
+                //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                min: 0,
+                title: { text: 'Percentage (%)' }
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                pointFormat: '{series.name} : {point.y:,.2f}%'
+            },
+            //tooltip: {
+            //    headerFormat: '<span style="font-size:12px">{point.key}</span><table style="width:200px;">',
+            //    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            //                 '<td style="padding:0"><b>{point.y:.2f}%</b></td></tr>',
+            //    footerFormat: '</table>',
+            //    shared: true,
+            //    useHTML: true
+            //},
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function () {
+                            return Highcharts.numberFormat(this.y, 2) + '%';
+                        }
+                    }
+                    //enableMouseTracking: false
+                }
+                //    column: {
+                //        pointPadding: 0.2,
+                //        borderWidth: 0
+                //    }
+            },
+            series: []
+        }
+        GetData_HalfYear();
+    }
+
+    function GetGraph_LastYear() {
+        
+        options = {
+            chart: {
+                renderTo: 'highChart'
+                //type: 'column'
+            },
+            title: {
+                text: 'Status QC Reject Rate'
+            },
+            subtitle: {
+                text: 'Compare Last Year'
+            },
+            xAxis: {
+                title: { text: 'Year' }
+                //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                min: 0,
+                title: { text: 'Percentage (%)' }
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                pointFormat: '{series.name} : {point.y:,.2f}%'
+            },
+            //tooltip: {
+            //    headerFormat: '<span style="font-size:12px">{point.key}</span><table style="width:200px;">',
+            //    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            //                 '<td style="padding:0"><b>{point.y:.2f}%</b></td></tr>',
+            //    footerFormat: '</table>',
+            //    shared: true,
+            //    useHTML: true
+            //},
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function () {
+                            return Highcharts.numberFormat(this.y, 2) + '%';
+                        }
+                    }
+                    //enableMouseTracking: false
+                }
+                //    column: {
+                //        pointPadding: 0.2,
+                //        borderWidth: 0
+                //    }
+            },
+            series: []
+        }
+        GetData_LastYear();
+    }
+
+    function GetGraph_HalfYearMonthly() {
+        options1 = {
+            chart: {
+                renderTo: 'highChart1'
+                //type: 'column'
+            },
+            title: {
+                text: 'Status QC Reject Rate'
+            },
+            subtitle: {
+                text: 'Monthly'
+            },
+            xAxis: {
+                title: { text: 'Month' }
+                //categories: [
+                //    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                //]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Percentage (%)'
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:12px">{point.key}</span><table style="width:200px;">',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                             '<td style="padding:0"><b>{point.y:.2f}%</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function () {
+                            return Highcharts.numberFormat(this.y, 2) + '%';
+                        }
+                    }
+                    //enableMouseTracking: false
+                }
+                //    column: {
+                //        pointPadding: 0.2,
+                //        borderWidth: 0
+                //    }
+            },
+            series: []
+        }
+        GetData_HalfYearMonthly();
+    }
+
+    function GetGraph_DayToDay() {
+        options = {
+            chart: {
+                renderTo: 'highChart'
+                //type: 'column'
+            },
+            title: {
+                text: 'Status QC Reject Rate'
+            },
+            subtitle: {
+                text: 'Day to Day'
+            },
+            xAxis: {
+                title: { text: 'Days' },
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    week: '%e %b'
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Percentage (%)'
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:12px">{point.key}</span><table style="width:200px;">',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                             '<td style="padding:0"><b>{point.y:.2f}%</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function () {
+                            return Highcharts.numberFormat(this.y, 2) + '%';
+                        }
+                    }
+                },
+                column: {
+                    pointWidth: 4
+                }
+                //    column: {
+                //        pointPadding: 0.2,
+                //        borderWidth: 0
+                //    }
+            },
+            series: []
+        }
+        GetData_DaytoDay();
+    }
+
+    function GetData_DaytoDay() {
+        var obj = new Object();
+        obj.dtFrom = $('#dtFrom').val();
+        obj.dtTo = $('#dtTo').val();
+        obj.plantid = $("#slPlant").val();
+        var date = $('#dtFrom').datepicker('getDate');
+
+        $.getJSON('@Url.Action("getData_DayToDay","Report")', obj, function (data) {
+            var series = [];
+            $.each(data, function (index, item) {
+                if ((data.length - 1) != index) {
+                    series.push({
+                        name: item.Key,
+                        data: item.Value,
+                        type: 'column',
+                        pointStart: Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+                        pointInterval: 24 * 3600 * 1000 // one day
+                    });
+                }
+                else {
+                    series.push({
+                        name: item.Key,
+                        data: item.Value,
+                        type: 'line',
+                        pointStart: Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+                        pointInterval: 24 * 3600 * 1000 // one day
+                    });
+                }
+            });
+            options.series = series;
+
+            //Create the chart
+            var chart = new Highcharts.Chart(options);
+            //chart.render();
+        });
+
+        $.get("@Url.Action("GetDayToDayData")", obj, function (data) {
+            $("#divDatatable").children().remove();
+            $("#divDatatable").append(data);
+        }).fail(function () { alert("error"); });
+    }
+
+    function GetData_CurrentDate() {
+        var obj = new Object();
+        obj.mm = $("#slMonth").val();
+        obj.yy = $("#slYear").val();
+        obj.plantid = $("#slPlant").val();
+
+        $.getJSON('@Url.Action("getData_CurrentDate","Report")', obj, function (data) {
+            var series = [];
+            $.each(data, function (index, item) {
+                if ((data.length - 1) != index) {
+                    series.push({
+                        name: item.Key,
+                        data: item.Value,
+                        type: 'column'
+                    });
+                }
+                else {
+                    series.push({
+                        name: item.Key,
+                        data: item.Value,
+                        type: 'line'
+                    });
+                }
+            });
+            options.series = series;
+
+            //Create the chart
+            var chart = new Highcharts.Chart(options);
+            //chart.render();
+        });
+
+        $.get("@Url.Action("GetCurrentDateData")", obj, function (data) {
+            $("#divDatatable").children().remove();
+            $("#divDatatable").append(data);
+        }).fail(function () { alert("error"); });
+    }
+
+    function GetData_Monthly() {
+        var obj = new Object();
+        obj.yy = $("#slYear").val();
+        obj.plantid = $("#slPlant").val();
+
+        $.getJSON('@Url.Action("getData_Monthly","Report")', obj, function (data) {
+            
+            var series = [];
+            var table_monthly = "<table id='tbMonthlyData' class='bordered'>";
+            table_monthly += "<tr><th>Line</th><th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th><th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th></tr>";
+            $.each(data, function (index, item) {
+                if ((data.length - 1) != index) {
+                    series.push({
+                        name: item.Key,
+                        data: item.Value,
+                        type: 'column'
+                    });
+                }
+                else {
+                    series.push({
+                        name: item.Key,
+                        data: item.Value,
+                        type: 'line'
+                    });
+                }
+                table_monthly += "<tr>";
+                table_monthly += "<th>" + item.Key + "</th>";
+                for (var i = 0; i < item.Value.length; i++) {
+                    table_monthly += "<td>" + item.Value[i].toFixed(2) + "%</td>";
+                }
+                table_monthly += "</tr>";
+            });
+            table_monthly += "</table>";
+            options.series = series;
+
+            //Create the chart
+            var chart = new Highcharts.Chart(options);
+            //chart.render();
+            $("#divDatatable").children().remove();
+            $("#divDatatable").append(table_monthly);
+        });
+    }
+
+    function GetData_Yearly() {
+        var obj = new Object();
+        obj.plantid = $("#slPlant").val();
+
+        $.getJSON('@Url.Action("getData_Yearly","Report")', obj, function (data) {
+            var datalength = data[0].Value.length;
+            var series = [];
+            var theDate = new Date();
+            var thisYear = theDate.getFullYear();
+            var arYear = [];
+            var table_yearly = "<table id='tbYearlyData' class='bordered'><tr><th>Line</th>";
+            for (var i = 0; i < datalength; i++) {
+                var temp_year = thisYear + i - (datalength - 1);
+                arYear[i] = temp_year;
+                table_yearly += "<th>Year " + temp_year + "</th>";
+            }
+            table_yearly += "</tr>";
+            options.xAxis.categories = arYear;
+
+            $.each(data, function (index, item) {
+                if ((data.length - 1) != index) {
+                    series.push({
+                        name: item.Key,
+                        data: item.Value,
+                        type: 'column'
+                    });
+                }
+                else {
+                    series.push({
+                        name: item.Key,
+                        data: item.Value,
+                        type: 'line'
+                    });
+                }
+                //---------------table data------------------//
+                table_yearly += "<tr>";
+                table_yearly += "<th>" + item.Key + "</th>";
+                for (var i = 0; i < item.Value.length; i++) {
+                    table_yearly += "<td>" + item.Value[i].toFixed(2) + "%</td>";
+                }
+                table_yearly += "</tr>";
+            });
+            table_yearly += "</table>";
+            options.series = series;
+
+            
+            //Create the chart
+            var chart = new Highcharts.Chart(options);
+            //chart.render();
+
+            $("#divDatatable").children().remove();
+            $("#divDatatable").append(table_yearly);
+        });
+    }
+
+    function GetData_HalfYear() {
+        var obj = new Object();
+        obj.plantid = $("#slPlant").val();
+
+        $.getJSON('@Url.Action("getData_HalfYear","Report")', obj, function (data) {
+            var theDate = new Date();
+            var thisYear = theDate.getFullYear();
+            var arYear = [];
+            var table_halfyear = "<table id='tbHalfYearData' class='bordered'><tr><th>Line</th>";
+            if (theDate.getMonth() > 5) {
+                arYear = ['First Half of Year ' + thisYear, 'Second Half of Year ' + thisYear];
+                table_halfyear += "<th>First Half of Year " + thisYear + "</th><th>Second Half of Year "+ thisYear + "</th>";
+            } else {
+                arYear = ['Second Half of Year ' + (thisYear - 1), 'First Half of Year ' + thisYear];
+                table_halfyear += "<th>Second Half of Year " + (thisYear - 1) + "</th><th>First Half of Year " + thisYear + "</th>";
+            }
+            table_halfyear += "</tr>";
+            options.xAxis.categories = arYear;
+
+            var series = [];
+            $.each(data, function (index, item) {
+                if ((data.length - 1) != index) {
+                    series.push({
+                        name: item.Key,
+                        data: item.Value,
+                        type: 'column'
+                    });
+                }
+                else {
+                    series.push({
+                        name: item.Key,
+                        data: item.Value,
+                        type: 'line'
+                    });
+                }
+                //---------------table data------------------//
+                table_halfyear += "<tr>";
+                table_halfyear += "<th>" + item.Key + "</th>";
+                for (var i = 0; i < item.Value.length; i++) {
+                    table_halfyear += "<td>" + item.Value[i].toFixed(2) + "%</td>";
+                }
+                table_halfyear += "</tr>";
+            });
+            table_halfyear += "</table>";
+            options.series = series;
+            
+            //Create the chart
+            var chart = new Highcharts.Chart(options);
+            //chart.render();
+            $("#divDatatable").children().remove();
+            $("#divDatatable").append(table_halfyear);
+        });
+    }
+
+    function GetData_LastYear() {
+        var obj = new Object();
+        obj.plantid = $("#slPlant").val();
+
+        $.getJSON('@Url.Action("getData_LastYear","Report")', obj, function (data) {
+
+            var series = [];
+            var theDate = new Date();
+            var thisYear = theDate.getFullYear();
+            var arYear = [thisYear - 1, thisYear];
+            options.xAxis.categories = arYear;
+
+            var table_lastyear = "<table id='tbLastYearData' class='bordered'><tr><th>Line</th>";
+            table_lastyear += "<th>Year " + (thisYear - 1) + "</th><th>Year " + thisYear + "</th>";
+            table_lastyear += "</tr>";
+
+            $.each(data, function (index, item) {
+                if ((data.length - 1) != index) {
+                    series.push({
+                        name: item.Key,
+                        data: item.Value,
+                        type: 'column'
+                    });
+                }
+                else {
+                    series.push({
+                        name: item.Key,
+                        data: item.Value,
+                        type: 'line'
+                    });
+                }
+                table_lastyear += "<tr>";
+                table_lastyear += "<th>" + item.Key + "</th>";
+                for (var i = 0; i < item.Value.length; i++) {
+                    table_lastyear += "<td>" + item.Value[i].toFixed(2) + "%</td>";
+                }
+                table_lastyear += "</tr>";
+            });
+            table_lastyear += "</table>";
+            options.series = series;
+
+            //Create the chart
+            var chart = new Highcharts.Chart(options);
+            //chart.render();
+            $("#divDatatable").children().remove();
+            $("#divDatatable").append(table_lastyear);
+        });
+    }
+
+    function GetData_HalfYearMonthly() {
+        var obj = new Object();
+        obj.plantid = $("#slPlant").val();
+
+        $.getJSON('@Url.Action("getData_HLMonthly","Report")', obj, function (data) {
+            var theDate = new Date();
+            var thisYear = theDate.getFullYear();
+            var arMonth = [];
+            var table_monthly = "<table id='tbHLMonthlyData' class='bordered'>";
+            if (theDate.getMonth() > 5) {
+                arMonth = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                table_monthly += "<tr><th>Line</th><th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th><th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th></tr>";
+            }
+            else {
+                arMonth = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+                table_monthly += "<tr><th>Line</th><th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th><th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th></tr>";
+            }
+            options1.xAxis.categories = arMonth;
+
+            var series = [];
+            $.each(data, function (index, item) {
+                if ((data.length - 1) != index) {
+                    series.push({
+                        name: item.Key,
+                        data: item.Value,
+                        type: 'column'
+                    });
+                }
+                else {
+                    series.push({
+                        name: item.Key,
+                        data: item.Value,
+                        type: 'line'
+                    });
+                }
+                table_monthly += "<tr>";
+                table_monthly += "<th>" + item.Key + "</th>";
+                for (var i = 0; i < item.Value.length; i++) {
+                    table_monthly += "<td>" + item.Value[i].toFixed(2) + "%</td>";
+                }
+                table_monthly += "</tr>";
+            });
+            table_monthly += "</table>";
+            options1.series = series;
+
+            //Create the chart
+            var chart1 = new Highcharts.Chart(options1);
+            //chart.render();
+            $("#divDatatable1").children().remove();
+            $("#divDatatable1").append(table_monthly);
+        });
+    }
+
+    function ShowHide_MonthYear(data){
+        if (data == 1) {
+            $("#slMonth").fadeIn();
+            $("#spanYear").fadeIn();
+            $("#spanDate").fadeOut();
+        } else if (data == 2) {
+            $("#slMonth").fadeOut();
+            $("#spanYear").fadeIn();
+            $("#spanDate").fadeOut();
+        } else if (data == 6) {
+            $("#slMonth").fadeOut();
+            $("#spanYear").fadeOut();
+            $("#spanDate").fadeIn();
+        } else {
+            $("#slMonth").fadeOut();
+            $("#spanYear").fadeOut();
+            $("#spanDate").fadeOut();
+        }
+    }
+
+    $(document).ready(function () {
+
+        var theDate = new Date();
+        var thisMonth = theDate.getMonth();
+        var thisYear = theDate.getFullYear();
+        var select = $("<select id='slYear' style='width:80px;'>");
+        for (var i = 0; i < 10; i++) {
+            var year = thisYear - i;
+            $("<option>", { value: year, text: year }).appendTo(select);
+        }
+        select.appendTo("#spanYear");
+
+        $("#slMonth").val(thisMonth + 1);//Set this month select.
+        var plant = '@ViewBag.MyPlant';
+        if(plant != "0")
+            $("#slPlant").val(plant);
+
+        ShowHide_MonthYear($("#slResult").val());//Set show/hide select month/year on page load
+
+        $("#slResult").change(function () {
+            ShowHide_MonthYear($(this).val());
+        });
+
+        $(document).tooltip({
+            items: '.tooltipUI',
+            tooltipClass: 'preview-tip',
+            //track: true,//follow mouse.
+            position: { my: "left+5 top+5", at: "right center" },
+            hide: { effect: "explode", duration: 1000 },
+            //open: function( event, ui ) {
+            //    setTimeout(function(){
+            //        $(ui.tooltip).hide('explode');
+            //    }, 1000);
+            //},
+            content: function (callback) {
+                var element = $(this);
+                $.get('@Url.Action("GetQCRejectByDate", "QCReject")', { d: element.attr("data-date"), m: element.attr("data-month"), y: element.attr("data-year"), product_id: element.attr("data-product") }, function (data) {
+                     callback(data);
+                 });
+             }
+        });
+
+        $("#btnExport").click(function () {
+            var graph_type = $("#slResult").val();
+            
+            if (graph_type == 1) {
+                xlsIESpecial("tbSummary");
+            }
+            else if (graph_type == 2) {
+                xlsIE("tbMonthlyData");
+            }
+            else if (graph_type == 3) {
+                xlsIE("tbYearlyData");
+            }
+            else if (graph_type == 4) {
+                xlsIE("tbHalfYearData");
+            }
+            else if (graph_type == 5) {
+                xlsIE("tbLastYearData");
+            }
+            else if (graph_type == 6) {
+                xlsIESpecial("tbDayToDay");
+            }
+        });
+
+        $("#btnCreateGraph").click(function () {
+            $("#highChart").css("display", "inline");
+            $("#btnExport").css("display", "inline");
+            $("#highChart1").css("display", "none");
+            $("#divDatatable1").children().remove();
+            var graph_type = $("#slResult").val();
+            
+            if (graph_type == 1) {
+                GetGraph_CurrentDate();
+            }
+            else if (graph_type == 2) {
+                GetGraph_Monthly();
+            }
+            else if (graph_type == 3) {
+                GetGraph_Yearly();
+            }
+            else if (graph_type == 4) {
+                GetGraph_HalfYear();
+                GetGraph_HalfYearMonthly();
+                $("#highChart1").css("display", "inline");
+            }
+            else if (graph_type == 5) {
+                GetGraph_LastYear();
+            }
+            else if (graph_type == 6) {
+                GetGraph_DayToDay();
+            }
+        });
+
+        //Datepicker Setting
+        //$(".datepicker").datepicker({
+        //    dateFormat: 'dd-mm-yy'
+        //});
+        $("#dtFrom").datepicker({
+            //defaultDate: "+1w",
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            numberOfMonths: 1,
+            onClose: function (selectedDate) {
+                $("#dtTo").datepicker("option", "minDate", selectedDate);
+            }
+        });
+        $("#dtTo").datepicker({
+            //defaultDate: "+1w",
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            numberOfMonths: 1,
+            onClose: function (selectedDate) {
+                $("#dtFrom").datepicker("option", "maxDate", selectedDate);
+            }
+        });
+    });
+</script>
+
+<h2>@ViewBag.Title</h2>
+<p>
+    QC Reject Result: <select id="slResult" style="width:150px;" >
+        <option value="6">Day to day</option>
+        <option value="1">Daily</option>
+        <option value="2">Monthly</option>
+        <option value="3">Yearly</option>
+        <option value="4">Compare Half Year</option>
+        <option value="5">Compare Last Year</option>
+    </select>
+    <select id="slMonth" style="width:80px;" >
+        <option value="1">Jan</option>
+        <option value="2">Feb</option>
+        <option value="3">Mar</option>
+        <option value="4">Apr</option>
+        <option value="5">May</option>
+        <option value="6">Jun</option>
+        <option value="7">Jul</option>
+        <option value="8">Aug</option>
+        <option value="9">Sep</option>
+        <option value="10">Oct</option>
+        <option value="11">Nov</option>
+        <option value="12">Dec</option>
+    </select>
+
+    <span id="spanYear"></span>
+
+    <span id="spanDate">
+        From : <input type="text" class="datepicker" id="dtFrom" name="dtFrom" readonly="true" placeholder="yyyy-mm-dd" />
+        To : <input type="text" class="datepicker" id="dtTo" name="dtTo" readonly="true" placeholder="yyyy-mm-dd" />
+    </span>
+    &nbsp;
+    Select Plant: <select id="slPlant" style="width:150px;" >
+        @foreach (var item in ViewBag.SelectPlant)
+        {
+            <option value="@item.plant_id">
+                @item.plant_name
+            </option>
+        }
+    </select>
+    
+    <input type="button" value="Create Graph" id="btnCreateGraph" name="btnCreateGraph" />
+</p>
+
+<div id="highChart" style="height: 400px; width: 1000px; display:none;"></div>
+<br />
+<div id="divDatatable"></div>
+<input type="button" id="btnExport" value="Export to Excel" style="display:none;" />
+<br />
+<div id="highChart1" style="height: 400px; width: 1000px; display:none;"></div>
+<br />
+<div id="divDatatable1"></div>

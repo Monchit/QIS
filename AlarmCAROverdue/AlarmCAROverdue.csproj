@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7B98A4A9-20C3-455B-B8E5-424245BD2E17}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AlarmCAROverdue</RootNamespace>
+    <AssemblyName>AlarmCAROverdue</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuthUser.cs">
+      <DependentUpon>QIS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Car.cs">
+      <DependentUpon>QIS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmailCenter.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmailCenter.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmailCenter.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmailCenter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmailCenter.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmailCenter.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Main.cs">
+      <DependentUpon>QIS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Master_Plant.cs">
+      <DependentUpon>QIS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Master_Product.cs">
+      <DependentUpon>QIS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PAR.cs">
+      <DependentUpon>QIS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QCReject.cs">
+      <DependentUpon>QIS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QIS.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QIS.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QIS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QIS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QIS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QIS.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="TempEmail.cs">
+      <DependentUpon>QIS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TNCAdmin.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TNCAdmin.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TNCAdmin.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TNCAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TNCAdmin.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TNCAdmin.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="tnc_costcentercode.cs">
+      <DependentUpon>TNCAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tnc_dept_master.cs">
+      <DependentUpon>TNCAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tnc_group_master.cs">
+      <DependentUpon>TNCAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tnc_plant_master.cs">
+      <DependentUpon>TNCAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tnc_user.cs">
+      <DependentUpon>TNCAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT_MAIL_WIP.cs">
+      <DependentUpon>EmailCenter.tt</DependentUpon>
+    </Compile>
+    <Compile Include="View_Organization.cs">
+      <DependentUpon>TNCAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="V_Employee_Info.cs">
+      <DependentUpon>TNCAdmin.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="QIS.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>QIS.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="EmailCenter.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EmailCenter.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="EmailCenter.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EmailCenter.edmx</DependentUpon>
+      <LastGenOutput>EmailCenter.Context.cs</LastGenOutput>
+    </None>
+    <None Include="EmailCenter.edmx.diagram">
+      <DependentUpon>EmailCenter.edmx</DependentUpon>
+    </None>
+    <None Include="EmailCenter.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EmailCenter.edmx</DependentUpon>
+      <LastGenOutput>EmailCenter.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="QIS.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>QIS.edmx</DependentUpon>
+      <LastGenOutput>QIS.Context.cs</LastGenOutput>
+    </None>
+    <None Include="QIS.edmx.diagram">
+      <DependentUpon>QIS.edmx</DependentUpon>
+    </None>
+    <None Include="QIS.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>QIS.edmx</DependentUpon>
+      <LastGenOutput>QIS.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="TNCAdmin.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TNCAdmin.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="TNCAdmin.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TNCAdmin.edmx</DependentUpon>
+      <LastGenOutput>TNCAdmin.Context.cs</LastGenOutput>
+    </None>
+    <None Include="TNCAdmin.edmx.diagram">
+      <DependentUpon>TNCAdmin.edmx</DependentUpon>
+    </None>
+    <None Include="TNCAdmin.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TNCAdmin.edmx</DependentUpon>
+      <LastGenOutput>TNCAdmin.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

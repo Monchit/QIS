@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MailCenterModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MailCenterEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="TT_MAIL_WIP" EntityType="MailCenterModel.TT_MAIL_WIP" />
+  </EntityContainer>
+  <EntityType Name="TT_MAIL_WIP">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ProgramID" Type="Int32" Nullable="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Sender" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Receiver" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="CC" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="BCC" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="Title" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="HTMLBody" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Flag" Type="Int16" Nullable="false" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TNC_CenterModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TNC_CenterModelStoreContainer">
+    <EntitySet Name="Department" EntityType="TNC_CenterModel.Store.Department" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Division" EntityType="TNC_CenterModel.Store.Division" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Employee" EntityType="TNC_CenterModel.Store.Employee" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Group" EntityType="TNC_CenterModel.Store.Group" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Position" EntityType="TNC_CenterModel.Store.Position" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SubGroup" EntityType="TNC_CenterModel.Store.SubGroup" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DeptId" />
+    </Key>
+    <Property Name="DeptId" Type="nvarchar" Nullable="false" MaxLength="15" />
+    <Property Name="DeptName" Type="nvarchar" MaxLength="100" />
+    <Property Name="MrgEmpId" Type="nvarchar" MaxLength="10" />
+    <Property Name="DivId" Type="nvarchar" MaxLength="12" />
+    <Property Name="OracleLastUpdate" Type="date" />
+    <Property Name="LastUpdate" Type="datetime" />
+    <Property Name="AutoUpdate" Type="bit" />
+    <Property Name="IsObsolete" Type="bit" />
+    <Property Name="ObsoleteDate" Type="date" />
+  </EntityType>
+  <EntityType Name="Division">
+    <Key>
+      <PropertyRef Name="DivId" />
+    </Key>
+    <Property Name="DivId" Type="nvarchar" Nullable="false" MaxLength="12" />
+    <Property Name="DivName" Type="nvarchar" MaxLength="100" />
+    <Property Name="MrgEmpId" Type="nvarchar" MaxLength="10" />
+    <Property Name="FieldId" Type="nvarchar" MaxLength="9" />
+    <Property Name="OracleLastUpdate" Type="date" />
+    <Property Name="LastUpdate" Type="datetime" />
+    <Property Name="AutoUpdate" Type="bit" />
+    <Property Name="IsObsolete" Type="bit" />
+    <Property Name="ObsoleteDate" Type="date" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmpId" />
+    </Key>
+    <Property Name="EmpId" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="Username" Type="nvarchar" MaxLength="32" />
+    <Property Name="Password" Type="nvarchar" MaxLength="32" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="30" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="30" />
+    <Property Name="FirstNameTh" Type="nvarchar" MaxLength="30" />
+    <Property Name="LastNameTh" Type="nvarchar" MaxLength="30" />
+    <Property Name="PositionId" Type="nvarchar" MaxLength="4" />
+    <Property Name="SubGroupId" Type="nvarchar" MaxLength="21" />
+    <Property Name="GroupId" Type="nvarchar" MaxLength="18" />
+    <Property Name="DeptId" Type="nvarchar" MaxLength="15" />
+    <Property Name="DivId" Type="nvarchar" MaxLength="12" />
+    <Property Name="FieldId" Type="nvarchar" MaxLength="9" />
+    <Property Name="FactoryId" Type="nvarchar" MaxLength="6" />
+    <Property Name="AreaId" Type="nvarchar" MaxLength="3" />
+    <Property Name="Ext" Type="nvarchar" MaxLength="30" />
+    <Property Name="Email" Type="nvarchar" MaxLength="30" />
+    <Property Name="BirthDate" Type="date" />
+    <Property Name="JoinDate" Type="date" />
+    <Property Name="Nation" Type="smallint" />
+    <Property Name="Sex" Type="nchar" MaxLength="1" />
+    <Property Name="Status" Type="smallint" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="SubDistId" Type="nvarchar" MaxLength="4" />
+    <Property Name="DistrictId" Type="nvarchar" MaxLength="4" />
+    <Property Name="ProvinceId" Type="nvarchar" MaxLength="4" />
+    <Property Name="PostCode" Type="nchar" MaxLength="5" />
+    <Property Name="Telephone" Type="nvarchar" MaxLength="30" />
+    <Property Name="OracleLastUpdate" Type="date" />
+    <Property Name="LastUpdate" Type="datetime" />
+    <Property Name="AutoUpdate" Type="bit" />
+    <Property Name="IsObsolete" Type="bit" />
+    <Property Name="ObsoleteDate" Type="date" />
+  </EntityType>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="GroupId" />
+    </Key>
+    <Property Name="GroupId" Type="nvarchar" Nullable="false" MaxLength="18" />
+    <Property Name="GroupName" Type="nvarchar" MaxLength="100" />
+    <Property Name="MrgEmpId" Type="nvarchar" MaxLength="10" />
+    <Property Name="DeptId" Type="nvarchar" MaxLength="15" />
+    <Property Name="OracleLastUpdate" Type="date" />
+    <Property Name="LastUpdate" Type="datetime" />
+    <Property Name="AutoUpdate" Type="bit" />
+    <Property Name="IsObsolete" Type="bit" />
+    <Property Name="ObsoleteDate" Type="date" />
+  </EntityType>
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="PositionId" />
+    </Key>
+    <Property Name="PositionId" Type="nvarchar" Nullable="false" MaxLength="4" />
+    <Property Name="PositionName" Type="nvarchar" MaxLength="100" />
+    <Property Name="PositionLevel" Type="smallint" />
+    <Property Name="OracleLastUpdate" Type="date" />
+    <Property Name="LastUpdate" Type="datetime" />
+    <Property Name="IsObsolete" Type="bit" />
+    <Property Name="ObsoleteDate" Type="date" />
+  </EntityType>
+  <EntityType Name="SubGroup">
+    <Key>
+      <PropertyRef Name="SubGroupId" />
+    </Key>
+    <Property Name="SubGroupId" Type="nvarchar" Nullable="false" MaxLength="21" />
+    <Property Name="SubGroupName" Type="nvarchar" MaxLength="100" />
+    <Property Name="GroupId" Type="nvarchar" MaxLength="18" />
+    <Property Name="OracleLastUpdate" Type="date" />
+    <Property Name="LastUpdate" Type="datetime" />
+    <Property Name="AutoUpdate" Type="bit" />
+    <Property Name="IsObsolete" Type="bit" />
+    <Property Name="ObsoleteDate" Type="date" />
+  </EntityType>
+</Schema>

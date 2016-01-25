@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcQIS", "MvcQIS\MvcQIS.csproj", "{D14F40C8-647A-40BA-8397-E0EF2D40688D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7E98FB83-11C6-4D07-B674-D0201FA8F4B7}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QISEmailReminder", "QISEmailReminder\QISEmailReminder.csproj", "{91C7D59C-CF9E-4750-9165-78495D2C6C68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlarmCAROverdue", "AlarmCAROverdue\AlarmCAROverdue.csproj", "{7B98A4A9-20C3-455B-B8E5-424245BD2E17}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D14F40C8-647A-40BA-8397-E0EF2D40688D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D14F40C8-647A-40BA-8397-E0EF2D40688D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D14F40C8-647A-40BA-8397-E0EF2D40688D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D14F40C8-647A-40BA-8397-E0EF2D40688D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91C7D59C-CF9E-4750-9165-78495D2C6C68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91C7D59C-CF9E-4750-9165-78495D2C6C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91C7D59C-CF9E-4750-9165-78495D2C6C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91C7D59C-CF9E-4750-9165-78495D2C6C68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B98A4A9-20C3-455B-B8E5-424245BD2E17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B98A4A9-20C3-455B-B8E5-424245BD2E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B98A4A9-20C3-455B-B8E5-424245BD2E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B98A4A9-20C3-455B-B8E5-424245BD2E17}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

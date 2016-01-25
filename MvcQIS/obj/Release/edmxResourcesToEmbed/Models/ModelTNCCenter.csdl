@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TNC_CenterModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="TNC_CenterEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Department" EntityType="TNC_CenterModel.Department" />
+    <EntitySet Name="Division" EntityType="TNC_CenterModel.Division" />
+    <EntitySet Name="Employee" EntityType="TNC_CenterModel.Employee" />
+    <EntitySet Name="Group" EntityType="TNC_CenterModel.Group" />
+    <EntitySet Name="Position" EntityType="TNC_CenterModel.Position" />
+    <EntitySet Name="SubGroup" EntityType="TNC_CenterModel.SubGroup" />
+  </EntityContainer>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DeptId" />
+    </Key>
+    <Property Name="DeptId" Type="String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="DeptName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="MrgEmpId" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="DivId" Type="String" MaxLength="12" Unicode="true" FixedLength="false" />
+    <Property Name="OracleLastUpdate" Type="DateTime" Precision="0" />
+    <Property Name="LastUpdate" Type="DateTime" Precision="3" />
+    <Property Name="AutoUpdate" Type="Boolean" />
+    <Property Name="IsObsolete" Type="Boolean" />
+    <Property Name="ObsoleteDate" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="Division">
+    <Key>
+      <PropertyRef Name="DivId" />
+    </Key>
+    <Property Name="DivId" Type="String" Nullable="false" MaxLength="12" Unicode="true" FixedLength="false" />
+    <Property Name="DivName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="MrgEmpId" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="FieldId" Type="String" MaxLength="9" Unicode="true" FixedLength="false" />
+    <Property Name="OracleLastUpdate" Type="DateTime" Precision="0" />
+    <Property Name="LastUpdate" Type="DateTime" Precision="3" />
+    <Property Name="AutoUpdate" Type="Boolean" />
+    <Property Name="IsObsolete" Type="Boolean" />
+    <Property Name="ObsoleteDate" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmpId" />
+    </Key>
+    <Property Name="EmpId" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="Username" Type="String" MaxLength="32" Unicode="true" FixedLength="false" />
+    <Property Name="Password" Type="String" MaxLength="32" Unicode="true" FixedLength="false" />
+    <Property Name="FirstName" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="LastName" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="FirstNameTh" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="LastNameTh" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="PositionId" Type="String" MaxLength="4" Unicode="true" FixedLength="false" />
+    <Property Name="SubGroupId" Type="String" MaxLength="21" Unicode="true" FixedLength="false" />
+    <Property Name="GroupId" Type="String" MaxLength="18" Unicode="true" FixedLength="false" />
+    <Property Name="DeptId" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="DivId" Type="String" MaxLength="12" Unicode="true" FixedLength="false" />
+    <Property Name="FieldId" Type="String" MaxLength="9" Unicode="true" FixedLength="false" />
+    <Property Name="FactoryId" Type="String" MaxLength="6" Unicode="true" FixedLength="false" />
+    <Property Name="AreaId" Type="String" MaxLength="3" Unicode="true" FixedLength="false" />
+    <Property Name="Ext" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="BirthDate" Type="DateTime" Precision="0" />
+    <Property Name="JoinDate" Type="DateTime" Precision="0" />
+    <Property Name="Nation" Type="Int16" />
+    <Property Name="Sex" Type="String" MaxLength="1" Unicode="true" FixedLength="true" />
+    <Property Name="Status" Type="Int16" />
+    <Property Name="Address" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="SubDistId" Type="String" MaxLength="4" Unicode="true" FixedLength="false" />
+    <Property Name="DistrictId" Type="String" MaxLength="4" Unicode="true" FixedLength="false" />
+    <Property Name="ProvinceId" Type="String" MaxLength="4" Unicode="true" FixedLength="false" />
+    <Property Name="PostCode" Type="String" MaxLength="5" Unicode="true" FixedLength="true" />
+    <Property Name="Telephone" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="OracleLastUpdate" Type="DateTime" Precision="0" />
+    <Property Name="LastUpdate" Type="DateTime" Precision="3" />
+    <Property Name="AutoUpdate" Type="Boolean" />
+    <Property Name="IsObsolete" Type="Boolean" />
+    <Property Name="ObsoleteDate" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="GroupId" />
+    </Key>
+    <Property Name="GroupId" Type="String" Nullable="false" MaxLength="18" Unicode="true" FixedLength="false" />
+    <Property Name="GroupName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="MrgEmpId" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="DeptId" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="OracleLastUpdate" Type="DateTime" Precision="0" />
+    <Property Name="LastUpdate" Type="DateTime" Precision="3" />
+    <Property Name="AutoUpdate" Type="Boolean" />
+    <Property Name="IsObsolete" Type="Boolean" />
+    <Property Name="ObsoleteDate" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="PositionId" />
+    </Key>
+    <Property Name="PositionId" Type="String" Nullable="false" MaxLength="4" Unicode="true" FixedLength="false" />
+    <Property Name="PositionName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="PositionLevel" Type="Int16" />
+    <Property Name="OracleLastUpdate" Type="DateTime" Precision="0" />
+    <Property Name="LastUpdate" Type="DateTime" Precision="3" />
+    <Property Name="IsObsolete" Type="Boolean" />
+    <Property Name="ObsoleteDate" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="SubGroup">
+    <Key>
+      <PropertyRef Name="SubGroupId" />
+    </Key>
+    <Property Name="SubGroupId" Type="String" Nullable="false" MaxLength="21" Unicode="true" FixedLength="false" />
+    <Property Name="SubGroupName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="GroupId" Type="String" MaxLength="18" Unicode="true" FixedLength="false" />
+    <Property Name="OracleLastUpdate" Type="DateTime" Precision="0" />
+    <Property Name="LastUpdate" Type="DateTime" Precision="3" />
+    <Property Name="AutoUpdate" Type="Boolean" />
+    <Property Name="IsObsolete" Type="Boolean" />
+    <Property Name="ObsoleteDate" Type="DateTime" Precision="0" />
+  </EntityType>
+</Schema>

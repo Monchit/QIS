@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TNC_ADMINModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="TNC_ADMINEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="tnc_costcentercode" EntityType="TNC_ADMINModel.tnc_costcentercode" />
+    <EntitySet Name="tnc_dept_master" EntityType="TNC_ADMINModel.tnc_dept_master" />
+    <EntitySet Name="tnc_group_master" EntityType="TNC_ADMINModel.tnc_group_master" />
+    <EntitySet Name="tnc_plant_master" EntityType="TNC_ADMINModel.tnc_plant_master" />
+    <EntitySet Name="tnc_position_master" EntityType="TNC_ADMINModel.tnc_position_master" />
+    <EntitySet Name="tnc_subgroup_master" EntityType="TNC_ADMINModel.tnc_subgroup_master" />
+    <EntitySet Name="tnc_user" EntityType="TNC_ADMINModel.tnc_user" />
+    <EntitySet Name="V_Employee_Info" EntityType="TNC_ADMINModel.V_Employee_Info" />
+    <EntitySet Name="View_Organization" EntityType="TNC_ADMINModel.View_Organization" />
+  </EntityContainer>
+  <EntityType Name="tnc_costcentercode">
+    <Key>
+      <PropertyRef Name="subgroup_id" />
+      <PropertyRef Name="cost_code" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="plant_id" />
+    <Property Type="Int32" Name="dept_id" />
+    <Property Type="Int32" Name="group_id" />
+    <Property Type="Int32" Name="subgroup_id" Nullable="false" />
+    <Property Type="String" Name="cost_code" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="active" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tnc_dept_master">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="dept_name" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tnc_group_master">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="group_name" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="s_name" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tnc_plant_master">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="plant_name" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tnc_position_master">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" />
+    <Property Type="String" Name="position_name" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Byte" Name="level" />
+  </EntityType>
+  <EntityType Name="tnc_subgroup_master">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="sub_group" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tnc_user">
+    <Key>
+      <PropertyRef Name="emp_code" />
+    </Key>
+    <Property Type="String" Name="emp_code" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="emp_title" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="emp_fname" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="emp_lname" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="emp_sex" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Byte" Name="emp_position" />
+    <Property Type="Byte" Name="emp_group" />
+    <Property Type="Byte" Name="emp_depart" />
+    <Property Type="Byte" Name="emp_plant" />
+    <Property Type="DateTime" Name="emp_joindate" Precision="0" />
+    <Property Type="String" Name="emp_status" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Type="String" Name="username" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="password" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="email" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="img_path" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Byte" Name="admin_role" />
+    <Property Type="String" Name="createby" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="createdate" Precision="0" />
+    <Property Type="DateTime" Name="lastupdate" Precision="0" />
+    <Property Type="Int32" Name="ext" />
+    <Property Type="Byte" Name="emp_subgroup" />
+    <Property Type="String" Name="windows_user" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="ip" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="transfer_permission" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="ad_user" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="V_Employee_Info">
+    <Key>
+      <PropertyRef Name="emp_code" />
+    </Key>
+    <Property Type="String" Name="emp_code" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="emp_fname" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="emp_lname" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="position_name" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="email" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="sub_group_id" />
+    <Property Type="String" Name="sub_group" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="group_id" />
+    <Property Type="String" Name="group_name" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="dept_id" />
+    <Property Type="String" Name="dept_name" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="plant_id" />
+    <Property Type="String" Name="plant_name" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="emp_status" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="View_Organization">
+    <Key>
+      <PropertyRef Name="cost_code" />
+      <PropertyRef Name="active" />
+      <PropertyRef Name="subgroup_id" />
+    </Key>
+    <Property Type="String" Name="cost_code" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="active" Nullable="false" />
+    <Property Type="Int32" Name="plant_id" />
+    <Property Type="String" Name="plant_name" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="PlantMgr" MaxLength="41" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="PlantMgr_email" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="dept_id" />
+    <Property Type="String" Name="dept_name" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="DeptMgr" MaxLength="41" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="DeptMgr_email" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="group_id" />
+    <Property Type="String" Name="group_name" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="GroupMgr" MaxLength="41" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="GroupMgr_email" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="subgroup_id" Nullable="false" />
+    <Property Type="String" Name="sub_group" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

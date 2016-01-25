@@ -1,0 +1,339 @@
+﻿
+<link href="~/Content/table.css" rel="stylesheet" />
+<style type="text/css">
+    .ui-datepicker { font-size: 12px !important; }
+    .ui-jqgrid tr.jqgrow td { white-space: normal !important; }
+</style>
+<script type="text/javascript">
+    function CreateGridOverDue(data) {
+        $("#divGridOverDue").html('<table id="grid_overdue"></table><div id="pager_overdue"></div>');
+        //Grid QC Reject
+        jQuery("#grid_overdue").jqGrid({
+            url: '@Url.Action("GridOverDue","Report")?' + data,
+             datatype: 'json',
+             mtype: 'POST',
+             colNames: ['Resposible by', 'Report no.','Product', 'Item code', 'Problem Detail', 'Defective level', 'Due date', 'Over due (days)'],
+             colModel: [
+                 { name: 'responsible', index: 'Master_Product.product_name', align: 'left', sortable: true },
+                 { name: 'report_no', index: 'report_no', align: 'left', sortable: true },
+                 { name: 'product_name', index: 'QCReject.Master_Product.product_name', align: 'left', sortable: true },
+                 { name: 'item_code', index: 'QCReject.item_code', align: 'left', sortable: true },
+                 { name: 'problem', index: 'QCReject.problem', align: 'left', sortable: true },
+                 { name: 'defective_lv', index: 'QCReject.defective_lv', align: 'center', sortable: true },
+                 { name: 'reply_due_date', index: 'reply_due_date', align: 'center', sortable: true, sorttype: 'date', formatter: 'date', formatoptions: { newformat: 'd-M-Y' }, datefmt: 'd-M-Y' },
+                 { name: 'over_due', index: 'over_due', align: 'center', sortable: true }
+             ],
+             pager: jQuery('#pager_overdue'),
+             rowNum: 10,
+             rowList: [5, 10, 20, 50],
+             autowidth: true,
+             //width: 500,
+             height: 'auto',
+             sortname: 'reply_due_date',
+             sortorder: "asc",
+             viewrecords: true,
+             rownumbers: true,
+             rownumWidth: '25px',
+             caption: 'CAR/PAR OVER DUE',
+             ajaxSelectOptions: { cache: false },
+             //gridview:true,
+             //loadonce: false,
+             scrollOffset: 0
+         });
+
+        jQuery("#grid_overdue").jqGrid('navGrid', '#pager_overdue',
+             { edit: false, add: false, del: false, search: false, view: false }, {}, {}, {}, {}, {});
+    }
+
+    @*function CreateGridCritical(data) {
+        $("#divGridCritical").html('<table id="grid_critical"></table><div id="pager_critical"></div>');
+        jQuery("#grid_critical").jqGrid({
+            url: '@Url.Action("GridCriticalRejData","Home")?' + data,
+            datatype: 'json',
+            mtype: 'POST',
+            colNames: ['Responsible by', 'Report no.', 'Product', 'Item code', 'Problem Detail', 'Defective level', 'Image', 'Date'],
+            colModel: [
+               { name: 'responsible', index: 'Car.Master_Product.product_name', align: 'left', sortable: true },
+               { name: 'report_no', index: 'Car.report_no', align: 'left', sortable: true },
+               { name: 'product_name', index: 'Master_Product.product_name', align: 'left', sortable: true },
+               { name: 'item_code', index: 'item_code', align: 'left', sortable: true },
+               { name: 'problem', index: 'problem', align: 'left' },
+               { name: 'defective_lv', index: 'defective_lv', align: 'center' },
+               { name: 'picture', index: 'picture', align: 'center' },
+               { name: 'issued_date', index: 'Car.issued_date', align: 'center', sortable: true, sorttype: 'date', formatter: 'date', formatoptions: { newformat: 'd-M-Y' }, datefmt: 'd-M-Y' }
+            ],
+            pager: jQuery('#pager_critical'),
+            rowNum: 10,
+            rowList: [5, 10, 20, 50],
+            autowidth: true,
+            //width: 500,
+            height: 'auto',
+            sortable: true,
+            sortname: 'item_code',
+            sortorder: "asc",
+            viewrecords: true,
+            rownumbers: true,
+            rownumWidth: '25px',
+            caption: 'Critical Reject',
+            ajaxSelectOptions: { cache: false },
+            //gridview:true,
+            //loadonce: false,
+            scrollOffset: 0
+        });
+
+        jQuery("#grid_critical").jqGrid('navGrid', '#pager_critical',
+             { edit: false, add: false, del: false, search: false, view: false }, {}, {}, {}, {}, {});
+    }*@
+
+    //var chart;
+    function CreateChart(data) {
+        $.get('@Url.Action("GetPieChartData","Report")?' + data, function (data) {
+            var json = data;
+            var jsondata = [];
+            for (var i in json) {
+                // var serie = new Array(json[i].Projects, json[i].Bugs);
+                jsondata.push([json[i].rootcause, json[i].rootcount]);
+            }
+            var chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'piechart4m',
+                    type: 'pie',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: '4M'
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat(this.percentage, 2) + ' %';
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
+                //tooltip: {
+                //    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+                //    percentageDecimals: 2
+                //},
+                //plotOptions: {
+                //    pie: {
+                //        showInLegend: true,
+                //        animation: false,
+                //        allowPointSelect: true,
+                //        cursor: 'pointer',
+                //        formatter: function () {
+                //            return this.point.name;
+                //        }
+                //    },
+                //    series: {
+                //        dataLabels: {
+                //            enabled: true,
+                //            formatter: function () {
+                //                return this.data
+                //                //return Highcharts.numberFormat(this.percentage, 2)
+                //                //Math.round(this.percentage * 100) / 100 + ' %';
+                //            },
+                //            distance: -30,
+                //            color: 'white'
+                //        }
+                //    }
+                //},
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            formatter: function () {
+                                return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat(this.percentage, 2) + ' % (' + this.y + ')';
+                            }
+                        }
+                    }
+                },
+                legend: {
+                    enabled: true
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'percent',
+                    data: jsondata
+                }]
+            });
+        });
+    }
+
+    $(document).ready(function () {
+        
+        CreateGridOverDue("plantid=" + $("#slPlant").val());
+        //CreateGridCritical("plantid=" + $("#slPlant").val());
+        var param = "plantid=" + $("#slPlant").val()
+        + "&productid=" + $("#slProduct").val()
+        + "&startdate=" + $("#start_date").val()
+        + "&enddate=" + $("#end_date").val();
+        CreateChart(param);
+
+        $("#slPlant").change(function () {
+            var plantid = "plantid=" + $(this).val();
+            $.get("@Url.Action("getProductByPlant")", plantid, function (data) {
+                $("#slProduct").children().remove();
+                var selection = "<option value='0'>All Product</option>";
+                for (var i = 0; i < data.length; i++) {
+                    selection += "<option value='" + data[i].product_id + "'>" + data[i].product_name + "</option>";
+                }
+                $("#slProduct").html(selection);
+            });
+            CreateGridOverDue(plantid);
+            //CreateGridCritical(plantid);
+            $('#divCar').slideUp();
+        });
+
+        $(".fancybox").fancybox({
+            openEffect: 'elastic',
+            closeEffect: 'elastic',
+            maxWidth: 800,
+            maxHeight: 600,
+            easing: true
+        });
+
+        //Datepicker Setting
+        $(".datepicker").datepicker({
+            dateFormat: 'dd-mm-yy',
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            showButtonPanel: true
+            //minDate: new Date()//set minDate is today
+        });
+
+        $(document).on("click", ".btCar", function () {
+            var $btn = $(this);
+            $.get("@Url.Action("GetShowCar","Home")", "id=" + $btn.attr("data-rejId"), function (data) {
+                 $("#lbReportNo").text(data.report_no);
+                 $("#lbFound").text(data.found);
+                 $("#lbRoot").text(data.root_cause);
+                 $("#lbRespGrp").text(data.product_name);
+                 $("#lbQtyProd").text(data.qty_product);
+                 $("#lbQtyRej").text(data.qty_reject);
+                 $("#lbIPQC").text(data.ipqc);
+                 $("#lbIssueDate").text(data.issued_date);
+                 $("#lbReplyDueDate").text(data.reply_due_date);
+                 $("#lbReplyDate").text(data.reply_date);
+                 $("#lbRespondDate").text(data.respond_date);
+                 $("#lbEffDate").text(data.effective_date);
+                 $("#linkFile").children().remove();
+                 if (data.attach != null) {
+                     $("#linkFile").append("<a href='../" + data.attach + "' target='_blank'>Show</a>");
+                 }
+             });
+             $('#divCar').slideUp().slideDown();//animation
+             $('#hideshow').css("display", "inline");//un-hide #hideshow
+             $("html, body").animate({ scrollTop: $(document).height() }, "slow");//scroll to bottom of page
+             return false;
+        });
+
+        $('#hideshow').click(function (e) {
+            e.preventDefault();//for prevent jump to top
+            $('#divCar').slideToggle();
+            if ($(this).text() == "Hide")
+                $(this).text("Show CAR Detail");
+            else
+                $(this).text("Hide");
+        });
+
+        $('#btnSearch').click(function () {
+            var param = "plantid=" + $("#slPlant").val()
+                + "&productid=" + $("#slProduct").val()
+                + "&startdate=" + $("#start_date").val()
+                + "&enddate=" + $("#end_date").val();
+            CreateChart(param);
+        });
+    });
+</script>
+<h2>@ViewBag.Title</h2>
+<p>
+    <select id="slPlant" style="width:120px;" >
+        @foreach (var item in ViewBag.SelectPlant)
+        {
+            <option value="@item.plant_id">
+                @item.plant_name
+            </option>
+        }
+    </select>
+</p>
+
+<h3>CAR/PAR OVER DUE:</h3>
+<div id="divGridOverDue"></div>
+
+@*<h3>Critical Reject:</h3>
+<div id="divGridCritical"></div>*@
+<a href="#" id="hideshow" style="display:none;">Hide</a>
+<div id="divCar" style="display:none;">
+    <table class="bordered">
+        <tr>
+            <th>Report No.</th>
+            <td><span id="lbReportNo"></span></td>
+            <th>Q'ty of Product</th>
+            <td><span id="lbQtyProd"></span></td>
+            <th>Reply Due Date</th>
+            <td><span id="lbReplyDueDate"></span></td>
+        </tr>
+        <tr>
+            <th>Found at Process</th>
+            <td><span id="lbFound"></span></td>
+            <th>Q'ty of Reject</th>
+            <td><span id="lbQtyRej"></span></td>
+            <th>Reply Date</th>
+            <td><span id="lbReplyDate"></span></td>
+        </tr>
+        <tr>
+            <th>Root cause (4M)</th>
+            <td><span id="lbRoot"></span></td>
+            <th>IPQC</th>
+            <td><span id="lbIPQC"></span></td>
+            <th>Respond Date</th>
+            <td><span id="lbRespondDate"></span></td>
+        </tr>
+        <tr>
+            <th>Responsible Group</th>
+            <td><span id="lbRespGrp"></span></td>
+            <th>Issue Date</th>
+            <td><span id="lbIssueDate"></span></td>
+            <th>Effective Date</th>
+            <td><span id="lbEffDate"></span></td>
+        </tr>
+        <tr>
+            <th>File scan</th>
+            <td colspan="5">
+                <span id="linkFile"></span>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<h3>CAR/PAR Status:</h3>
+<table>
+    <tr>
+        <td>Start Date:</td>
+        <td><input type="text" id="start_date" class="datepicker" style="width:120px;"/></td>
+        <td>End Date:</td>
+        <td><input type="text" id="end_date" class="datepicker" style="width:120px;"/></td>
+        <td>Product:</td>
+        <td>
+            <select id="slProduct" style="width:150px;" >
+                <option value='0'>All Product</option>
+                @foreach (var item in ViewBag.SelectProduct)
+                {
+                    <option value="@item.product_id">
+                        @item.product_name
+                    </option>
+                }
+            </select>
+        </td>
+        <td><input type="button" id="btnSearch" value="Search" /></td>
+    </tr>
+</table>
+
+<div id="piechart4m" style="height: 400px"></div>

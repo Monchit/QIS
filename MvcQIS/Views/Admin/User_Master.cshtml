@@ -1,0 +1,55 @@
+﻿<style type="text/css">
+    /* fix the size of the pager */
+    input.ui-pg-input { width: auto; }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Grid User
+        jQuery("#grid_user").jqGrid({
+            url: "@Url.Action("GridUserData","Admin")",
+            datatype: 'json',
+            mtype: 'POST',
+            colNames: ['User Name','Name', 'User Type', 'Plant Name'],
+            colModel: [
+              { name: 'user_code', index: 'user_code', key: true, align: 'center', editable: true, sortable: true, edittype: 'select', editoptions: { dataUrl: "@Url.Action("UserSelectList","Admin")" }, editrules: { required: true } },
+              { name: 'empfullname', index: 'empfullname', sortable: true },
+              { name: 'utype_id', index: 'utype_id', align: 'center', editable: true, sortable: true, edittype: 'select', editoptions: { dataUrl: "@Url.Action("UTypeSelectList","Admin")" }, editrules: { required: true } },
+              { name: 'plant_id', index: 'plant_id', align: 'center', editable: true, sortable: true, edittype: 'select', editoptions: { dataUrl: "@Url.Action("PlantSelectList","Admin")" }, editrules: { required: true } }
+            ],
+            pager: jQuery('#pager_user'),
+            //pagerpos: 'left',
+            rowNum: 10,
+            rowList: [5, 10, 20, 50],
+            autowidth: true,
+            //width: '600',
+            height: 'auto',
+            sortname: 'plant_id',
+            sortorder: "asc",
+            viewrecords: true,
+            caption: 'User Master',
+            ajaxSelectOptions: { cache: false },
+            //recreateForm: true,
+            scrollOffset: 0
+        });
+
+        jQuery("#grid_user").jqGrid('navGrid', '#pager_user',
+            { edit: true, add: true, del: true, search: false, view: true },//
+            { url: "@Url.Action("EditUser","Admin")", closeAfterEdit: true, width: 400, beforeShowForm: function (formid) { $("#tr_user_code", formid).show(); } },
+            { url: "@Url.Action("AddUser","Admin")", addCaption: 'Create New User', width: 400, closeAfterAdd: true, beforeShowForm: function (formid) { $("#tr_user_code", formid).show(); } },
+            { url: "@Url.Action("DeleteUser","Admin")", width: 400,
+                beforeShowForm: function (formid) {
+                    var selRowId = $(this).jqGrid('getGridParam', 'selrow');
+                    $("td.delmsg", formid[0]).html("Do you really want delete <br /><b>User : " +
+                         $(this).jqGrid('getCell', selRowId, 'empfullname') + "</b>?");
+                }
+            }, {}, { width: 400 });
+    });
+</script>
+
+<h2>@ViewBag.Title</h2>
+
+<br />
+<table id="grid_user">
+</table>
+<div id="pager_user"></div>

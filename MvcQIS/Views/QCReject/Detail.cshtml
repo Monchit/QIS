@@ -1,0 +1,96 @@
+﻿@model MvcQIS.Models.QCReject
+
+<link href="~/Content/table.css" rel="stylesheet" />
+<style type="text/css">
+    table.bordered th {
+        text-align:left !important;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+</script>
+<h2>@ViewBag.Title</h2>
+
+<h3>QC Reject Detail</h3>
+<table id="tableQCRej" class="bordered">
+        <tr>
+            <th>Product</th>
+            <td>@Model.Master_Product.product_name</td>
+            <th style="white-space: nowrap">Defective level</th>
+            <td>@Model.defective_lv</td>
+            <th style="white-space: nowrap">QC Inspector</th>
+            <td>@Model.inspector</td>
+        </tr>
+        <tr>
+            <th>Item code</th>
+            <td>@Model.item_code</td>
+            <th>Shift</th>
+            <td>@Model.shift</td>
+            <th>Setupman</th>
+            <td></td>
+        </tr>
+        <tr>
+            <th>Lot no.</th>
+            <td>@Model.lot_no</td>
+            <th>Issue CAR</th>
+            <td>@if (Model.issue_car == 0)
+                { <label>No</label> }
+                else
+                { <label>Yes</label> }</td>
+            <th>Screener</th>
+            <td>@Model.screener</td>
+        </tr>
+        <tr>
+            <th style="white-space: nowrap">Problem detail</th>
+            <td colspan="5">@Model.problem</td>
+        </tr>
+        <tr>
+            <th>Picture</th>
+            <td colspan="5"><img src="http://webExternal/qis/@Model.picture" alt="not found" height="150" width="150"/></td>
+        </tr>
+    </table>
+
+@if (Model.Car != null)
+{
+<h3>CAR Detail</h3>
+    <table class="bordered">
+        <tr>
+            <th>Report No.</th>
+            <td>@Model.Car.report_no</td>
+            <th>Q'ty of Product</th>
+            <td>@Model.Car.qty_product</td>
+            <th>Reply Due Date</th>
+            <td>@String.Format("{0:dd-MM-yyyy}", Model.Car.reply_due_date)</td>
+        </tr>
+        <tr>
+            <th>Found at Process</th>
+            <td>@Model.Car.found</td>
+            <th>Q'ty of Reject</th>
+            <td>@Model.Car.qty_reject</td>
+            <th>Reply Date</th>
+            <td>@String.Format("{0:dd-MM-yyyy}", Model.Car.reply_date)</td>
+        </tr>
+        <tr>
+            <th>Root cause (4M)</th>
+            <td>@Model.Car.root_cause</td>
+            <th>IPQC</th>
+            <td>@Model.Car.ipqc</td>
+            <th>Respond Date</th>
+            <td>@String.Format("{0:dd-MM-yyyy}", Model.Car.respond_date)</td>
+        </tr>
+        <tr>
+            <th>Responsible Group</th>
+            <td>@Model.Car.responsible</td>
+            <th>Issue Date</th>
+            <td>@String.Format("{0:dd-MM-yyyy}", Model.Car.issued_date)</td>
+            <th>Effective Date</th>
+            <td>@String.Format("{0:dd-MM-yyyy}", Model.Car.effective_date)</td>
+        </tr>
+        <tr>
+            <th>File scan</th>
+            <td colspan="5"></td>
+        </tr>
+    </table>
+}

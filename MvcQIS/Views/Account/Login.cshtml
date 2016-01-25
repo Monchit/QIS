@@ -1,0 +1,70 @@
+﻿@model MvcQIS.Models.tnc_user
+
+@{
+    ViewBag.Title = "Log in";
+}
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+    </section>
+}
+<style type="text/css">
+        .jquery_form_error_message {
+            /*font-size: .8em;*/
+            color: red;
+            display: block;
+            margin-top: 2px;
+        }
+    </style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Show error below inputs
+        var validationSettings = {
+            errorMessagePosition: 'element'//top, element
+        };
+
+        $("#btlogin").click(function () {
+            return $("#loginForm").validateOnBlur().validate(false, validationSettings);
+        });
+    });
+</script>
+
+<section id="loginForm">
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <table>
+        <tr>
+            <td>
+                @Html.LabelFor(m => m.username)
+                @Html.TextBoxFor(m => m.username, new { data_validation = "validate_min_length length4" })
+                @Html.ValidationMessageFor(m => m.username)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(m => m.password)
+                @Html.PasswordFor(m => m.password, new { data_validation = "validate_min_length length4" })
+                @Html.ValidationMessageFor(m => m.password)
+            </td>
+        </tr>
+        <tr><td style="height:10px;"></td></tr>
+        <tr>
+            <td>
+                <input id="btlogin" type="submit" value="Log in" />
+            </td>
+        </tr>
+    </table>
+}
+</section>
+
+@*<section>
+    <h3>&nbsp;User Manual : </h3>
+    <a href="@Url.Content("~/Content/QIS UserManual.docx")">Thai Version.</a>
+</section>*@

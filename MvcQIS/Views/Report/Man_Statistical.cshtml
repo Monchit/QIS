@@ -1,0 +1,284 @@
+﻿
+<link href="~/Content/table.css" rel="stylesheet" />
+<script type="text/javascript" src="@Url.Content("~/Scripts/exporting.js")"></script>
+<script type="text/javascript">
+    function GetGraph_ManMonth() {
+        options = {
+            chart: {
+                renderTo: 'highChart',
+                type: 'column'
+            },
+            title: {
+                text: 'Month Summary'
+            },
+            xAxis: {
+                title: { text: 'Operator' },
+                categories: [],
+                //labels: {
+                //    rotation: -45,
+                //    align: 'right',
+                //    style: {
+                //        fontSize: '14px',
+                //        fontFamily: 'Tahoma, Verdana, sans-serif'
+                //    }
+                //},
+                useHTML: true
+            },
+            yAxis: {
+                min: 0,
+                title: { text: 'QC Reject' }
+            },
+            legend: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.x + '</b><br/>' +
+                        'Amount of QC Reject: ' + Highcharts.numberFormat(this.y, 0);
+                }
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                        color: 'blue'
+                    }
+                }
+            },
+            series: []
+        }
+        GetData_ManMonth();
+    }
+
+    function GetGraph_ManYear() {
+        options = {
+            chart: {
+                renderTo: 'highChart',
+                type: 'column'
+            },
+            title: {
+                text: 'Year Summary'
+            },
+            xAxis: {
+                title: { text: 'Operator' },
+                categories: [],
+                useHTML: true
+                //categories: ['1','2','3','4','5','6','7','8','9','10']
+            },
+            yAxis: {
+                min: 0,
+                title: { text: 'QC Reject' }
+            },
+            legend: {
+                enabled: false
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.x + '</b><br/>' +
+                        'Amount of QC Reject: ' + Highcharts.numberFormat(this.y, 0);
+                }
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                        color: 'blue'
+                    }
+                }
+            },
+            series: []
+        }
+        GetData_ManYear();
+    }
+
+    function GetData_ManMonth() {
+        var obj = new Object();
+        obj.mm = $("#slMonth").val();
+        obj.yy = $("#slYear").val();
+        obj.plantid = $("#slPlant").val();
+        obj.productid = $("#slProduct").val();
+        obj.utype = $("#slOperator").val();
+
+        $.getJSON('@Url.Action("getData_ManMonth","Report")', obj, function (data) {
+
+            var series = [];
+            var cat = [];
+
+            series.push({
+                data: data.ucount
+            });
+
+            options.xAxis.categories = data.cat;
+            options.series = series;
+
+            //Create the chart
+            var chart = new Highcharts.Chart(options);
+        });
+    }
+
+    function GetData_ManYear() {
+        var obj = new Object();
+        obj.yy = $("#slYear").val();
+        obj.plantid = $("#slPlant").val();
+        obj.productid = $("#slProduct").val();
+        obj.utype = $("#slOperator").val();
+
+        $.getJSON('@Url.Action("getData_ManYear","Report")', obj, function (data) {
+
+            var series = [];
+            var cat = [];
+
+            series.push({
+                data: data.ucount
+            });
+
+            options.xAxis.categories = data.cat;
+            options.series = series;
+
+            //Create the chart
+            var chart = new Highcharts.Chart(options);
+        });
+    }
+
+    function ShowHide_MonthYear(data) {
+        if (data == 1) {
+            $("#slMonth").fadeIn();
+            $("#spanYear").fadeIn();
+        } else if (data == 2) {
+            $("#slMonth").fadeOut();
+            $("#spanYear").fadeIn();
+        } else {
+            $("#slMonth").fadeOut();
+            $("#spanYear").fadeOut();
+        }
+    }
+
+    $(document).ready(function () {
+
+        var theDate = new Date();
+        var thisMonth = theDate.getMonth();
+        var thisYear = theDate.getFullYear();
+        var select = $("<select id='slYear' style='width:70px;'>");
+        for (var i = 0; i < 10; i++) {
+            var year = thisYear - i;
+            $("<option>", { value: year, text: year }).appendTo(select);
+        }
+        select.appendTo("#spanYear");
+
+        $("#slPlant").change(function () {
+            $.get("@Url.Action("getProductByPlant")", "plantid=" + $(this).val(), function (data) {
+                $("#slProduct").children().remove();
+                var selection = "<option value='0'>All Product</option>";
+                for (var i = 0; i < data.length; i++) {
+                    selection += "<option value='" + data[i].product_id + "'>" + data[i].product_name + "</option>";
+                }
+                $("#slProduct").html(selection);
+            });
+        });
+
+        $("#slMonth").val(thisMonth + 1);//Set this month select.
+        var plant = '@ViewBag.MyPlant';
+        if (plant != "0")
+            $("#slPlant").val(plant);
+
+        ShowHide_MonthYear($("#slResult").val());//Set show/hide select month/year on page load
+
+        $("#slResult").change(function () {
+            ShowHide_MonthYear($(this).val());
+        });
+
+        $("#btnCreateGraph").click(function () {
+            $("#highChart").css("display", "inline");
+            var graph_type = $("#slResult").val();
+
+            if (graph_type == 1) {
+                GetGraph_ManMonth();
+            }
+            else if (graph_type == 2) {
+                GetGraph_ManYear();
+            }
+        });
+    });
+</script>
+<h2>@ViewBag.Title</h2>
+<br />
+<table>
+    <tr>
+        <td>Graph Type:</td>
+        <td>
+            <select id="slResult" style="width:150px;" >
+                <option value="1">Month Summary</option>
+                <option value="2">Year Summary</option>
+            </select>
+        </td>
+        <td>
+            <select id="slMonth" style="width:70px;" >
+                <option value="1">Jan</option>
+                <option value="2">Feb</option>
+                <option value="3">Mar</option>
+                <option value="4">Apr</option>
+                <option value="5">May</option>
+                <option value="6">Jun</option>
+                <option value="7">Jul</option>
+                <option value="8">Aug</option>
+                <option value="9">Sep</option>
+                <option value="10">Oct</option>
+                <option value="11">Nov</option>
+                <option value="12">Dec</option>
+            </select>
+            <span id="spanYear"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>Select Plant:</td>
+        <td>
+            <select id="slPlant" style="width:150px;" >
+                @foreach (var item in ViewBag.SelectPlant)
+                {
+                    <option value="@item.plant_id">
+                        @item.plant_name
+                    </option>
+                }
+            </select>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Select Product:</td>
+        <td>
+            <select id="slProduct" style="width:150px;" >
+                <option value='0'>All Product</option>
+                @foreach (var item in ViewBag.SelectProduct)
+                {
+                    <option value="@item.product_id">
+                        @item.product_name
+                    </option>
+                }
+            </select>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Select Operator:</td>
+        <td>
+            <select id="slOperator" style="width:150px;">
+                @foreach (var item in ViewBag.Oper)
+                {
+                    <option value="@item.outype_id">
+                        @item.outype_name
+                    </option>
+                }
+            </select>
+        </td>
+        <td><input type="button" value="Create Graph" id="btnCreateGraph" name="btnCreateGraph" /></td>
+    </tr>
+</table>
+<br />
+<div id="highChart" style="height: 400px; width: 1000px; display:none;"></div>
+
