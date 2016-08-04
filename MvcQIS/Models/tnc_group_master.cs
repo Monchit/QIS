@@ -17,5 +17,6 @@ namespace MvcQIS.Models
         public int id { get; set; }
         public string group_name { get; set; }
         public string s_name { get; set; }
+        public string subname { get; set; }
     }
 }

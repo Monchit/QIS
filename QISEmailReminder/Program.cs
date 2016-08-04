@@ -63,23 +63,50 @@ namespace QISEmailReminder
                             topemail = g.email + ",chiba@nok.co.th,yoshioka@nok.co.th,sirichai@nok.co.th";
                         }
                         //Add by Monchit 2015-07-29
-                        else if (g.email == "pansak@nok.co.th")//PPP
+                        else if (g.email == "wichet@nok.co.th")//QC OSP1
+                        {
+                            topemail = g.email + ",sereepap@nok.co.th,suzuki@nok.co.th,teerapoom@nok.co.th";
+                        }
+                        else if (g.email == "Poonsab@nok.co.th")//QC OSP2
+                        {
+                            topemail = g.email + ",jatuphol@nok.co.th,suzuki@nok.co.th";
+                        }
+                        else if (g.email == "widchuda@nok.co.th")//Plant PPP
                         {
                             topemail = g.email + ",metan@nok.co.th";
                         }
-                        else if (g.email == "Poonsab@nok.co.th")//OSP2
+                        // Update by Monchit 2016-04-28
+                        else if (g.email == "yok@nok.co.th")//BPK3
                         {
-                            topemail = g.email + ",jatuphol@nok.co.th";
+                            topemail = g.email + ",Manit@nok.co.th";
                         }
-                        else if (g.email == "wichet@nok.co.th")//OSP1
+                        else if (g.email == "terapon@nok.co.th")//VCP
                         {
-                            topemail = g.email + ",sereepap@nok.co.th";
+                            topemail = g.email + ",Saroj@nok.co.th,mangkorn@nok.co.th";
                         }
-                        //Add by Monchit 2015-08-20
-                        else if (g.email == "manoj@nok.co.th" || g.email == "terapon@nok.co.th")
+                        else if (g.email == "pansak@nok.co.th")//RSP
+                        {
+                            topemail = g.email + ",Saroj@nok.co.th,nakamura@nok.co.th";
+                        }
+                        else if (g.email == "manoj@nok.co.th")//T&D
                         {
                             topemail = g.email + ",Saroj@nok.co.th";
                         }
+                        ////Add by Monchit 2015-08-20
+                        //else if (g.email == "manoj@nok.co.th" //Plant Tool&Die
+                        //    || g.email == "terapon@nok.co.th")//Plant VCP
+                        //{
+                        //    topemail = g.email + ",Saroj@nok.co.th";
+                        //}
+                        ////Add by Monchit 2016-02-11
+                        //else if (g.email == "Saroj@nok.co.th")//Plant RSP
+                        //{
+                        //    topemail = g.email + ",nakamura@nok.co.th";
+                        //}
+                        //else if (g.email == "Manit@nok.co.th")//Plant RSP
+                        //{
+                        //    topemail = g.email + ",suzuki@nok.co.th";
+                        //}
                         //End Add
                         else
                         {

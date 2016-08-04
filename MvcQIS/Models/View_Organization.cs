@@ -30,5 +30,9 @@ namespace MvcQIS.Models
         public string GroupMgr_email { get; set; }
         public int subgroup_id { get; set; }
         public string sub_group { get; set; }
+        public Nullable<int> IsRealCostCode { get; set; }
+        public Nullable<int> LeafId { get; set; }
+        public Nullable<int> LeafLevel { get; set; }
+        public string LeafTitle { get; set; }
     }
 }

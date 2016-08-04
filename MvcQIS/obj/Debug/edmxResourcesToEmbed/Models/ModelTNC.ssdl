@@ -7,29 +7,72 @@
     <EntitySet Name="tnc_plant_master" EntityType="TNC_ADMINModel.Store.tnc_plant_master" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tnc_position_master" EntityType="TNC_ADMINModel.Store.tnc_position_master" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="tnc_subgroup_master" EntityType="TNC_ADMINModel.Store.tnc_subgroup_master" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="tnc_user" EntityType="TNC_ADMINModel.Store.tnc_user" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="tnc_user" EntityType="TNC_ADMINModel.Store.tnc_user" store:Type="Tables" store:Schema="dbo" store:Name="tnc_user">
+      <DefiningQuery>SELECT 
+      [tnc_user].[emp_code] AS [emp_code], 
+      [tnc_user].[emp_title] AS [emp_title], 
+      [tnc_user].[emp_fname] AS [emp_fname], 
+      [tnc_user].[emp_lname] AS [emp_lname], 
+      [tnc_user].[emp_sex] AS [emp_sex], 
+      [tnc_user].[emp_position] AS [emp_position], 
+      [tnc_user].[emp_group] AS [emp_group], 
+      [tnc_user].[emp_depart] AS [emp_depart], 
+      [tnc_user].[emp_plant] AS [emp_plant], 
+      [tnc_user].[emp_joindate] AS [emp_joindate], 
+      [tnc_user].[emp_status] AS [emp_status], 
+      [tnc_user].[username] AS [username], 
+      [tnc_user].[password] AS [password], 
+      [tnc_user].[email] AS [email], 
+      [tnc_user].[img_path] AS [img_path], 
+      [tnc_user].[admin_role] AS [admin_role], 
+      [tnc_user].[createby] AS [createby], 
+      [tnc_user].[createdate] AS [createdate], 
+      [tnc_user].[lastupdate] AS [lastupdate], 
+      [tnc_user].[ext] AS [ext], 
+      [tnc_user].[emp_subgroup] AS [emp_subgroup], 
+      [tnc_user].[windows_user] AS [windows_user], 
+      [tnc_user].[ip] AS [ip], 
+      [tnc_user].[transfer_permission] AS [transfer_permission], 
+      [tnc_user].[ad_user] AS [ad_user], 
+      [tnc_user].[TNCFlage] AS [TNCFlage]
+      FROM [dbo].[tnc_user] AS [tnc_user]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="V_Employee_Info" EntityType="TNC_ADMINModel.Store.V_Employee_Info" store:Type="Views" store:Schema="dbo" store:Name="V_Employee_Info">
       <DefiningQuery>SELECT 
       [V_Employee_Info].[emp_code] AS [emp_code], 
+      [V_Employee_Info].[username] AS [username], 
+      [V_Employee_Info].[password] AS [password], 
       [V_Employee_Info].[emp_fname] AS [emp_fname], 
       [V_Employee_Info].[emp_lname] AS [emp_lname], 
+      [V_Employee_Info].[emp_position] AS [emp_position], 
       [V_Employee_Info].[position_name] AS [position_name], 
       [V_Employee_Info].[email] AS [email], 
-      [V_Employee_Info].[sub_group_id] AS [sub_group_id], 
-      [V_Employee_Info].[sub_group] AS [sub_group], 
-      [V_Employee_Info].[group_id] AS [group_id], 
-      [V_Employee_Info].[group_name] AS [group_name], 
-      [V_Employee_Info].[dept_id] AS [dept_id], 
-      [V_Employee_Info].[dept_name] AS [dept_name], 
       [V_Employee_Info].[plant_id] AS [plant_id], 
       [V_Employee_Info].[plant_name] AS [plant_name], 
-      [V_Employee_Info].[emp_status] AS [emp_status]
+      [V_Employee_Info].[dept_id] AS [dept_id], 
+      [V_Employee_Info].[dept_name] AS [dept_name], 
+      [V_Employee_Info].[group_id] AS [group_id], 
+      [V_Employee_Info].[group_name] AS [group_name], 
+      [V_Employee_Info].[sub_group_id] AS [sub_group_id], 
+      [V_Employee_Info].[sub_group] AS [sub_group], 
+      [V_Employee_Info].[emp_status] AS [emp_status], 
+      [V_Employee_Info].[LeafOrganize] AS [LeafOrganize], 
+      [V_Employee_Info].[LeafOrgGroupId] AS [LeafOrgGroupId], 
+      [V_Employee_Info].[LeafOrgGroup] AS [LeafOrgGroup], 
+      [V_Employee_Info].[position_level] AS [position_level], 
+      [V_Employee_Info].[LeafOrgLevel] AS [LeafOrgLevel], 
+      [V_Employee_Info].[ext] AS [ext], 
+      [V_Employee_Info].[level] AS [level]
       FROM [dbo].[V_Employee_Info] AS [V_Employee_Info]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="View_Organization" EntityType="TNC_ADMINModel.Store.View_Organization" store:Type="Views" store:Schema="dbo" store:Name="View_Organization">
       <DefiningQuery>SELECT 
-      [View_Organization].[cost_code] AS [cost_code], 
+      [View_Organization].[IsRealCostCode] AS [IsRealCostCode], 
       [View_Organization].[active] AS [active], 
+      [View_Organization].[cost_code] AS [cost_code], 
+      [View_Organization].[LeafId] AS [LeafId], 
+      [View_Organization].[LeafLevel] AS [LeafLevel], 
+      [View_Organization].[LeafTitle] AS [LeafTitle], 
       [View_Organization].[plant_id] AS [plant_id], 
       [View_Organization].[plant_name] AS [plant_name], 
       [View_Organization].[PlantMgr] AS [PlantMgr], 
@@ -59,6 +102,7 @@
     <Property Name="subgroup_id" Type="int" Nullable="false" />
     <Property Name="cost_code" Type="nvarchar" Nullable="false" MaxLength="80" />
     <Property Name="active" Type="bit" Nullable="false" />
+    <Property Name="sts_active" Type="bit" />
   </EntityType>
   <EntityType Name="tnc_dept_master">
     <Key>
@@ -74,6 +118,7 @@
     <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="group_name" Type="nvarchar" MaxLength="255" />
     <Property Name="s_name" Type="nvarchar" MaxLength="10" />
+    <Property Name="subname" Type="nvarchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="tnc_plant_master">
     <Key>
@@ -89,6 +134,7 @@
     <Property Name="id" Type="int" Nullable="false" />
     <Property Name="position_name" Type="nvarchar" MaxLength="255" />
     <Property Name="level" Type="tinyint" />
+    <Property Name="position_level" Type="tinyint" />
   </EntityType>
   <EntityType Name="tnc_subgroup_master">
     <Key>
@@ -97,6 +143,9 @@
     <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="sub_group" Type="nvarchar" MaxLength="255" />
   </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'TNC_ADMIN.dbo.tnc_user' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
   <EntityType Name="tnc_user">
     <Key>
       <PropertyRef Name="emp_code" />
@@ -126,6 +175,7 @@
     <Property Name="ip" Type="nvarchar" MaxLength="255" />
     <Property Name="transfer_permission" Type="nvarchar" MaxLength="60" />
     <Property Name="ad_user" Type="nvarchar" MaxLength="50" />
+    <Property Name="TNCFlage" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
       warning 6002: The table/view 'TNC_ADMIN.dbo.V_Employee_Info' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -133,33 +183,48 @@
   <EntityType Name="V_Employee_Info">
     <Key>
       <PropertyRef Name="emp_code" />
+      <PropertyRef Name="LeafOrgLevel" />
     </Key>
     <Property Name="emp_code" Type="nvarchar" Nullable="false" MaxLength="25" />
+    <Property Name="username" Type="nvarchar" MaxLength="255" />
+    <Property Name="password" Type="nvarchar" MaxLength="255" />
     <Property Name="emp_fname" Type="nvarchar" MaxLength="255" />
     <Property Name="emp_lname" Type="nvarchar" MaxLength="255" />
+    <Property Name="emp_position" Type="tinyint" />
     <Property Name="position_name" Type="nvarchar" MaxLength="255" />
     <Property Name="email" Type="nvarchar" MaxLength="255" />
-    <Property Name="sub_group_id" Type="int" />
-    <Property Name="sub_group" Type="nvarchar" MaxLength="255" />
-    <Property Name="group_id" Type="int" />
-    <Property Name="group_name" Type="nvarchar" MaxLength="255" />
-    <Property Name="dept_id" Type="int" />
-    <Property Name="dept_name" Type="nvarchar" MaxLength="255" />
     <Property Name="plant_id" Type="int" />
     <Property Name="plant_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="dept_id" Type="int" />
+    <Property Name="dept_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="group_id" Type="int" />
+    <Property Name="group_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="sub_group_id" Type="int" />
+    <Property Name="sub_group" Type="nvarchar" MaxLength="255" />
     <Property Name="emp_status" Type="nchar" MaxLength="10" />
+    <Property Name="LeafOrganize" Type="nvarchar" MaxLength="255" />
+    <Property Name="LeafOrgGroupId" Type="int" />
+    <Property Name="LeafOrgGroup" Type="nvarchar" MaxLength="255" />
+    <Property Name="position_level" Type="tinyint" />
+    <Property Name="LeafOrgLevel" Type="int" Nullable="false" />
+    <Property Name="ext" Type="nvarchar" MaxLength="50" />
+    <Property Name="level" Type="tinyint" />
   </EntityType>
   <!--Errors Found During Generation:
       warning 6002: The table/view 'TNC_ADMIN.dbo.View_Organization' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
   <EntityType Name="View_Organization">
     <Key>
-      <PropertyRef Name="cost_code" />
       <PropertyRef Name="active" />
+      <PropertyRef Name="cost_code" />
       <PropertyRef Name="subgroup_id" />
     </Key>
-    <Property Name="cost_code" Type="nvarchar" Nullable="false" MaxLength="80" />
+    <Property Name="IsRealCostCode" Type="int" />
     <Property Name="active" Type="bit" Nullable="false" />
+    <Property Name="cost_code" Type="nvarchar" Nullable="false" MaxLength="80" />
+    <Property Name="LeafId" Type="int" />
+    <Property Name="LeafLevel" Type="int" />
+    <Property Name="LeafTitle" Type="nvarchar" MaxLength="255" />
     <Property Name="plant_id" Type="int" />
     <Property Name="plant_name" Type="nvarchar" MaxLength="255" />
     <Property Name="PlantMgr" Type="nvarchar" MaxLength="41" />

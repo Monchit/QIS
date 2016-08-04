@@ -28,5 +28,15 @@ namespace MvcQIS.Models
         public Nullable<int> plant_id { get; set; }
         public string plant_name { get; set; }
         public string emp_status { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
+        public Nullable<byte> emp_position { get; set; }
+        public string LeafOrganize { get; set; }
+        public Nullable<int> LeafOrgGroupId { get; set; }
+        public string LeafOrgGroup { get; set; }
+        public Nullable<byte> position_level { get; set; }
+        public int LeafOrgLevel { get; set; }
+        public string ext { get; set; }
+        public Nullable<byte> level { get; set; }
     }
 }

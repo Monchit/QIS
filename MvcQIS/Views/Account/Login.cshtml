@@ -8,19 +8,19 @@
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
-                <h2>@ViewBag.Message</h2>
+                <h2>@ViewBag.Title</h2>
             </hgroup>
         </div>
     </section>
 }
 <style type="text/css">
-        .jquery_form_error_message {
-            /*font-size: .8em;*/
-            color: red;
-            display: block;
-            margin-top: 2px;
-        }
-    </style>
+    .jquery_form_error_message {
+        /*font-size: .8em;*/
+        color: red;
+        display: block;
+        margin-top: 2px;
+    }
+</style>
 <script type="text/javascript">
     $(document).ready(function () {
         // Show error below inputs
@@ -33,6 +33,26 @@
         });
     });
 </script>
+
+@*<form id="loginForm" action="@Url.Action("Login", "Account")" method="post">
+    <table>
+        <tr>
+            <td>
+                <label>Username :</label>
+                <input type="text" id="username" name="username" data-validation="validate_min_length length4" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Password :</label>
+                <input type="password" id="password" name="password" data-validation="validate_min_length length4" />
+            </td>
+        </tr>
+        <tr>
+            <td><input id="btlogin" type="submit" value="Log in" /></td>
+        </tr>
+    </table>
+</form>*@
 
 <section id="loginForm">
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
@@ -63,8 +83,3 @@
     </table>
 }
 </section>
-
-@*<section>
-    <h3>&nbsp;User Manual : </h3>
-    <a href="@Url.Content("~/Content/QIS UserManual.docx")">Thai Version.</a>
-</section>*@

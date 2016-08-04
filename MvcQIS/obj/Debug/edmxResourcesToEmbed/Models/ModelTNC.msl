@@ -4,6 +4,7 @@
     <EntitySetMapping Name="tnc_costcentercode">
       <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_costcentercode">
         <MappingFragment StoreEntitySet="tnc_costcentercode">
+          <ScalarProperty Name="sts_active" ColumnName="sts_active" />
           <ScalarProperty Name="active" ColumnName="active" />
           <ScalarProperty Name="cost_code" ColumnName="cost_code" />
           <ScalarProperty Name="subgroup_id" ColumnName="subgroup_id" />
@@ -25,6 +26,7 @@
     <EntitySetMapping Name="tnc_group_master">
       <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_group_master">
         <MappingFragment StoreEntitySet="tnc_group_master">
+          <ScalarProperty Name="subname" ColumnName="subname" />
           <ScalarProperty Name="s_name" ColumnName="s_name" />
           <ScalarProperty Name="group_name" ColumnName="group_name" />
           <ScalarProperty Name="id" ColumnName="id" />
@@ -42,6 +44,7 @@
     <EntitySetMapping Name="tnc_position_master">
       <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_position_master">
         <MappingFragment StoreEntitySet="tnc_position_master">
+          <ScalarProperty Name="position_level" ColumnName="position_level" />
           <ScalarProperty Name="level" ColumnName="level" />
           <ScalarProperty Name="position_name" ColumnName="position_name" />
           <ScalarProperty Name="id" ColumnName="id" />
@@ -59,6 +62,7 @@
     <EntitySetMapping Name="tnc_user">
       <EntityTypeMapping TypeName="TNC_ADMINModel.tnc_user">
         <MappingFragment StoreEntitySet="tnc_user">
+          <ScalarProperty Name="TNCFlage" ColumnName="TNCFlage" />
           <ScalarProperty Name="ad_user" ColumnName="ad_user" />
           <ScalarProperty Name="transfer_permission" ColumnName="transfer_permission" />
           <ScalarProperty Name="ip" ColumnName="ip" />
@@ -90,6 +94,16 @@
     <EntitySetMapping Name="V_Employee_Info">
       <EntityTypeMapping TypeName="TNC_ADMINModel.V_Employee_Info">
         <MappingFragment StoreEntitySet="V_Employee_Info">
+          <ScalarProperty Name="level" ColumnName="level" />
+          <ScalarProperty Name="ext" ColumnName="ext" />
+          <ScalarProperty Name="LeafOrgLevel" ColumnName="LeafOrgLevel" />
+          <ScalarProperty Name="position_level" ColumnName="position_level" />
+          <ScalarProperty Name="LeafOrgGroup" ColumnName="LeafOrgGroup" />
+          <ScalarProperty Name="LeafOrgGroupId" ColumnName="LeafOrgGroupId" />
+          <ScalarProperty Name="LeafOrganize" ColumnName="LeafOrganize" />
+          <ScalarProperty Name="emp_position" ColumnName="emp_position" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="username" ColumnName="username" />
           <ScalarProperty Name="emp_status" ColumnName="emp_status" />
           <ScalarProperty Name="plant_name" ColumnName="plant_name" />
           <ScalarProperty Name="plant_id" ColumnName="plant_id" />
@@ -110,6 +124,10 @@
     <EntitySetMapping Name="View_Organization">
       <EntityTypeMapping TypeName="TNC_ADMINModel.View_Organization">
         <MappingFragment StoreEntitySet="View_Organization">
+          <ScalarProperty Name="LeafTitle" ColumnName="LeafTitle" />
+          <ScalarProperty Name="LeafLevel" ColumnName="LeafLevel" />
+          <ScalarProperty Name="LeafId" ColumnName="LeafId" />
+          <ScalarProperty Name="IsRealCostCode" ColumnName="IsRealCostCode" />
           <ScalarProperty Name="sub_group" ColumnName="sub_group" />
           <ScalarProperty Name="subgroup_id" ColumnName="subgroup_id" />
           <ScalarProperty Name="GroupMgr_email" ColumnName="GroupMgr_email" />

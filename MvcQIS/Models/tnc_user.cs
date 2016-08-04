@@ -39,5 +39,6 @@ namespace MvcQIS.Models
         public string ip { get; set; }
         public string transfer_permission { get; set; }
         public string ad_user { get; set; }
+        public Nullable<bool> TNCFlage { get; set; }
     }
 }

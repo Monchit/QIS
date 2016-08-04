@@ -17,5 +17,6 @@ namespace MvcQIS.Models
         public int id { get; set; }
         public string position_name { get; set; }
         public Nullable<byte> level { get; set; }
+        public Nullable<byte> position_level { get; set; }
     }
 }

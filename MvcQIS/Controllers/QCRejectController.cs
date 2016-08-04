@@ -1849,6 +1849,44 @@ namespace MvcQIS.Controllers
             }
         }
 
+        public void InsertMail(string receiver, int qc_reject_id)
+        {
+            try
+            {
+                var query = (from q in dbQIS.QCReject
+                             where q.qc_reject_id == qc_reject_id
+                             select q).FirstOrDefault();
+                MailCenterEntities dbMail = new MailCenterEntities();
+                TT_MAIL_WIP ttMail = new TT_MAIL_WIP();
+                ttMail.ProgramID = 3;
+                ttMail.CreateDate = DateTime.Now;
+                ttMail.Sender = "TNCAutoMail-QIS@nok.co.th";
+                ttMail.Receiver = "monchit@nok.co.th";
+                //ttMail.Receiver = receiver;
+
+                ttMail.Title = "QC Reject Created.";
+                string bodyhtml = "<b>Dear. All Concern</b>"
+                + "<br /><b>*This message is automatic sending from QIS, please do not reply*</b>"
+                + "<br /><br /><b>QC Reject Detail :</b>"
+                + "<br />Product Name : " + query.Master_Product.product_name
+                + "<br />Item Code : " + query.item_code
+                + "<br />Lot No. : " + query.lot_no
+                + "<br />Problem Detail : " + query.problem
+                + "<br />More Detail : <a href=\"http://webExternal/qis/qcreject/detail/" + query.qc_reject_id + "\">Show</a>";
+
+
+                ttMail.HTMLBody = bodyhtml;
+                //ttMail.Flag = 1;//Comment this line when Real.
+
+                var qinsert = dbMail.TT_MAIL_WIP.Add(ttMail);
+                dbMail.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Response.Write("Error InsertMail : " + ex);
+            }
+        }
+
         public void InsertTemp(string receiver, int qc_reject_id)
         {
             try{

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace AlarmCAROverdue
 {
-    class Program
+    class Program1
     {
-        static void Main1(string[] args)
+        static void Main(string[] args)
         {
-            Program pg = new Program();
+            Program1 pg = new Program1();
             try
             {
                 QISEntities dbQIS = new QISEntities();
@@ -89,10 +89,10 @@ namespace AlarmCAROverdue
                         }
                     }
                     htmlBody += "</table>";
+                    //htmlBody += "<br />" + topemail;//For Test
 
                     if (!string.IsNullOrEmpty(topemail) && count != 0)
                     {
-                        //string topemail = g.email != "thaworn@nok.co.th" ? g.email : g.email + ",chiba@nok.co.th,yoshioka@nok.co.th,sirichai@nok.co.th";
                         TT_MAIL_WIP ttMail = new TT_MAIL_WIP();
                         ttMail.ProgramID = 3;
                         ttMail.CreateDate = DateTime.Now;
@@ -102,7 +102,7 @@ namespace AlarmCAROverdue
                         ttMail.BCC = "wichet@nok.co.th";//Open when Real
                         ttMail.Title = "Alarm CAR Overdue Date.";
                         ttMail.HTMLBody = htmlBody;
-                        ttMail.Flag = 1;//Comment this line when Real.
+                        //ttMail.Flag = 1;//Comment this line when Real.
 
                         var qinsert = dbMail.TT_MAIL_WIP.Add(ttMail);
                     }
@@ -128,86 +128,6 @@ namespace AlarmCAROverdue
             Console.ReadLine();
         }
 
-        private string GetEmailQC(int plant)
-        {
-            string email_list = "";
-            using (var db = new QISEntities())
-            {
-                var query = (from a in db.AuthUser
-                             where a.plant_id == plant && a.utype_id == 3
-                             select a).FirstOrDefault();
-                if (query != null)
-                {
-                    using (var dbTNC = new TNC_ADMINEntities())
-                    {
-                        var get_mail = (from a in dbTNC.View_Organization
-                                        where a.GroupMgr == query.user_code
-                                        select a).FirstOrDefault();
-                        if (get_mail != null)
-                        {
-                            email_list += !string.IsNullOrEmpty(get_mail.GroupMgr_email) ? "," + get_mail.GroupMgr_email : string.Empty;
-                            email_list += !string.IsNullOrEmpty(get_mail.DeptMgr_email) ? "," + get_mail.DeptMgr_email : string.Empty;
-                            //email_list += !string.IsNullOrEmpty(get_mail.PlantMgr_email) ? "," + get_mail.PlantMgr_email : string.Empty;
-                        }
-                        else
-                        {
-                            var get_mail_dept = (from a in dbTNC.View_Organization
-                                                 where a.DeptMgr == query.user_code
-                                                 select a).FirstOrDefault();
-                            if (get_mail_dept != null)
-                            {
-                                email_list += !string.IsNullOrEmpty(get_mail_dept.DeptMgr_email) ? "," 
-                                    + get_mail_dept.DeptMgr_email : string.Empty;
-                                //email_list += !string.IsNullOrEmpty(get_mail_dept.PlantMgr_email) ? "," 
-                                //    + get_mail_dept.PlantMgr_email : string.Empty;
-                            }
-                        }
-                    }
-                }
-            }
-            return email_list;
-        }
-
-        private string GetEmailProduction(int? group_id)
-        {
-            string email_list = "";
-            using (var db = new TNC_ADMINEntities())
-            {
-                var query = (from a in db.View_Organization
-                             where a.group_id == group_id
-                             select a).FirstOrDefault();
-                
-                if (query != null)
-                {
-                    email_list += !string.IsNullOrEmpty(query.GroupMgr_email) ? "," + query.GroupMgr_email : string.Empty;
-                    email_list += !string.IsNullOrEmpty(query.DeptMgr_email) ? "," + query.DeptMgr_email : string.Empty;
-                    //email_list += !string.IsNullOrEmpty(query.PlantMgr_email) ? "," + query.PlantMgr_email + ";thaworn@nok.co.th;sirichai@nok.co.th" : string.Empty;
-                    if (!string.IsNullOrEmpty(query.PlantMgr_email))
-                    {
-                        if (query.PlantMgr_email == "manoj@nok.co.th")
-                        {
-                            email_list += "," + query.PlantMgr_email + ";thaworn@nok.co.th;sirichai@nok.co.th;Saroj@nok.co.th,nakamura@nok.co.th";
-                        }
-                        else if (query.PlantMgr_email == "terapon@nok.co.th")
-                        {
-                            email_list += "," + query.PlantMgr_email + ";thaworn@nok.co.th;sirichai@nok.co.th;Saroj@nok.co.th";
-                        }
-                        else if (query.PlantMgr_email == "pansak@nok.co.th")
-                        {
-                            email_list += "," + query.PlantMgr_email + ";thaworn@nok.co.th;sirichai@nok.co.th;Saroj@nok.co.th";
-                        }
-                        else
-                        {
-                            email_list += "," + query.PlantMgr_email + ";thaworn@nok.co.th;sirichai@nok.co.th";
-                        }
-                    }else{
-                        email_list += string.Empty;
-                    }
-                }
-            }
-            return email_list;
-        }
-
         private string GetEmailProdSupDown(int? group_id)
         {
             string email_list = "";
@@ -230,50 +150,115 @@ namespace AlarmCAROverdue
             return email_list;
         }
 
+        private string GetEmailQC(int plant)
+        {
+            string email_list = "";
+            using (var db = new QISEntities())
+            {
+                var query = (from a in db.AuthUser
+                             where a.plant_id == plant && a.utype_id == 3
+                             select a).FirstOrDefault();
+                if (query != null)
+                {
+                    using (var dbTNC = new TNC_ADMINEntities())
+                    {
+                        var get_mail = (from a in dbTNC.View_Organization
+                                        where a.GroupMgr == query.user_code
+                                        select a).FirstOrDefault();
+                        if (get_mail != null)
+                        {
+                            email_list += !string.IsNullOrEmpty(get_mail.GroupMgr_email) ? "," + get_mail.GroupMgr_email : string.Empty;
+                            email_list += !string.IsNullOrEmpty(get_mail.DeptMgr_email) ? "," + get_mail.DeptMgr_email : string.Empty;
+                        }
+                        else
+                        {
+                            var get_mail_dept = (from a in dbTNC.View_Organization
+                                                 where a.DeptMgr == query.user_code
+                                                 select a).FirstOrDefault();
+                            if (get_mail_dept != null)
+                            {
+                                email_list += !string.IsNullOrEmpty(get_mail_dept.DeptMgr_email) ? ","
+                                    + get_mail_dept.DeptMgr_email : string.Empty;
+                            }
+                        }
+                    }
+                }
+            }
+            return email_list;
+        }
+
+        private string GetEmailProduction(int? group_id)
+        {
+            string email_list = "";
+            using (var db = new TNC_ADMINEntities())
+            {
+                var query = (from a in db.View_Organization
+                             where a.group_id == group_id
+                             select a).FirstOrDefault();
+
+                if (query != null)
+                {
+                    email_list += !string.IsNullOrEmpty(query.GroupMgr_email) ? "," + query.GroupMgr_email : string.Empty;
+                    email_list += !string.IsNullOrEmpty(query.DeptMgr_email) ? "," + query.DeptMgr_email : string.Empty;
+                    
+                    if (!string.IsNullOrEmpty(query.PlantMgr_email))
+                    {
+                        if (query.PlantMgr_email == "yok@nok.co.th")//BPK3
+                        {
+                            email_list += "," + query.PlantMgr_email + ";Manit@nok.co.th";
+                        }
+                        else if (query.PlantMgr_email == "terapon@nok.co.th")//VCP
+                        {
+                            email_list += "," + query.PlantMgr_email + ";Saroj@nok.co.th;mangkorn@nok.co.th";
+                        }
+                        else if (query.PlantMgr_email == "pansak@nok.co.th")//RSP
+                        {
+                            email_list += "," + query.PlantMgr_email + ";Saroj@nok.co.th;nakamura@nok.co.th";
+                        }
+                        else if (query.PlantMgr_email == "manoj@nok.co.th")//T&D
+                        {
+                            email_list += "," + query.PlantMgr_email + ";Saroj@nok.co.th";
+                        }
+                        else
+                        {
+                            email_list += "," + query.PlantMgr_email;
+                        }
+
+                        email_list += ";thaworn@nok.co.th;sirichai@nok.co.th";
+                    }
+                    else
+                    {
+                        email_list += string.Empty;
+                    }
+                }
+            }
+            return email_list;
+        }
+
         private void InsertTemp(string receiver, int qc_reject_id)
         {
             using (var db = new QISEntities())
             {
                 try
                 {
-                    //char[] delimiters = new char[] { ',', ';' };
-                    //var emails = receiver.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
                     var emails = receiver.Split(',');
                     foreach (string email in emails)
                     {
                         if (email != "")
                         {
                             var demail = "";
-                            if (email == "pansak@nok.co.th")//PPP
+                            if (email == "wichet@nok.co.th")//QC OSP1
+                            {
+                                demail = email + ",sereepap@nok.co.th,suzuki@nok.co.th,teerapoom@nok.co.th";
+                            }
+                            else if (email == "Poonsab@nok.co.th")//QC OSP2
+                            {
+                                demail = email + ",jatuphol@nok.co.th,suzuki@nok.co.th";
+                            }
+                            else if (email == "widchuda@nok.co.th")//QC PPP
                             {
                                 demail = email + ",metan@nok.co.th";
                             }
-                            else if (email == "Poonsab@nok.co.th")//OSP2
-                            {
-                                demail = email + ",jatuphol@nok.co.th";
-                            }
-                            else if (email == "wichet@nok.co.th")//QC OSP1
-                            {
-                                demail = email + ",sereepap@nok.co.th";
-                            }
-                            //else if (email == "manoj@nok.co.th")//T&D
-                            //{
-                            //    demail = email + ",Saroj@nok.co.th";
-                            //}
-                            //else if (email == "terapon@nok.co.th")//PTN
-                            //{
-                            //    demail = email + ",Saroj@nok.co.th";
-                            //}
-                            //Add by Monchit 2016-02-11
-                            else if (email == "Saroj@nok.co.th")//Plant RSP
-                            {
-                                demail = email + ",nakamura@nok.co.th";
-                            }
-                            else if (email == "Manit@nok.co.th")//Plant RSP
-                            {
-                                demail = email + ",suzuki@nok.co.th";
-                            }
-                            //--
                             else
                             {
                                 demail = email;

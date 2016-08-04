@@ -23,6 +23,7 @@
     <Property Type="Int32" Name="subgroup_id" Nullable="false" />
     <Property Type="String" Name="cost_code" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
     <Property Type="Boolean" Name="active" Nullable="false" />
+    <Property Type="Boolean" Name="sts_active" />
   </EntityType>
   <EntityType Name="tnc_dept_master">
     <Key>
@@ -38,6 +39,7 @@
     <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Type="String" Name="group_name" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="s_name" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="subname" MaxLength="10" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="tnc_plant_master">
     <Key>
@@ -53,6 +55,7 @@
     <Property Type="Int32" Name="id" Nullable="false" />
     <Property Type="String" Name="position_name" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Type="Byte" Name="level" />
+    <Property Type="Byte" Name="position_level" />
   </EntityType>
   <EntityType Name="tnc_subgroup_master">
     <Key>
@@ -90,10 +93,12 @@
     <Property Type="String" Name="ip" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="transfer_permission" MaxLength="60" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="ad_user" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="TNCFlage" />
   </EntityType>
   <EntityType Name="V_Employee_Info">
     <Key>
       <PropertyRef Name="emp_code" />
+      <PropertyRef Name="LeafOrgLevel" />
     </Key>
     <Property Type="String" Name="emp_code" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="emp_fname" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -109,6 +114,16 @@
     <Property Type="Int32" Name="plant_id" />
     <Property Type="String" Name="plant_name" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="emp_status" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Type="String" Name="username" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="password" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Byte" Name="emp_position" />
+    <Property Type="String" Name="LeafOrganize" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="LeafOrgGroupId" />
+    <Property Type="String" Name="LeafOrgGroup" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Byte" Name="position_level" />
+    <Property Type="Int32" Name="LeafOrgLevel" Nullable="false" />
+    <Property Type="String" Name="ext" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Byte" Name="level" />
   </EntityType>
   <EntityType Name="View_Organization">
     <Key>
@@ -132,5 +147,9 @@
     <Property Type="String" Name="GroupMgr_email" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Type="Int32" Name="subgroup_id" Nullable="false" />
     <Property Type="String" Name="sub_group" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="IsRealCostCode" />
+    <Property Type="Int32" Name="LeafId" />
+    <Property Type="Int32" Name="LeafLevel" />
+    <Property Type="String" Name="LeafTitle" MaxLength="255" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

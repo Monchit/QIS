@@ -21,5 +21,6 @@ namespace MvcQIS.Models
         public int subgroup_id { get; set; }
         public string cost_code { get; set; }
         public bool active { get; set; }
+        public Nullable<bool> sts_active { get; set; }
     }
 }
